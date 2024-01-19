@@ -1,0 +1,115 @@
+﻿@model API_WEB_GESTION.Controllers.ADMIN.ADMIN_API_GRANT_MODEL_LIST_E
+
+@if (Model.API_PROY_CAB.Count() > 0)
+{
+    <div class="row">
+        <div class="col-md-12">
+            <div id="accordion">
+
+                @foreach (var item in Model.API_PROY_CAB.ToList())
+                {
+                    <div class="card">
+                        <div class="card-header p-1" id="heading_@item.ProyID">
+                            <h5 class="mb-0">
+                                <button class="btn btn-link" data-toggle="collapse" data-target="#collapse_@item.ProyID" aria-expanded="true" aria-controls="collapse_@item.ProyID" onclick="">
+                                    <i class="icon-accordion pull-left fa fa-chevron-circle-right"></i> @item.Nombre
+                                </button>
+                                <small><span class="badge badge-warning " style="text-align: right;float: right;">API</span></small>
+                            </h5>
+                        </div>
+
+                        <div id="collapse_@item.ProyID" class="collapse @(Model.SESSION_PAN_EXP == item.ProyID.ToString() ? "show" : "")" aria-labelledby="heading_@item.ProyID" data-parent="#accordion">
+                            <div class="card-body">
+                                @if (Model.API_PROY_DET.Where(m => m.ProyID == item.ProyID).ToList().Count() > 0)
+                                {
+                                    <table class="table table-bordered small">
+                                        <thead>
+                                            <tr class="header">
+                                                <th scope="col" class="text-center p-1 m-1 text-dark bg-light"><i class="fas fa-list"></i> RECURSOS ASOCIADOS</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                            @foreach (var item2 in Model.API_PROY_DET.Where(m => m.ProyID == item.ProyID).ToList())
+                                            {
+                                                <tr>
+                                                    <td class="small"><span class="badge badge-info " style="text-align: right;float: right;">RECURSO</span> @item2.Nombre</td>
+                                                </tr>
+                                            }
+                                        </tbody>
+                                    </table>
+                                }
+                                else
+                                {
+                                    <div class="row mb-2">
+                                        <div class="col-md-12">
+                                            <div class="alert alert-info text-center small p-0 m-0">
+                                                <i class="fa fa-info-circle"></i> NO EXISTEN RECURSOS ASIGNADOS
+                                            </div>
+                                        </div>
+                                    </div>
+                                }
+                                <div class="row  justify-content-center mb-2">
+                                    <button class="btn btn-warning btn-icon-split btn-sm" type="button" onclick="MOD_PROYDET(@item.ProyID,'@item.Nombre.Trim()')">
+                                        <span class="icon text-white-50">
+                                            <i class="fas fa-plus-circle"></i>
+                                        </span>
+                                        <span class="text">ASIGNAR RECURSOS</span>
+                                    </button>
+                                </div>
+
+                            </div>
+                        </div>
+                    </div>
+                }
+
+            </div>
+        </div>
+    </div>
+}
+else
+{
+    <div class="row">
+        <div class="col-md-12">
+            <div class="alert alert-info text-center">
+                <i class="fa fa-info-circle"></i> NO EXISTEN APIS ASIGNADAS
+            </div>
+        </div>
+    </div>
+}
+<script>
+    $(document).ready(function () {
+        $(".collapse").on('show.bs.collapse', function (i) {
+            var PAN_EXP = i.target.id;
+            PAN_EXP = PAN_EXP.replace("collapse_", "");
+            $.ajax({
+                url: "@Url.Content("~/ADMIN_API_GRANT/AJX_E_SET_PAN_EXP/")",
+                data: { PAN_EXP: PAN_EXP },
+                cache: false,
+                type: "GET",
+                timeout: 10000,
+                dataType: "json",
+                success: function (result) { }
+            });
+        }).on('hide.bs.collapse', function (i) { });
+    });
+
+    $(document).ready(function () {
+        $('.collapse')
+            .on('shown.bs.collapse', function () {
+                $(this)
+                    .parent()
+                    .find(".fa-chevron-circle-right")
+                    .removeClass("fa-chevron-circle-right")
+                    .addClass("fa-chevron-circle-down");
+            })
+            .on('hidden.bs.collapse', function () {
+                $(this)
+                    .parent()
+                    .find(".fa-chevron-circle-down")
+                    .removeClass("fa-chevron-circle-down")
+                    .addClass("fa-chevron-circle-right");
+            });
+    });
+</script>
+
+

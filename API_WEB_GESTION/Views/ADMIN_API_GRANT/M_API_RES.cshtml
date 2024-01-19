@@ -1,0 +1,60 @@
+﻿@{
+    Layout = null;
+    ViewBag.Title = " ASOCIAR RECURSOS DE API ";
+}
+<div id="MOD_PROYDET" class="modal" tabindex="-1" role="dialog">
+    <div class="modal-dialog modal-lg" style="z-index: 99999">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h6 class="modal-title"><i class="fas fa-th-list"></i>@ViewBag.Title <label class="text-success" id="MOD_PROYDET_PROY"></label></h6>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body p-3 m-0">
+
+                @using (Ajax.BeginForm("M_API_RES_I", "ADMIN_API_GRANT", new AjaxOptions
+                {
+                    HttpMethod = "GET",
+                    InsertionMode = InsertionMode.Replace,
+                    UpdateTargetId = "MOD_PROYDET_div"
+                }))
+                {
+                    <button type="submit" class="invisible" id="MOD_PROYDET_btnBuscar"></button>
+                    @Html.Hidden("MOD_PROYDET_ID",0)
+                }
+                <div id="MOD_PROYDET_div">
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-dismiss="modal">CERRAR</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script type="text/javascript">
+    function MOD_PROYDET(ID,T)
+    {
+        $("#MOD_PROYDET_PROY").text(T);
+        $("#MOD_PROYDET_ID").val(ID);
+        $("#MOD_PROYDET_btnBuscar").click();
+        $("#MOD_PROYDET").modal("show");
+    }
+
+    function N_DEL_AJX_MOD_PROYDET(ope,pID, pdID, btn) {
+        $(btn).prop("disabled", true);
+        $.ajax({
+            url: "@Url.Content("~/ADMIN_API_GRANT/AJX_MOD_API_RES_N_DEL/")",
+            data: { ope: ope,pID:pID, pdID: pdID },
+            cache: false,
+            type: "GET",
+            timeout: 10000,
+            dataType: "json",
+            success: function (result) {
+                if (!result.Success) { }
+                else { $("#MOD_PROYDET_btnBuscar").click();AJX_REFRESH()}
+            }
+        });
+    }
+</script>

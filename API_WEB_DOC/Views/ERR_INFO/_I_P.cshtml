@@ -1,0 +1,25 @@
+﻿@model IEnumerable<API_LIB.Model.API.API_CLS.API_RESPONSE_ERRORS>
+@{
+    var grid = new WebGrid(null,
+canPage: true,
+rowsPerPage: 50,
+selectionFieldName: "selectedRow",
+ajaxUpdateContainerId: "myGrid");
+    grid.Bind(Model, autoSortAndPage: true);
+}
+
+    <div id="myGrid" class="small">
+        <br />
+        @grid.GetHtml(tableStyle: "table table-striped table-bordered table-hover small",
+    headerStyle: "header",
+    alternatingRowStyle: "alt",
+    selectedRowStyle: "select",
+    columns: grid.Columns(
+    grid.Column("ErrID", header: "CÓDIGO", format: @<text>@item.ErrID</text>, style: "small")
+, grid.Column("Nombre", header: "NOMBRE", format: @<text>@item.Nombre</text>, style: "small")
+, grid.Column("IndTipo", header: "TIPO", format: @<text><span class="text-@(!item.IndTipo ? "info" : "primary")">@(!item.IndTipo ? "SISTEMA" : "PERSONALIZADO")</span></text>, style: "text-center small")
+, grid.Column("Mensaje", header: "DESCRIPCIÓN", format: @<text>@item.Mensaje</text>, style: "small")
+),
+mode: WebGridPagerModes.All)
+
+    </div>

@@ -1,0 +1,40 @@
+﻿@model  API_LIB.Model.API.API_CLS.API_PROF_USERS
+@{
+    ViewBag.Title = "INICIO";
+}
+
+<div class="container-fluid">
+ 
+    <div class="row justify-content-center">
+        <div class="col-lg-8">
+            <div class="card shadow mb-1  w-100">
+                <div class="card-header py-3">
+                    <h6 class="m-0 font-weight-bold text-primary">Bienvenido</h6>
+                </div>
+                <div class="card-body small">
+                    <div class="row m-1">
+                        <div class="col-lg-4 text-dark text-right">USERNAME</div>
+                        <div class="col-lg-8">@Model.USERNAME</div>
+                    </div>
+                    <div class="row m-1">
+                        <div class="col-lg-4 text-dark text-right">NOMBRE</div>
+                        <div class="col-lg-8">@Model.Nombre1 @Model.Nombre2</div>
+                    </div>
+                    <div class="row m-1">
+                        <div class="col-lg-4 text-dark text-right">APELLIDOS</div>
+                        <div class="col-lg-8">@Model.Apellido1 @Model.Apellido2</div>
+                    </div>
+                    <div class="row m-1">
+                        <div class="col-lg-4 text-dark text-right">MAIL</div>
+                        <div class="col-lg-8">@Model.Mail1</div>
+                    </div>
+                    <hr />
+                    <div class="row justify-content-center">
+                        <a href="@Url.Action("USER_EDIT","H")" class="d-none d-sm-inline-block btn btn-sm btn-primary shadow-sm"><i class="fas fa-user-edit fa-sm text-white-50"></i> EDITAR DATOS</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+    </div>
+</div>

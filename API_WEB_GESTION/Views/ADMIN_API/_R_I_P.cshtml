@@ -1,0 +1,31 @@
+﻿@model List < API_WEB_GESTION.Controllers.ADMIN.ADMIN_API_R_MODEL>
+@{
+var grid = new WebGrid(null,
+canPage: true,
+rowsPerPage: 50,
+selectionFieldName: "selectedRow",
+ajaxUpdateContainerId: "myGrid");
+grid.Bind(Model.ToList(), autoSortAndPage: true);
+}
+
+    <div id="myGrid" class="small">
+        <br />
+        @grid.GetHtml(tableStyle: "table  table-bordered table-hover small",
+    headerStyle: "header",
+    alternatingRowStyle: "alt",
+    selectedRowStyle: "select",
+    columns: grid.Columns(
+        grid.Column("API_PROY_DET.DetID", header: "ID", format: @<text>@item.API_PROY_DET.DetID</text>, style: "")
+, grid.Column("API_PROY_DET.Nombre", header: "NOMBRE", format: @<text>
+        <a href="javascript:void()" onclick="goE('@Url.Content("~/ADMIN_API/RE_AJX/")',{'Items':[{'Item1':'@item.API_PROY_DET.ProyID','Item2':'@item.API_PROY_DET.DetID'}]},'@Url.Action("R_E", "ADMIN_API")');">
+            @item.API_PROY_DET.Nombre
+        </a>
+    </text>, style: "")
+ , grid.Column("API_ATTR_CONT_TYPE.Nombre", header: "CONTENT TYPE", format: @<text><span class="badge badge-primary">@item.API_ATTR_CONT_TYPE.Nombre</span></text>, style: "text-center")
+, grid.Column("API_ATTR_HTTP.Nombre", header: "HTTP METHOD", format: @<text><span class="badge badge-info">@item.API_ATTR_HTTP.Nombre</span></text>, style: "text-center")
+, grid.Column("API_PROY_DET.URL", header: "URL RECURSO", format: @<text><small class="text-primary">@item.API_PROY_CAB.URL/</small><small class="text-info">@item.API_PROY_DET.URL</small></text>, style: "")
+, grid.Column("API_PROY_DET.Estado", header: "ESTADO", format: @<text><span class="text-@(item.API_PROY_DET.Estado ==0? "danger" : "success")">@(item.API_PROY_DET.Estado == 0 ? "NO VIGENTE" : "VIGENTE")</span></text>, style: "text-center")
+),
+mode: WebGridPagerModes.All)
+
+    </div>

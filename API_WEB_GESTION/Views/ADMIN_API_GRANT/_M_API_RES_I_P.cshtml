@@ -1,0 +1,46 @@
+﻿@model API_WEB_GESTION.Controllers.ADMIN.ADMIN_API_GRANT_MODEL_LIST_E_API_RES
+<div class="row">
+    <div class="col-md-6">
+        <p class="text-success text-center"><i class="fa fa-link"></i> ASOCIADOS</p>
+        @{
+            var grid = new WebGrid(Model.API_PROY_DET_IN,
+            canPage: true,
+            rowsPerPage: 10,
+            selectionFieldName: "selectedRow",
+            ajaxUpdateContainerId: "MOD_PROY_div_IN");
+        }
+        <div id="MOD_PROY_div_IN">
+            @grid.GetHtml(tableStyle: "table table-striped table-bordered table-hover small",
+        headerStyle: "header",
+        alternatingRowStyle: "alt",
+        selectedRowStyle: "select",
+        columns: grid.Columns(
+         grid.Column("Nombre", "Recurso", format: @<text>@item.Nombre.ToUpper()  </text>, style: "col-xs-11 small")
+        , grid.Column("", "", format: @<text><button class="btn btn-danger btn-sm" type="button" title="QUITAR" onclick="N_DEL_AJX_MOD_PROYDET(2,@item.ProyID,@item.DetID,$(this))"><i class="fa fa-angle-double-right"></i></button></text>, style: "col-xs-1  text-center")
+        ),
+        mode: WebGridPagerModes.All)
+        </div>
+    </div>
+    <div class="col-md-6">
+        <p class="text-primary text-center"><i class="fa fa-unlink"></i> NO ASOCIADOS</p>
+        @{
+            var grid2 = new WebGrid(Model.API_PROY_DET_NI,
+            canPage: true,
+            rowsPerPage: 10,
+            selectionFieldName: "selectedRow",
+            ajaxUpdateContainerId: "MOD_PROY_div_NI");
+        }
+        <div id="MOD_PROY_div_NI">
+            @grid2.GetHtml(tableStyle: "table table-striped table-bordered table-hover small",
+        headerStyle: "header",
+        alternatingRowStyle: "alt",
+        selectedRowStyle: "select",
+        columns: grid.Columns(
+        grid2.Column("", "", format: @<text><button class="btn btn-primary btn-sm" type="button" title="AGREGAR" onclick="N_DEL_AJX_MOD_PROYDET(1,@item.ProyID,@item.DetID,$(this))"><i class="fa fa-angle-double-left"></i></button></text>, style: "col-xs-1 text-center")
+         , grid2.Column("Nombre", "Recurso", format: @<text>@item.Nombre.ToUpper()  </text>, style: "col-xs-11 small")
+    
+        ),
+        mode: WebGridPagerModes.All)
+        </div>
+    </div>
+</div>

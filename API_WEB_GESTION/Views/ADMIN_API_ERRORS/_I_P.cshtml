@@ -1,0 +1,29 @@
+﻿@model IEnumerable<API_LIB.Model.API.API_CLS.API_RESPONSE_ERRORS>
+@{
+    var grid = new WebGrid(null,
+canPage: true,
+rowsPerPage: 50,
+selectionFieldName: "selectedRow",
+ajaxUpdateContainerId: "myGrid");
+    grid.Bind(Model, autoSortAndPage: true);
+}
+
+<div id="myGrid" class="small">
+    <br />
+    @grid.GetHtml(tableStyle: "table table-striped table-bordered table-hover small",
+headerStyle: "header",
+alternatingRowStyle: "alt",
+selectedRowStyle: "select",
+columns: grid.Columns(
+grid.Column("ErrID", header: "CÓDIGO", format: @<text>@item.ErrID</text>, style: "")
+, grid.Column("Nombre", header: "NOMBRE", format: @<text>
+<a href="#" onclick="goE('@Url.Content("~/ADMIN_API_ERRORS/E_AJX/")',{'Items':[{'Item1':'@item.ErrID'}]},'@Url.Action("E", "ADMIN_API_ERRORS")');">
+@item.Nombre
+</a>
+</text>, style: "")
+, grid.Column("IndTipo", header: "TIPO", format: @<text><span class="text-@(!item.IndTipo ? "info" : "primary")">@(!item.IndTipo ? "SISTEMA" : "PERSONALIZADO")</span></text>, style: "text-center")
+, grid.Column("Estado", header: "ESTADO", format: @<text><span class="text-@(item.Estado ==0? "danger" : "success")">@(item.Estado == 0 ? "NO VIGENTE" : "VIGENTE")</span></text>, style: "text-center")
+),
+mode: WebGridPagerModes.All)
+
+</div>

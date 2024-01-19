@@ -1,0 +1,35 @@
+﻿@{
+     Layout = "~/Views/Shared/_Layout_NULL.cshtml";
+     ViewBag.Title = "LA SESIÓN HA EXPIRADO";
+}
+<div class="row justify-content-center">
+    <div class="col-xl-10 col-lg-12 col-md-9">
+        <div class="card o-hidden border-0 shadow-lg my-5">
+            <div class="card-body p-0">
+                <div class="row">
+                    <div class="col-lg-6 d-none d-lg-block">
+                        <img src="holder.js/500x600">
+                    </div>
+                    <div class="col-lg-6">
+                        <div class="p-5">
+                            <div class="text-center">
+                                <h1 class="h4 text-gray-900 mb-4">@ViewBag.Title</h1>
+                            </div>
+                            @using (Html.BeginForm())
+                            {
+                                <a href="@Url.Action("I","Default")" class="btn btn-primary btn-block btn-lg">INGRESAR</a>
+
+                                if (ViewBag.ERR != null && ViewBag.ERR != "0")
+                                {
+                                    <div class="alert alert-danger m-2 small">
+                                        @Html.Raw(ViewBag.ERR)
+                                    </div>
+                                }
+                            }
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

@@ -1,0 +1,97 @@
+﻿@{
+    ViewBag.Title = "Administración de APIS por Usuario";
+}
+<link href="~/Scripts/vendor/bootstrap-select/css/bootstrap-select.min.css" rel="stylesheet" />
+
+<div class="container-fluid ">
+
+    <nav aria-label="breadcrumb w-30">
+        <ol class="breadcrumb  p-2 mb-2 bg-gray-200">
+            <li class="breadcrumb-item"><a href="@Url.Action("I","H")"><i class="fas fa-home"></i></a></li>
+            <li class="breadcrumb-item">PARÁMETROS</li>
+            <li class="breadcrumb-item" active aria-current="page">API Grant Access</li>
+        </ol>
+    </nav>
+
+    <div class="card shadow mb-1">
+        <div class="card-header  p-2 mb-2">
+            <h6 class="m-0 font-weight-bold text-primary"><i class="fas fa-list"></i> @ViewBag.Title</h6>
+        </div>
+        <div class="card-body pt-0">
+            @using (Ajax.BeginForm(new AjaxOptions
+            {
+                HttpMethod = "GET",
+                InsertionMode = InsertionMode.Replace,
+                UpdateTargetId = "myGrid"
+            }))
+            {
+                <div class="row  justify-content-end mb-1">
+                    <button class="btn btn-primary btn-icon-split btn-sm" type="submit">
+                        <span class="icon text-white-50">
+                            <i class="fas fa-search"></i>
+                        </span>
+                        <span class="text">BUSCAR</span>
+                    </button>
+                </div>
+                <div class="row mb-2">
+                    <div class="col-lg-3 small text-right">EMPRESA</div>
+                    <div class="col-lg-6">
+                        <select class="selectpicker form-control" data-live-search="true" data-width="100%" id="filtro_rut" name="filtro_rut">
+                            <option value="">(SELECCIONAR)</option>
+                            @foreach (var item in ViewBag.EMPRESAS)
+                            {
+                                <option value="@item.Rut">@item.Rut @item.RazonSocial.ToUpper()</option>
+                            }
+                        </select>
+                    </div>
+                </div>
+                <hr class="p-1 m-0" />
+                <div class="row mb-2">
+                    <div class="col-lg-3 small text-right">ESTADO</div>
+                    <div class="col-lg-2">
+                        <select class="form-control input-sizing-esp" id="filtro_estado" name="filtro_estado">
+                            <option value="-1">-</option>
+                            <option value="0">NO VIGENTE</option>
+                            <option value="1" selected>VIGENTE</option>
+                        </select>
+                    </div>
+                </div>
+                <div class="row mb-2">
+                    <div class="col-lg-3 small text-right">USERNAME</div>
+                    <div class="col-lg-2">
+                        @Html.TextBox("filtro_username", "", new { @class = "form-control input-sizing-esp" })
+                    </div>
+                    <div class="col-lg-3 small  text-right">APELLIDO PATERNO</div>
+                    <div class="col-lg-3">
+                        @Html.TextBox("filtro_apellidopat", "", new { @class = "form-control input-sizing-esp" })
+                    </div>
+                </div>
+                <hr class="p-1 m-0" />
+                <div class="row mb-2">
+                    <div class="col-lg-3 small text-right">POSEE TOKEN?</div>
+                    <div class="col-lg-2">
+                        <select class="form-control input-sizing-esp" id="filtro_ind_token" name="filtro_ind_token">
+                            <option value="0">-</option>
+                            <option value="1" selected>SI</option>
+                        </select>
+                    </div>
+                    <div class="col-lg-3 small  text-right">TOKEN</div>
+                    <div class="col-lg-3">
+                        @Html.TextBox("filtro_token", "", new { @class = "form-control input-sizing-esp" })
+                    </div>
+                </div>
+            }
+            <div id="myGrid">
+                @Html.Partial("_I_P")
+            </div>
+        </div>
+    </div>
+</div>
+<script src="~/Scripts/vendor/bootstrap-select/js/bootstrap-select.min.js"></script>
+<script src="~/Scripts/vendor/bootstrap-select/js/i18n/defaults-es_CL.js"></script>
+<script src="~/Scripts/vendor/bootbox/bootbox.all.min.js"></script>
+<script>
+    $(function () {
+        $('.selectpicker').selectpicker();
+    });
+</script>

@@ -1,0 +1,218 @@
+﻿@model API_LIB.Model.API.API_CLS.API_PROY_CAB
+@{
+    ViewBag.Title = "Edición de APIS";
+}
+<link href="~/Scripts/vendor/trumbowyg/dist/ui/trumbowyg.min.css" rel="stylesheet" />
+<script src="~/Scripts/vendor/trumbowyg/dist/trumbowyg.min.js"></script>
+<script src="~/Scripts/vendor/trumbowyg/dist/langs/es.min.js"></script>
+
+<link href="~/Scripts/vendor/trumbowyg/dist/plugins/colors/ui/trumbowyg.colors.min.css" rel="stylesheet" />
+<link href="~/Scripts/vendor/trumbowyg/dist/plugins/emoji/ui/trumbowyg.emoji.min.css" rel="stylesheet" />
+<link href="~/Scripts/vendor/trumbowyg/dist/plugins/table/ui/trumbowyg.table.min.css" rel="stylesheet" />
+
+<div class="container-fluid ">
+
+    <nav aria-label="breadcrumb w-30">
+        <ol class="breadcrumb  p-2 mb-2 bg-gray-200">
+            <li class="breadcrumb-item"><a href="@Url.Action("I","H")"><i class="fas fa-home"></i></a></li>
+            <li class="breadcrumb-item">PARÁMETROS</li>
+            <li class="breadcrumb-item" active aria-current="page">API Management</li>
+        </ol>
+    </nav>
+
+    <div class="card shadow mb-2">
+        <div class="card-header  p-2 mb-2">
+            <h6 class="m-0 font-weight-bold text-primary"><i class="fas fa-edit"></i> @ViewBag.Title</h6>
+        </div>
+        <div class="card-body pt-0">
+            @using (Html.BeginForm())
+            {
+                @Html.ValidationSummary(true)
+                <div class="row  justify-content-end mb-2">
+                    <button class="btn btn-light btn-icon-split btn-sm" type="button" onclick="go('@Url.Action("I")')">
+                        <span class="icon text-white-50">
+                            <i class="fas fa-backward"></i>
+                        </span>
+                        <span class="text">VOLVER</span>
+                    </button>
+                    <div class="p-1"></div>
+                    <button class="btn btn-warning btn-icon-split btn-sm" type="button" onclick="go('@Url.Action("N")')">
+                        <span class="icon text-white-50">
+                            <i class="fas fa-plus-circle"></i>
+                        </span>
+                        <span class="text">NUEVO</span>
+                    </button>
+                    <div class="p-1"></div>
+                    <button class="btn btn-success btn-icon-split btn-sm" type="submit">
+                        <span class="icon text-white-50">
+                            <i class="fas fa-refresh"></i>
+                        </span>
+                        <span class="text">ACTUALIZAR</span>
+                    </button>
+                </div>
+
+                if (ViewBag.ERR != "0")
+                {
+                    <div class="alert alert-warning alert-dismissable m-t-sm m-b-xxs ">
+                        <button aria-hidden="true" data-dismiss="alert" class="close" type="button">×</button>
+                        @Html.Raw(ViewBag.ERR)
+                    </div>
+                }
+                if (ViewBag.UPD != "0")
+                {
+                    <div class="alert alert-success alert-dismissable   justify-content-center ">
+                        <button aria-hidden="true" data-dismiss="alert" class="close" type="button">×</button>
+                        @Html.Raw(ViewBag.UPD)
+                    </div>
+                }
+
+                <div class="row mb-2">
+                    <div class="col-md-2 text-right ">API ID</div>
+                    <div class="col-md-4">
+                        <span class="text-primary h6">@Model.ProyID </span>
+                    </div>
+                    <div class="col-md-2 text-right ">FECHA CREACIÓN</div>
+                    <div class="col-md-4">
+                        <span class="text-primary h6">@string.Format("{0:dd/MM/yyyy HH:mm}", Model.FechaDIG) </span>
+                    </div>
+                </div>
+                <hr />
+                <div class="row mb-2">
+                    <div class="col-md-2 text-right ">NOMBRE</div>
+                    <div class="col-md-4">
+                        @Html.TextAreaFor(model => model.Nombre, new { @class = "form-control input-sizing-esp", @placeholder = "NOMBRE TÉCNICO", @maxlength = "255" })
+                        @Html.ValidationMessageFor(model => model.Nombre)
+                    </div>
+                </div>
+                <div class="row mb-2">
+                    <div class="col-md-2 text-right ">ESTADO</div>
+                    <div class="col-md-2">
+                        <select class="form-control input-sizing-esp" id="Estado" name="Estado">
+                            <option value="0" class="text-danger">NO VIGENTE</option>
+                            <option value="1" class="text-success" selected>VIGENTE</option>
+                        </select>
+                    </div>
+                </div>
+                <hr />
+                <div class="row mb-2">
+                    <div class="col-md-2 text-right ">URL O RUTA INICIAL</div>
+                    <div class="col-md-6">
+                        @Html.TextAreaFor(model => model.URL, new { @class = "form-control input-sizing-esp", @placeholder = "URL ENDPOINT", @maxlength = "1000" })
+                        @Html.ValidationMessageFor(model => model.URL)
+                    </div>
+                </div>
+                <hr />
+                <div class="justify-content-center">
+                    <div class="row text-center">
+                        <div class="col-md-12">
+                            <small class="text-primary h5">
+                                <i class="fa fa-info-circle"></i> DOCUMENTACIÓN
+                            </small>
+                        </div>
+                    </div>
+                </div>
+                <div class="row mb-2">
+                    <div class="col-md-12">
+                        @Html.TextAreaFor(model => model.Descrip, new { @class = "form-control input-sizing-esp", @placeholder = "", @maxlength = "80000" })
+                        @Html.ValidationMessageFor(model => model.Descrip)
+                    </div>
+                </div>
+
+
+                @Html.HiddenFor(model => model.ProyID)
+                @Html.HiddenFor(model => model.FechaDIG)
+                @Html.HiddenFor(model => model.UsuarioDIG)
+            }
+        </div>
+    </div>
+
+    <div class="card shadow mb-1">
+        <div class="card-header  p-2 mb-2">
+            <h6 class="m-0 font-weight-bold text-primary"><i class="fas fa-th-list"></i> Recursos</h6>
+        </div>
+        <div class="card-body pt-0">
+
+            @using (Ajax.BeginForm("R_I", "ADMIN_API", new AjaxOptions
+            {
+                HttpMethod = "GET",
+                InsertionMode = InsertionMode.Replace,
+                UpdateTargetId = "R_div"
+            }))
+            {
+                <div class="row  justify-content-end mb-2">
+                    <button class="btn btn-warning btn-icon-split btn-sm" type="button" onclick="go('@Url.Action("R_N")')">
+                        <span class="icon text-white-50">
+                            <i class="fas fa-plus-square"></i>
+                        </span>
+                        <span class="text">NUEVO</span>
+                    </button>
+                    <div class="p-1"></div>
+                    <button class="btn btn-primary btn-icon-split btn-sm" type="submit" id="R_btnSearch">
+                        <span class="icon text-white-50">
+                            <i class="fas fa-search"></i>
+                        </span>
+                        <span class="text">BUSCAR</span>
+                    </button>
+                </div>
+                <div class="row mb-2">
+                    <div class="col-lg-3 small  text-right">NOMBRE</div>
+                    <div class="col-lg-3">
+                        @Html.TextBox("fitro_R_nombre", "", new { @class = "form-control input-sizing-esp" })
+                    </div>
+                    <div class="col-lg-3 small  text-right">ESTADO</div>
+                    <div class="col-lg-2">
+                        <select class="form-control input-sizing-esp" id="fitro_R_estado" name="fitro_R_estado">
+                            <option value="-1">-</option>
+                            <option value="0">NO VIGENTE</option>
+                            <option value="1" selected>VIGENTE</option>
+                        </select>
+                    </div>
+                </div>
+            }
+            <div id="R_div"></div>
+        </div>
+    </div>
+
+</div>
+
+
+
+<script src="~/Scripts/vendor/trumbowyg/plugins/allowtagsfrompaste/trumbowyg.allowtagsfrompaste.js"></script>
+<script src="~/Scripts/vendor/trumbowyg/plugins/colors/trumbowyg.colors.js"></script>
+<script src="~/Scripts/vendor/trumbowyg/dist/plugins/emoji/trumbowyg.emoji.min.js"></script>
+<script src="~/Scripts/vendor/trumbowyg/dist/plugins/fontfamily/trumbowyg.fontfamily.min.js"></script>
+<script src="~/Scripts/vendor/trumbowyg/dist/plugins/history/trumbowyg.history.min.js"></script>
+<script src="~/Scripts/vendor/trumbowyg/dist/plugins/table/trumbowyg.table.min.js"></script>
+<script src="~/Scripts/vendor/trumbowyg/dist/plugins/fontsize/trumbowyg.fontsize.min.js"></script>
+
+<script>
+    $( document ).ready(function() {
+        $("#Estado").val(@Model.Estado);
+        AJX_REFRESH();
+
+        $('#Descrip')
+        .trumbowyg({
+            btns: [
+                ['viewHTML', 'historyUndo', 'historyRedo', 'fontfamily', 'foreColor', 'backColor','fontsize', 'emoji'],
+                ['formatting'],
+                ['table'],
+                ['strong', 'em', 'del'],
+                ['justifyLeft', 'justifyCenter', 'justifyRight', 'justifyFull'],
+                ['unorderedList', 'orderedList'],
+                ['horizontalRule'],
+                ['removeformat'],
+            ],
+            plugins: {
+                allowTagsFromPaste: {
+                    allowedTags: ['h1','h2','h3','h4','h5','h6', 'p', 'br']
+                }
+            }
+        });
+
+    });
+
+    function AJX_REFRESH() {
+        setTimeout(function () { $("#R_btnSearch").click() },1000)
+    }
+
+</script>

@@ -1,0 +1,273 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+  <!-- EF Runtime content -->
+  <edmx:Runtime>
+    <!-- SSDL content -->
+    <edmx:StorageModels>
+      <Schema Namespace="GP.CLS.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+        <EntityType Name="Empresa">
+          <Key>
+            <PropertyRef Name="EmpId" />
+          </Key>
+          <Property Name="EmpId" Type="int" Nullable="false" />
+          <Property Name="Rut" Type="char" MaxLength="12" Nullable="false" />
+          <Property Name="EmpOwner" Type="int" Nullable="false" />
+          <Property Name="RazonSocial" Type="char" MaxLength="100" Nullable="false" />
+          <Property Name="Giro" Type="int" Nullable="false" />
+          <Property Name="NombreFantasia" Type="char" MaxLength="60" Nullable="false" />
+          <Property Name="Direccion" Type="char" MaxLength="80" Nullable="false" />
+          <Property Name="Region" Type="int" Nullable="false" />
+          <Property Name="Ciudad" Type="int" Nullable="false" />
+          <Property Name="Comuna" Type="int" Nullable="false" />
+          <Property Name="Telefono1" Type="char" MaxLength="30" Nullable="false" />
+          <Property Name="Telefono2" Type="char" MaxLength="30" Nullable="false" />
+          <Property Name="Fax" Type="char" MaxLength="30" Nullable="false" />
+          <Property Name="Mail1" Type="char" MaxLength="60" Nullable="false" />
+          <Property Name="Mail2" Type="char" MaxLength="60" Nullable="false" />
+          <Property Name="Web" Type="char" MaxLength="60" Nullable="false" />
+          <Property Name="Tipo" Type="int" Nullable="false" />
+          <Property Name="ConfigId" Type="int" Nullable="false" />
+          <Property Name="FechaCreacion" Type="datetime" Nullable="false" />
+          <Property Name="Usuario" Type="char" MaxLength="15" Nullable="false" />
+          <Property Name="FechaAct" Type="datetime" Nullable="false" />
+          <Property Name="UsuarioAct" Type="char" MaxLength="15" Nullable="false" />
+          <Property Name="Estado" Type="tinyint" Nullable="false" />
+          <Property Name="CodigoExt" Type="char" MaxLength="20" Nullable="false" />
+          <Property Name="ValidaRut" Type="smallint" Nullable="false" />
+        </EntityType>
+        <EntityType Name="Usuario">
+          <Key>
+            <PropertyRef Name="UserName" />
+          </Key>
+          <Property Name="UserName" Type="char" MaxLength="15" Nullable="false" />
+          <Property Name="Password" Type="varchar" MaxLength="256" />
+          <Property Name="Rut" Type="char" MaxLength="12" Nullable="false" />
+          <Property Name="RutEmpresa" Type="char" MaxLength="12" Nullable="false" />
+          <Property Name="Nombres" Type="char" MaxLength="40" Nullable="false" />
+          <Property Name="ApellidoPat" Type="char" MaxLength="30" Nullable="false" />
+          <Property Name="ApellidoMat" Type="char" MaxLength="30" Nullable="false" />
+          <Property Name="Direccion" Type="char" MaxLength="80" Nullable="false" />
+          <Property Name="Region" Type="int" Nullable="false" />
+          <Property Name="Ciudad" Type="int" Nullable="false" />
+          <Property Name="Comuna" Type="int" Nullable="false" />
+          <Property Name="TelefonoCasa" Type="char" MaxLength="30" Nullable="false" />
+          <Property Name="TelefonoOficina" Type="char" MaxLength="30" Nullable="false" />
+          <Property Name="Movil" Type="char" MaxLength="30" Nullable="false" />
+          <Property Name="Fax" Type="char" MaxLength="30" Nullable="false" />
+          <Property Name="Mail1" Type="char" MaxLength="60" Nullable="false" />
+          <Property Name="Mail2" Type="char" MaxLength="60" Nullable="false" />
+          <Property Name="Estado" Type="int" Nullable="false" />
+          <Property Name="Nivel" Type="int" Nullable="false" />
+          <Property Name="UsuarioFin700" Type="tinyint" Nullable="false" />
+          <Property Name="FecUltConx" Type="datetime" Nullable="false" />
+          <Property Name="IPUltConx" Type="char" MaxLength="20" Nullable="false" />
+          <Property Name="Intentos" Type="smallint" Nullable="false" />
+          <Property Name="FecUltInt" Type="datetime" Nullable="false" />
+          <Property Name="PWD" Type="varbinary" MaxLength="256" Nullable="false" />
+          <Property Name="FechaCreacion" Type="datetime" Nullable="false" />
+          <Property Name="Usuario" Type="char" MaxLength="15" Nullable="false" />
+          <Property Name="FechaAct" Type="datetime" Nullable="false" />
+          <Property Name="UsuarioAct" Type="char" MaxLength="15" Nullable="false" />
+          <Property Name="PWD2" Type="varbinary" MaxLength="8000" Nullable="false" />
+        </EntityType>
+        <EntityType Name="UsuarioEmpresa">
+          <Key>
+            <PropertyRef Name="EmpId" />
+            <PropertyRef Name="UserName" />
+          </Key>
+          <Property Name="EmpId" Type="int" Nullable="false" />
+          <Property Name="UserName" Type="char" MaxLength="15" Nullable="false" />
+        </EntityType>
+        <EntityContainer Name="GPCLSStoreContainer">
+          <EntitySet Name="Empresa" EntityType="Self.Empresa" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Usuario" EntityType="Self.Usuario" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="UsuarioEmpresa" EntityType="Self.UsuarioEmpresa" Schema="dbo" store:Type="Tables" />
+        </EntityContainer>
+      </Schema>
+    </edmx:StorageModels>
+    <!-- CSDL content -->
+    <edmx:ConceptualModels>
+      <Schema Namespace="GP.CLS" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+        <EntityType Name="Empresa">
+          <Key>
+            <PropertyRef Name="EmpId" />
+          </Key>
+          <Property Name="EmpId" Type="Int32" Nullable="false" />
+          <Property Name="Rut" Type="String" MaxLength="12" FixedLength="true" Unicode="false" Nullable="false" />
+          <Property Name="EmpOwner" Type="Int32" Nullable="false" />
+          <Property Name="RazonSocial" Type="String" MaxLength="100" FixedLength="true" Unicode="false" Nullable="false" />
+          <Property Name="Giro" Type="Int32" Nullable="false" />
+          <Property Name="NombreFantasia" Type="String" MaxLength="60" FixedLength="true" Unicode="false" Nullable="false" />
+          <Property Name="Direccion" Type="String" MaxLength="80" FixedLength="true" Unicode="false" Nullable="false" />
+          <Property Name="Region" Type="Int32" Nullable="false" />
+          <Property Name="Ciudad" Type="Int32" Nullable="false" />
+          <Property Name="Comuna" Type="Int32" Nullable="false" />
+          <Property Name="Telefono1" Type="String" MaxLength="30" FixedLength="true" Unicode="false" Nullable="false" />
+          <Property Name="Telefono2" Type="String" MaxLength="30" FixedLength="true" Unicode="false" Nullable="false" />
+          <Property Name="Fax" Type="String" MaxLength="30" FixedLength="true" Unicode="false" Nullable="false" />
+          <Property Name="Mail1" Type="String" MaxLength="60" FixedLength="true" Unicode="false" Nullable="false" />
+          <Property Name="Mail2" Type="String" MaxLength="60" FixedLength="true" Unicode="false" Nullable="false" />
+          <Property Name="Web" Type="String" MaxLength="60" FixedLength="true" Unicode="false" Nullable="false" />
+          <Property Name="Tipo" Type="Int32" Nullable="false" />
+          <Property Name="ConfigId" Type="Int32" Nullable="false" />
+          <Property Name="FechaCreacion" Type="DateTime" Nullable="false" Precision="3" />
+          <Property Name="Usuario" Type="String" MaxLength="15" FixedLength="true" Unicode="false" Nullable="false" />
+          <Property Name="FechaAct" Type="DateTime" Nullable="false" Precision="3" />
+          <Property Name="UsuarioAct" Type="String" MaxLength="15" FixedLength="true" Unicode="false" Nullable="false" />
+          <Property Name="Estado" Type="Byte" Nullable="false" />
+          <Property Name="CodigoExt" Type="String" MaxLength="20" FixedLength="true" Unicode="false" Nullable="false" />
+          <Property Name="ValidaRut" Type="Int16" Nullable="false" />
+        </EntityType>
+        <EntityType Name="Usuario">
+          <Key>
+            <PropertyRef Name="UserName" />
+          </Key>
+          <Property Name="UserName" Type="String" MaxLength="15" FixedLength="true" Unicode="false" Nullable="false" />
+          <Property Name="Password" Type="String" MaxLength="256" FixedLength="false" Unicode="false" />
+          <Property Name="Rut" Type="String" MaxLength="12" FixedLength="true" Unicode="false" Nullable="false" />
+          <Property Name="RutEmpresa" Type="String" MaxLength="12" FixedLength="true" Unicode="false" Nullable="false" />
+          <Property Name="Nombres" Type="String" MaxLength="40" FixedLength="true" Unicode="false" Nullable="false" />
+          <Property Name="ApellidoPat" Type="String" MaxLength="30" FixedLength="true" Unicode="false" Nullable="false" />
+          <Property Name="ApellidoMat" Type="String" MaxLength="30" FixedLength="true" Unicode="false" Nullable="false" />
+          <Property Name="Direccion" Type="String" MaxLength="80" FixedLength="true" Unicode="false" Nullable="false" />
+          <Property Name="Region" Type="Int32" Nullable="false" />
+          <Property Name="Ciudad" Type="Int32" Nullable="false" />
+          <Property Name="Comuna" Type="Int32" Nullable="false" />
+          <Property Name="TelefonoCasa" Type="String" MaxLength="30" FixedLength="true" Unicode="false" Nullable="false" />
+          <Property Name="TelefonoOficina" Type="String" MaxLength="30" FixedLength="true" Unicode="false" Nullable="false" />
+          <Property Name="Movil" Type="String" MaxLength="30" FixedLength="true" Unicode="false" Nullable="false" />
+          <Property Name="Fax" Type="String" MaxLength="30" FixedLength="true" Unicode="false" Nullable="false" />
+          <Property Name="Mail1" Type="String" MaxLength="60" FixedLength="true" Unicode="false" Nullable="false" />
+          <Property Name="Mail2" Type="String" MaxLength="60" FixedLength="true" Unicode="false" Nullable="false" />
+          <Property Name="Estado" Type="Int32" Nullable="false" />
+          <Property Name="Nivel" Type="Int32" Nullable="false" />
+          <Property Name="UsuarioFin700" Type="Byte" Nullable="false" />
+          <Property Name="FecUltConx" Type="DateTime" Nullable="false" Precision="3" />
+          <Property Name="IPUltConx" Type="String" MaxLength="20" FixedLength="true" Unicode="false" Nullable="false" />
+          <Property Name="Intentos" Type="Int16" Nullable="false" />
+          <Property Name="FecUltInt" Type="DateTime" Nullable="false" Precision="3" />
+          <Property Name="PWD" Type="Binary" MaxLength="256" FixedLength="false" Nullable="false" />
+          <Property Name="FechaCreacion" Type="DateTime" Nullable="false" Precision="3" />
+          <Property Name="Usuario1" Type="String" MaxLength="15" FixedLength="true" Unicode="false" Nullable="false" />
+          <Property Name="FechaAct" Type="DateTime" Nullable="false" Precision="3" />
+          <Property Name="UsuarioAct" Type="String" MaxLength="15" FixedLength="true" Unicode="false" Nullable="false" />
+          <Property Name="PWD2" Type="Binary" MaxLength="8000" FixedLength="false" Nullable="false" />
+        </EntityType>
+        <EntityType Name="UsuarioEmpresa">
+          <Key>
+            <PropertyRef Name="EmpId" />
+            <PropertyRef Name="UserName" />
+          </Key>
+          <Property Name="EmpId" Type="Int32" Nullable="false" />
+          <Property Name="UserName" Type="String" MaxLength="15" FixedLength="true" Unicode="false" Nullable="false" />
+        </EntityType>
+        <EntityContainer Name="GP_CLS" annotation:LazyLoadingEnabled="true">
+          <EntitySet Name="Empresa" EntityType="Self.Empresa" />
+          <EntitySet Name="Usuario" EntityType="Self.Usuario" />
+          <EntitySet Name="UsuarioEmpresa" EntityType="Self.UsuarioEmpresa" />
+        </EntityContainer>
+      </Schema>
+    </edmx:ConceptualModels>
+    <!-- C-S mapping content -->
+    <edmx:Mappings>
+      <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
+        <EntityContainerMapping StorageEntityContainer="GPCLSStoreContainer" CdmEntityContainer="GP_CLS">
+          <EntitySetMapping Name="Empresa">
+            <EntityTypeMapping TypeName="GP.CLS.Empresa">
+              <MappingFragment StoreEntitySet="Empresa">
+                <ScalarProperty Name="EmpId" ColumnName="EmpId" />
+                <ScalarProperty Name="Rut" ColumnName="Rut" />
+                <ScalarProperty Name="EmpOwner" ColumnName="EmpOwner" />
+                <ScalarProperty Name="RazonSocial" ColumnName="RazonSocial" />
+                <ScalarProperty Name="Giro" ColumnName="Giro" />
+                <ScalarProperty Name="NombreFantasia" ColumnName="NombreFantasia" />
+                <ScalarProperty Name="Direccion" ColumnName="Direccion" />
+                <ScalarProperty Name="Region" ColumnName="Region" />
+                <ScalarProperty Name="Ciudad" ColumnName="Ciudad" />
+                <ScalarProperty Name="Comuna" ColumnName="Comuna" />
+                <ScalarProperty Name="Telefono1" ColumnName="Telefono1" />
+                <ScalarProperty Name="Telefono2" ColumnName="Telefono2" />
+                <ScalarProperty Name="Fax" ColumnName="Fax" />
+                <ScalarProperty Name="Mail1" ColumnName="Mail1" />
+                <ScalarProperty Name="Mail2" ColumnName="Mail2" />
+                <ScalarProperty Name="Web" ColumnName="Web" />
+                <ScalarProperty Name="Tipo" ColumnName="Tipo" />
+                <ScalarProperty Name="ConfigId" ColumnName="ConfigId" />
+                <ScalarProperty Name="FechaCreacion" ColumnName="FechaCreacion" />
+                <ScalarProperty Name="Usuario" ColumnName="Usuario" />
+                <ScalarProperty Name="FechaAct" ColumnName="FechaAct" />
+                <ScalarProperty Name="UsuarioAct" ColumnName="UsuarioAct" />
+                <ScalarProperty Name="Estado" ColumnName="Estado" />
+                <ScalarProperty Name="CodigoExt" ColumnName="CodigoExt" />
+                <ScalarProperty Name="ValidaRut" ColumnName="ValidaRut" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Usuario">
+            <EntityTypeMapping TypeName="GP.CLS.Usuario">
+              <MappingFragment StoreEntitySet="Usuario">
+                <ScalarProperty Name="UserName" ColumnName="UserName" />
+                <ScalarProperty Name="Password" ColumnName="Password" />
+                <ScalarProperty Name="Rut" ColumnName="Rut" />
+                <ScalarProperty Name="RutEmpresa" ColumnName="RutEmpresa" />
+                <ScalarProperty Name="Nombres" ColumnName="Nombres" />
+                <ScalarProperty Name="ApellidoPat" ColumnName="ApellidoPat" />
+                <ScalarProperty Name="ApellidoMat" ColumnName="ApellidoMat" />
+                <ScalarProperty Name="Direccion" ColumnName="Direccion" />
+                <ScalarProperty Name="Region" ColumnName="Region" />
+                <ScalarProperty Name="Ciudad" ColumnName="Ciudad" />
+                <ScalarProperty Name="Comuna" ColumnName="Comuna" />
+                <ScalarProperty Name="TelefonoCasa" ColumnName="TelefonoCasa" />
+                <ScalarProperty Name="TelefonoOficina" ColumnName="TelefonoOficina" />
+                <ScalarProperty Name="Movil" ColumnName="Movil" />
+                <ScalarProperty Name="Fax" ColumnName="Fax" />
+                <ScalarProperty Name="Mail1" ColumnName="Mail1" />
+                <ScalarProperty Name="Mail2" ColumnName="Mail2" />
+                <ScalarProperty Name="Estado" ColumnName="Estado" />
+                <ScalarProperty Name="Nivel" ColumnName="Nivel" />
+                <ScalarProperty Name="UsuarioFin700" ColumnName="UsuarioFin700" />
+                <ScalarProperty Name="FecUltConx" ColumnName="FecUltConx" />
+                <ScalarProperty Name="IPUltConx" ColumnName="IPUltConx" />
+                <ScalarProperty Name="Intentos" ColumnName="Intentos" />
+                <ScalarProperty Name="FecUltInt" ColumnName="FecUltInt" />
+                <ScalarProperty Name="PWD" ColumnName="PWD" />
+                <ScalarProperty Name="FechaCreacion" ColumnName="FechaCreacion" />
+                <ScalarProperty Name="Usuario1" ColumnName="Usuario" />
+                <ScalarProperty Name="FechaAct" ColumnName="FechaAct" />
+                <ScalarProperty Name="UsuarioAct" ColumnName="UsuarioAct" />
+                <ScalarProperty Name="PWD2" ColumnName="PWD2" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="UsuarioEmpresa">
+            <EntityTypeMapping TypeName="GP.CLS.UsuarioEmpresa">
+              <MappingFragment StoreEntitySet="UsuarioEmpresa">
+                <ScalarProperty Name="EmpId" ColumnName="EmpId" />
+                <ScalarProperty Name="UserName" ColumnName="UserName" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+        </EntityContainerMapping>
+      </Mapping>
+    </edmx:Mappings>
+  </edmx:Runtime>
+  <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <Connection>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="MetadataArtifactProcessing" Value="EmbedInOutputAssembly" />
+      </DesignerInfoPropertySet>
+    </Connection>
+    <Options>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="ValidateOnBuild" Value="true" />
+        <DesignerProperty Name="EnablePluralization" Value="false" />
+        <DesignerProperty Name="IncludeForeignKeysInModel" Value="true" />
+        <DesignerProperty Name="UseLegacyProvider" Value="false" />
+        <DesignerProperty Name="CodeGenerationStrategy" Value="Ninguno" />
+      </DesignerInfoPropertySet>
+    </Options>
+    <!-- Diagram content (shape and connector positions) -->
+    <Diagrams></Diagrams>
+  </Designer>
+</edmx:Edmx>

@@ -1,0 +1,29 @@
+[SOLDESP/CREARJSON2]. Fecha/Hora 08/08/2023 11:21. Estructura JSON
+[SOLDESP/CREARJSON2]. Fecha/Hora 08/08/2023 11:22. Estructura JSON: {"Proceso":"INT-SOL-DESPACHOS","Empid":1,"TipoSolicitud":3,"CodigoBodega":23,"TipoReferencia":"ZUB","NumeroReferencia":"4600472211","FechaReferencia":"28-07-2023","FechaProceso":"08-08-2023","TipoDocumento":0,"NumeroDocto":null,"FechaDocto":null,"Glosa":null,"Cliente":null,"RazonSocial":null,"Telefono":null,"Email":null,"Direccion":"Av. Nuble Rupanco 640","Contacto":"GASTÓN CASTRO","RutaDespacho":0,"Region":null,"Comuna":null,"Ciudad":null,"Vendedor":null,"Comprador":null,"Dato1":null,"Dato2":null,"Dato3":null,"Valor1":0.0,"Valor2":0.0,"Valor3":0.0,"Fecha1":null,"Fecha2":null,"Fecha3":null,"Sucursal":0,"Items":[{"CodigoArticulo":"1600034","UnidadVenta":"BID","NumeroSerie":null,"FechaVectoLote":null,"Cantidad":6.000,"Estado":1,"CostoUnitario":0.0,"KilosTotales":0.0,"PorcQa":0.0,"Maquila":0,"Pallet":null,"ItemReferencia":10,"Dato1":null,"Dato2":null,"Dato3":null,"Valor1":0.0,"Valor2":0.0,"Valor3":0.0,"Fecha1":"04-08-2023","Fecha2":null,"Fecha3":null,"Sucursal":21}]}
+[SOLDESP/CREARJSON2]. Fecha/Hora 08/08/2023 11:23. Se produjo un error al ejecutar un proceso a nivel de base de datos
+[SOLDESP/CREARJSON2]. Fecha/Hora 08/08/2023 11:27. Estructura JSON recibida
+[SOLDESP/CREARJSON2]. Fecha/Hora 08/08/2023 11:27. Estructura JSON: {"Proceso":"INT-SOL-DESPACHOS","Empid":1,"TipoSolicitud":3,"CodigoBodega":23,"TipoReferencia":"ZUB","NumeroReferencia":"4600472211","FechaReferencia":"28-07-2023","FechaProceso":"08-08-2023","TipoDocumento":0,"NumeroDocto":null,"FechaDocto":null,"Glosa":null,"Cliente":null,"RazonSocial":null,"Telefono":null,"Email":null,"Direccion":"Av. Nuble Rupanco 640","Contacto":"GASTÓN CASTRO","RutaDespacho":0,"Region":null,"Comuna":null,"Ciudad":null,"Vendedor":null,"Comprador":null,"Dato1":null,"Dato2":null,"Dato3":null,"Valor1":0.0,"Valor2":0.0,"Valor3":0.0,"Fecha1":null,"Fecha2":null,"Fecha3":null,"Sucursal":0,"Items":[{"CodigoArticulo":"1600034","UnidadVenta":"BID","NumeroSerie":null,"FechaVectoLote":null,"Cantidad":6.000,"Estado":1,"CostoUnitario":0.0,"KilosTotales":0.0,"PorcQa":0.0,"Maquila":0,"Pallet":null,"ItemReferencia":10,"Dato1":null,"Dato2":null,"Dato3":null,"Valor1":0.0,"Valor2":0.0,"Valor3":0.0,"Fecha1":"04-08-2023","Fecha2":null,"Fecha3":null,"Sucursal":21}]}
+[SOLDESP/CREARJSON2]. Fecha/Hora 08/08/2023 11:27. Se produjo un error al ejecutar un proceso a nivel de base de datos
+[SOLDESP/CREARJSON2]. Fecha/Hora 08/08/2023 11:28. Estructura JSON recibida
+[SOLDESP/CREARJSON2]. Fecha/Hora 08/08/2023 11:28. Estructura JSON recibida
+[SOLDESP/CREARJSON2]. Fecha/Hora 08/08/2023 11:29. Estructura JSON recibida
+[SOLDESP/CREARJSON2]. Fecha/Hora 08/08/2023 11:30. Estructura JSON recibida
+[SOLDESP/CREARJSON2]. Fecha/Hora 08/08/2023 11:30. Estructura JSON recibida
+[SOLDESP/CREARJSON2]. Fecha/Hora 08/08/2023 11:30. Estructura JSON: {"Proceso":null,"Empid":0,"TipoSolicitud":0,"CodigoBodega":0,"TipoReferencia":null,"NumeroReferencia":null,"FechaReferencia":null,"FechaProceso":null,"TipoDocumento":0,"NumeroDocto":null,"FechaDocto":null,"Glosa":null,"Cliente":null,"RazonSocial":null,"Telefono":null,"Email":null,"Direccion":null,"Contacto":null,"RutaDespacho":0,"Region":null,"Comuna":null,"Ciudad":null,"Vendedor":null,"Comprador":null,"Dato1":null,"Dato2":null,"Dato3":null,"Valor1":0.0,"Valor2":0.0,"Valor3":0.0,"Fecha1":null,"Fecha2":null,"Fecha3":null,"Sucursal":0,"Items":null}
+[SOLDESP/CREARJSON2]. Fecha/Hora 08/08/2023 11:32. Estructura JSON: {"Proceso":null,"Empid":0,"TipoSolicitud":0,"CodigoBodega":0,"TipoReferencia":null,"NumeroReferencia":null,"FechaReferencia":null,"FechaProceso":null,"TipoDocumento":0,"NumeroDocto":null,"FechaDocto":null,"Glosa":null,"Cliente":null,"RazonSocial":null,"Telefono":null,"Email":null,"Direccion":null,"Contacto":null,"RutaDespacho":0,"Region":null,"Comuna":null,"Ciudad":null,"Vendedor":null,"Comprador":null,"Dato1":null,"Dato2":null,"Dato3":null,"Valor1":0.0,"Valor2":0.0,"Valor3":0.0,"Fecha1":null,"Fecha2":null,"Fecha3":null,"Sucursal":0,"Items":null}
+[SOLDESP/CREARJSON2]. Fecha/Hora 08/08/2023 11:33. La estructura JSON viene vacia
+[SOLDESP/CREARJSON2]. Fecha/Hora 08/08/2023 22:31. Estructura JSON recibida
+[SOLDESP/CREARJSON2]. Fecha/Hora 08/08/2023 22:32. Estructura JSON recibida
+[SOLDESP/CREARJSON2]. Fecha/Hora 08/08/2023 22:32. Estructura JSON recibida
+[SOLDESP/CREARJSON2]. Fecha/Hora 08/08/2023 22:32. ERROR: Problemas en el formato del JSON enviado. Could not convert string to integer: A. Path 'CodigoBodega', line 5, position 23..
+[SOLDESP/CREARJSON2]. Fecha/Hora 08/08/2023 22:34. La estructura JSON viene vacia
+[SOLRECEP/CREARJSON2]. Fecha/Hora 08/08/2023 22:37. Estructura JSON recibida
+[SOLRECEP/CREARJSON2]. Fecha/Hora 08/08/2023 22:38. Estructura JSON recibida
+[SOLRECEP/CREARJSON2]. Fecha/Hora 08/08/2023 22:38. ERROR: Problemas en el formato del JSON enviado. Could not convert string to integer: A. Path 'TipoSolicitud', line 4, position 24..
+[SOLRECEP/CREARJSON2]. Fecha/Hora 08/08/2023 22:38. La estructura JSON viene vacia
+[SOLRECEP/CREARJSON2]. Fecha/Hora 08/08/2023 22:39. Estructura JSON recibida
+[SOLRECEP/CREARJSON2]. Fecha/Hora 08/08/2023 22:39. Estructura JSON recibida
+[SOLRECEP/CREARJSON2]. Fecha/Hora 08/08/2023 22:39. Estructura JSON recibida
+[SOLRECEP/CREARJSON2]. Fecha/Hora 08/08/2023 22:40. Estructura JSON recibida
+[SOLRECEP/CREARJSON2]. Fecha/Hora 08/08/2023 22:44. Estructura JSON recibida
+[SOLRECEP/CREARJSON2]. Fecha/Hora 08/08/2023 22:44. Error no especificado, comuniquese con soporte

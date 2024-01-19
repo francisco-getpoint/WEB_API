@@ -1,0 +1,326 @@
+﻿@model API_LIB.Model.API.API_CLS.API_USUARIOS
+@{
+    ViewBag.Title = "Edición de APIS por Usuario";
+}
+<script src="~/Scripts/vendor/moment/moment.js"></script>
+@*<script src="~/Scripts/vendor/moment/moment.min.js"></script>*@
+<script src="~/Scripts/vendor/moment/moment-with-locales.js"></script>
+<script src="~/Scripts/vendor/datetimepicker/tempusdominus-bootstrap-4.min.js"></script>
+<link href="~/Scripts/vendor/datetimepicker/tempusdominus-bootstrap-4.min.css" rel="stylesheet" />
+
+<div class="container-fluid ">
+
+    <nav aria-label="breadcrumb w-30">
+        <ol class="breadcrumb  p-2 mb-2 bg-gray-200">
+            <li class="breadcrumb-item"><a href="@Url.Action("I","H")"><i class="fas fa-home"></i></a></li>
+            <li class="breadcrumb-item">PARÁMETROS</li>
+            <li class="breadcrumb-item" active aria-current="page">API Grant Access</li>
+        </ol>
+    </nav>
+
+    <div class="card shadow mb-2">
+        <div class="card-header  p-2 mb-2">
+            <h6 class="m-0 font-weight-bold text-primary"><i class="fas fa-info-circle"></i> @ViewBag.Title</h6>
+        </div>
+        <div class="card-body pt-0">
+            <div class="row  justify-content-end mb-2">
+                <button class="btn btn-light btn-icon-split btn-sm" type="button" onclick="go('@Url.Action("I")')">
+                    <span class="icon text-white-50">
+                        <i class="fas fa-backward"></i>
+                    </span>
+                    <span class="text">VOLVER</span>
+                </button>
+            </div>
+            <div class="row mb-2">
+                <div class="col-md-2 text-right ">USERNAME</div>
+                <div class="col-md-4">
+                    <span class="text-primary">@ViewBag.Usuario.UserName</span>
+                </div>
+            </div>
+            <div class="row mb-2">
+                <div class="col-md-2 text-right ">NOMBRE COMPLETO</div>
+                <div class="col-md-4">
+                    <span class="text-primary">@ViewBag.Usuario.ApellidoPat @ViewBag.Usuario.ApellidoMat @ViewBag.Usuario.Nombres</span>
+                </div>
+            </div>
+            <div class="row mb-2">
+                <div class="col-md-2 text-right ">EMPRESA</div>
+                <div class="col-md-4">
+                    <span class="text-primary">@ViewBag.Empresa.Rut @ViewBag.Empresa.RazonSocial </span>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="card shadow mb-2">
+        <div class="card-header  p-2 mb-2">
+            <h6 class="m-0 font-weight-bold text-primary"><i class="fas fa-key"></i> Credenciales de acceso</h6>
+        </div>
+        <div class="card-body pt-0">
+            <div class="row  justify-content-end mb-2">
+                <div class="col-md-6 text-center text-primary"><i class="fa fa-lock"></i><small> TOKEN</small> </div>
+                <div class="col-md-6  text-center text-primary"><i class="fa fa-key"></i><small> SECRET</small></div>
+            </div>
+            <div class="row  justify-content-end mb-2">
+                <div class="col-md-6 text-center h6 text-dark">@Model.API_TOKEN</div>
+                <div class="col-md-6  text-center h6 text-dark">@Model.API_SECRET</div>
+            </div>
+            <div class="row  justify-content-center mb-2">
+                @if (Model.API_SECRET.Trim().Length > 0 && Model.API_TOKEN.Trim().Length > 0)
+                {
+                    <button type="button" class="btn btn-info btn-sm" onclick="TOKEN_COPY()" id="LS_BTN_COPY"><i class="fa fa-copy"></i> COPIAR</button>
+                    <div class="p-1"></div>
+                    <button type="button" class="btn btn-success btn-sm" onclick="AJX_E_NEW_SECRET()"><i class="fa fa-edit"></i> GENERAR NUEVO SECRET</button>
+                }
+            </div>
+        </div>
+    </div>
+
+    <div class="card shadow mb-2">
+        <div class="card-header  p-2 mb-2">
+            <h6 class="m-0 font-weight-bold text-primary"><i class="fas fa-eye"></i> Vigencia de acceso</h6>
+        </div>
+        <div class="card-body pt-0">
+            <div class="row mb-2 justify-content-center">
+                <div class="col-md-2 text-right ">COMPORTAMIENTO</div>
+                <div class="col-md-4">
+                    <select class="form-control input-sizing-esp" id="IndValVigFecha" name="IndValVigFecha" onchange="SET_COMPORTAMIENTO()">
+                        <option value="False" class="text-dark">CONCEDER ACCESO CON VIGENCIA</option>
+                        <option value="True" class="text-dark">CONCEDER ACCESO CON VIGENCIA Y RANGO DE FECHA </option>
+                    </select>
+                </div>
+            </div>
+            <hr />
+            <div class="row mb-2">
+                <div class="col-md-2 text-right ">ESTADO</div>
+                <div class="col-md-3">
+                    <select class="form-control input-sizing-esp" id="Estado" name="Estado">
+                        <option value="0" class="text-danger">ACCESO NO VIGENTE</option>
+                        <option value="1" class="text-success">ACCESO VIGENTE</option>
+                    </select>
+                </div>
+                @*<div class="col-md-1 text-center h1 text-primary font-weight-bold " id="IndValVigFechaPLUS"></div>*@
+                <div class="col-md-1"></div>
+                <div class="col-md-2 text-right" id="IndValVigFechaTITLE">RANGO DE FECHAS</div>
+                <div class="col-md-3">
+                    <div class="row">
+                        <div class="form-group">
+                            <div class="input-group date" id="VigenciaDesdeDTP" data-target-input="nearest">
+                                <input type="text" class="form-control datetimepicker-input" data-target="#VigenciaDesdeDTP" id="VigenciaDesde" />
+                                <div class="input-group-append" data-target="#VigenciaDesdeDTP" data-toggle="datetimepicker">
+                                    <div class="input-group-text"><i class="fa fa-calendar"></i></div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="form-group">
+                            <div class="input-group date" id="VigenciaHastaDTP" data-target-input="nearest">
+                                <input type="text" class="form-control datetimepicker-input" data-target="#VigenciaHastaDTP" id="VigenciaHasta" />
+                                <div class="input-group-append" data-target="#VigenciaHastaDTP" data-toggle="datetimepicker">
+                                    <div class="input-group-text"><i class="fa fa-calendar"></i></div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+            <div class="row  justify-content-center mb-2">
+                <button type="button" class="btn btn-success btn-sm" onclick="AJX_E_SET_ACCESO()"><i class="fa fa-edit"></i> ACTUALIZAR ACCESO</button>
+            </div>
+        </div>
+    </div>
+
+
+    <div class="card shadow mb-2">
+        <div class="card-header  p-2 mb-2">
+            <h6 class="m-0 font-weight-bold text-primary"><i class="fas fa-link"></i> Asigación de APIS y Recursos</h6>
+        </div>
+        <div class="card-body pt-0">
+            @using (Ajax.BeginForm("API_I", "ADMIN_API_GRANT", new AjaxOptions
+            {
+                HttpMethod = "GET",
+                InsertionMode = InsertionMode.Replace,
+                UpdateTargetId = "myGrid"
+            }))
+            {
+                <div class="row  justify-content-end mb-2">
+                    <button class="btn btn-primary btn-icon-split btn-sm" type="submit" id="API_btnSearch">
+                        <span class="icon text-white-50">
+                            <i class="fas fa-search"></i>
+                        </span>
+                        <span class="text">BUSCAR</span>
+                    </button>
+                    <div class="p-1"></div>
+                    <button class="btn btn-warning btn-icon-split btn-sm" type="button" onclick="MOD_PROY('@Model.Username.ToUpper()')">
+                        <span class="icon text-white-50">
+                            <i class="fas fa-link"></i>
+                        </span>
+                        <span class="text">ASOCIAR APIS</span>
+                    </button>
+                </div>
+            }
+            <br />
+            <div id="myGrid"></div>
+        </div>
+    </div>
+</div>
+
+
+
+<textarea id="INFO_TOKEN" class="invisible">
+USUARIO : @Model.Username
+NOMBRE  : @ViewBag.Usuario.ApellidoPat @ViewBag.Usuario.ApellidoMat @ViewBag.Usuario.Nombres 
+EMPRESA : @ViewBag.Empresa.Rut @ViewBag.Empresa.RazonSocial
+TOKEN   : @Model.API_TOKEN
+SECRET  : @Model.API_SECRET
+</textarea>
+
+
+
+
+
+<script>
+    $(document).ready(function () {
+        $("#Estado").val(@Model.Estado)
+        $("#IndValVigFecha").val('@Model.IndValVigFecha');
+
+      
+        $("#VigenciaDesdeDTP").children().val('@String.Format("{0:dd/MM/yyyy}",Model.VigenciaD.ToShortDateString().ToString()).Replace("-","/")')
+        $("#VigenciaHastaDTP").children().val('@String.Format("{0:dd/MM/yyyy}",Model.VigenciaH.ToShortDateString().ToString()).Replace("-","/")')
+        SET_COMPORTAMIENTO();
+
+        $('#VigenciaDesdeDTP').datetimepicker({ locale: 'es-CL', format: 'L'});
+        $('#VigenciaHastaDTP').datetimepicker({useCurrent: false, locale: 'es-CL', format: 'L'});
+        $("#VigenciaDesdeDTP").on("change.datetimepicker", function (e) {
+            $('#VigenciaHastaDTP').datetimepicker('minDate', e.date);
+        });
+        $("#VigenciaHastaDTP").on("change.datetimepicker", function (e) {
+            $('#VigenciaDesdeDTP').datetimepicker('maxDate', e.date);
+        });
+
+        AJX_REFRESH();
+    });
+
+    function AJX_REFRESH() {
+        setTimeout(function () { $("#API_btnSearch").click() }, 1000)
+    }
+
+    function TOKEN_COPY() {
+        var text = $("#INFO_TOKEN").text();
+        if (window.clipboardData && window.clipboardData.setData) {
+            return clipboardData.setData("Text", text);
+
+        } else if (document.queryCommandSupported && document.queryCommandSupported("copy")) {
+            var textarea = document.createElement("textarea");
+            textarea.textContent = text;
+            textarea.style.position = "fixed";
+            document.body.appendChild(textarea);
+            textarea.select();
+            try {
+                return document.execCommand("copy");
+            } catch (ex) {
+                alert("Copy to clipboard failed.", ex);
+                return false;
+            } finally {
+                document.body.removeChild(textarea);
+                $("#LS_BTN_COPY").html('<i class="fa fa-check-circle"></i> COPIADO');
+                setTimeout(function () {
+                    $("#LS_BTN_COPY").html('<i class="fa fa-copy"></i> COPIAR');
+                }, 2500);
+            }
+        }
+    }
+    function AJX_E_NEW_SECRET() {
+        swal.fire({
+            title: "CONFIRME",
+            text: "-",
+            html: "DESEA ACTUALIZAR LLAVE SECRET? <p><small class='text-warning'><b>AL CONFIRMAR ESTA ACCIÓN SE DEBE NOTIFICAR AL USUARIO <span class='text-primary'>@Model.Username.Trim().ToUpper()</span></b></small><p>",
+            icon: "warning",
+            showCancelButton: true,
+            confirmButtonColor: "#1cc88a",
+            confirmButtonText: "SI, ACTUALIZAR",
+            cancelButtonText: "CANCELAR",
+            closeOnConfirm: true
+        }).then((resp) => {
+            if (resp.isConfirmed) {
+                $.ajax({
+                    url: "@Url.Content("~/ADMIN_API_GRANT/AJX_E_NEW_SECRET/")",
+                    data: {},
+                    cache: false,
+                    type: "GET",
+                    timeout: 10000,
+                    dataType: "json",
+                    success: function (result) {
+                        if (result.Success) {
+                            swal.fire("INFORMACIÓN", "SE HA GENERADO NUEVO SECRET", "success")
+                            setTimeout(function () {
+                                go("@Url.Action("E")");
+                            }, 1500);
+                        }
+                        else { swal.fire("INFORMACIÓN", result.Mensaje, "error"); }
+                    }
+                });
+            }
+        });
+    }
+    function SET_COMPORTAMIENTO() {
+        if ($("#IndValVigFecha").val().toUpperCase()== 'FALSE') {
+            $("#VigenciaDesdeDTP,#VigenciaHastaDTP").children().attr('disabled', true)
+            //$("#IndValVigFechaPLUS").removeClass("text-primary").addClass("text-muted");
+            $("#VigenciaDesde").val('')
+            $("#VigenciaHasta").val('')
+            $("#IndValVigFechaTITLE").css("text-decoration","line-through")
+        }
+        else {
+            $("#VigenciaDesdeDTP,#VigenciaHastaDTP").children().removeAttr('disabled');
+            //$("#IndValVigFechaPLUS").addClass("text-primary").removeClass("text-muted");
+            $("#VigenciaDesdeDTP").children().val('@String.Format("{0:dd/MM/yyyy}",DateTime.Now.ToShortDateString().ToString()).Replace("-","/")')
+            $("#VigenciaHastaDTP").children().val('@String.Format("{0:dd/MM/yyyy}",DateTime.Now.AddDays(1).ToShortDateString().ToString()).Replace("-","/")')
+            $("#IndValVigFechaTITLE").css("text-decoration","none")
+        }
+    }
+    function AJX_E_SET_ACCESO() {
+        swal.fire({
+            title: "CONFIRME",
+            text: "-",
+            html: "DESEA ACTUALIZAR LA VIGENCIA DE ACCESO A ESTE USUARIO? <p><small class='text-warning'><b>AL CONFIRMAR ESTA ACCIÓN PODRÍA AFECTAR EL ACCESO DEL USUARIO <span class='text-primary'>@Model.Username.Trim().ToUpper()</span></b></small><p>",
+            icon: "warning",
+            showCancelButton: true,
+            confirmButtonColor: "#1cc88a",
+            confirmButtonText: "SI, ACTUALIZAR",
+            cancelButtonText: "CANCELAR",
+            closeOnConfirm: true
+        }).then((resp) => {
+            if (resp.isConfirmed) {
+                $.ajax({
+                    url: "@Url.Content("~/ADMIN_API_GRANT/AJX_E_SET_ACCESO/")",
+                    data: {
+                        iv: ($("#IndValVigFecha").val().toUpperCase() == 'TRUE' ? 1 : 0)
+                        , e: $("#Estado").val()
+                        , vd: $("#VigenciaDesde").val()
+                        , vh: $("#VigenciaHasta").val()
+                    },
+                    cache: false,
+                    type: "GET",
+                    timeout: 10000,
+                    dataType: "json",
+                    success: function (result) {
+                        if (result.Success) {
+                            swal.fire("INFORMACIÓN", "SE HA GENERADO ACTUALIZADO MODO DE ACCESO", "success")
+                            setTimeout(function () {
+                                go("@Url.Action("E")");
+                            }, 1500);
+                        }
+                        else { swal.fire("INFORMACIÓN", result.Mensaje, "error"); }
+                    }
+                });
+            }
+        });
+    }
+
+
+</script>
+@Html.Partial("~/Views/ADMIN_API_GRANT/M_API.cshtml")
+@Html.Partial("~/Views/ADMIN_API_GRANT/M_API_RES.cshtml")

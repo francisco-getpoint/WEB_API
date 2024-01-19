@@ -1,0 +1,208 @@
+﻿@model  API_LIB.Model.API.API_CLS.API_PROF_USERS
+@{
+    ViewBag.Title = "EDICIÓN DE USUARIO";
+}
+
+<div class="container-fluid">
+
+
+    <div class="card shadow mb-1  w-100">
+        <div class="card-header py-3 bg-gradient-secondary">
+            <h6 class="m-0 font-weight-bold text-white"><i class="fa fa-edit"></i> @ViewBag.Title</h6>
+        </div>
+        <div class="card-body ">
+
+            <div class="row m-0">
+                <div class="col-lg-6 text-dark text-right">USUARIO</div>
+                <div class="col-lg-6 text-primary h5">@Model.USERNAME</div>
+            </div>
+            <hr class="m-0 p-2" />
+
+            <div class="row justify-content-center small">
+                <div class="col-lg-6">
+                    <div class="card shadow mb-1  w-100">
+                        <div class="card-header py-2">
+                            <h6 class="m-0 font-weight-bold text-primary text-center"><i class="fa fa-user-edit"></i> INFORMACIÓN</h6>
+                        </div>
+                        @using (Html.BeginForm())
+                        {
+                            <div class="card-body h-100" style="min-height:250px">
+
+                                <div class="row m-1">
+                                    <div class="col-lg-4 text-dark text-right">NOMBRE</div>
+                                    <div class="col-lg-8">
+                                        @Html.TextBoxFor(model => model.Nombre1, new { @class = "form-control", @placeholder = "", @maxlength = "50" })
+                                    </div>
+                                </div>
+                                <div class="row m-1">
+                                    <div class="col-lg-4 text-dark text-right">APELLIDO PATERNO</div>
+                                    <div class="col-lg-8">
+                                        @Html.TextBoxFor(model => model.Apellido1, new { @class = "form-control", @placeholder = "", @maxlength = "50" })
+                                    </div>
+                                </div>
+                                <div class="row m-1">
+                                    <div class="col-lg-4 text-dark text-right">APELLIDO MATERNO</div>
+                                    <div class="col-lg-8">
+                                        @Html.TextBoxFor(model => model.Apellido2, new { @class = "form-control", @placeholder = "", @maxlength = "50" })
+                                    </div>
+                                </div>
+                                <div class="row m-1">
+                                    <div class="col-lg-4 text-dark text-right">MAIL</div>
+                                    <div class="col-lg-8">
+                                        @Html.TextBoxFor(model => model.Mail1, new { @class = "form-control", @placeholder = "", @maxlength = "50" })
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="card-footer">
+                                <div class="row justify-content-center">
+                                    <button type="button" id="btnINFO" class="d-none d-sm-inline-block btn  btn-success shadow-sm"><i class="fas fa-check-circle fa-sm text-white-50"></i> ACTUALIZAR</button>
+                                </div>
+                            </div>
+                            @Html.HiddenFor(model => model.USERNAME)
+                        }
+                    </div>
+                </div>
+                <div class="col-lg-6">
+                    <div class="card shadow mb-1  w-100">
+                        <div class="card-header py-2">
+                            <h6 class="m-0 font-weight-bold text-primary text-center"><i class="fa fa-lock-open"></i> ACTUALIZAR CONTRASEÑA</h6>
+                        </div>
+                        <div class="card-body h-100" style="min-height:250px">
+                            <div class="row m-1">
+                                <div class="col-lg-4 text-dark text-right">CONTRASEÑA ACTUAL</div>
+                                <div class="col-lg-8">
+                                    @Html.Password("MOD_E_CLIENTES_CONTRASENA_1", "", new { @class = "form-control", @placeholder = "", @maxlength = "15" })
+                                </div>
+                            </div>
+                            <hr />
+                            <div class="row m-1">
+                                <div class="col-lg-4 text-dark text-right">NUEVA CONTRASEÑA</div>
+                                <div class="col-lg-8">
+                                    @Html.Password("MOD_E_CLIENTES_CONTRASENA_2", "", new { @class = "form-control", @placeholder = "", @maxlength = "15" })
+                                </div>
+                            </div>
+                            <div class="row m-1">
+                                <div class="col-lg-4 text-dark text-right">REPETIR CONTRASEÑA</div>
+                                <div class="col-lg-8">
+                                    @Html.Password("MOD_E_CLIENTES_CONTRASENA_3", "", new { @class = "form-control", @placeholder = "", @maxlength = "15" })
+                                </div>
+                            </div>
+                        </div>
+                        <div class="card-footer">
+                            <div class="row justify-content-center">
+                                <button type="button" id="btnPW" class="d-none d-sm-inline-block btn  btn-success shadow-sm"><i class="fas fa-check-circle fa-sm text-white-50"></i> ACTUALIZAR</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+    </div>
+</div>
+<script>
+    $(document).ready(function () {
+
+        $("#btnINFO").click(function () {
+            var errors = [];
+            if ($.trim($("#Nombre1").val()).length == 0) { errors.push("INGRESE NOMBRE"); }
+            if ($.trim($("#Apellido1").val()).length == 0) { errors.push("INGRESE APELLIDO PATERNO"); }
+            if ($.trim($("#Apellido2").val()).length == 0) { errors.push("INGRESE APELLIDO MATATERNO"); }
+            if ($.trim($("#Mail1").val()).length == 0) { errors.push("INGRESE MAIL"); }
+            if (errors.length > 0) {
+                var errors_mensaje = ""; $(errors).each(function (i, i2) { errors_mensaje += "<p>" + errors[i] + "</p>"; });
+                Swal.fire({
+                    title: 'INFORMACIÓN',
+                    icon: 'error',
+                    html: errors_mensaje,
+                    showCloseButton: false,
+                    showCancelButton: true,
+                    showConfirmButton: false,
+                    focusConfirm: false,
+                    cancelButtonText: '<i class="fa fa-times"></i> CANCELAR'
+                })
+                return;
+            }
+            $.ajax({
+                url: "@Url.Content("~/H/AJX_USER_EDIT_INFO/")",
+                data: {
+                    USERNAME: $("#USERNAME").val(),
+                    Nombre1: $("#Nombre1").val(),
+                    Nombre2: "",
+                    Apellido1: $("#Apellido1").val(),
+                    Apellido2: $("#Apellido2").val(),
+                    Mail1: $("#Mail1").val(),
+                },
+                cache: false,
+                type: "GET",
+                timeout: 10000,
+                dataType: "json",
+                success: function (result) {
+                    if (result.Success) {
+                        swal.fire("INFORMACIÓN", "SE HA ACTUALIZADO CORRECTAMENTE", "success");
+                    }
+                    else {
+                        swal.fire("INFORMACIÓN", result.Error, "error");
+                    }
+                }
+            });
+        });
+        $("#btnPW").click(function () {
+            var c = $("#MOD_E_CLIENTES_CONTRASENA_1").val();
+            var c2 = $("#MOD_E_CLIENTES_CONTRASENA_2").val();
+            var c3 = $("#MOD_E_CLIENTES_CONTRASENA_3").val();
+
+            if (c == 0) {
+                Swal.fire("Información", "INGRESE CONTRASEÑA ACTUAL", "info");
+                return false;
+            }
+            if (c2 == 0) {
+                Swal.fire("Información", "CONFIRMA CONTRASEÑA", "info");
+                return false;
+            }
+            if (c3 == 0) {
+                Swal.fire("Información", "REPITA CONFIRMACION DE CONTRASEÑA", "info");
+                return false;
+            }
+            if (c2 != c3) {
+                Swal.fire("Información", "PARA CONFIRMAR LAS CONTRASEÑAS DEBEN SER IGUALES", "info");
+                return false;
+            }
+            if ($.trim(c2).length < 5) {
+                Swal.fire("Información", "COTRASEÑAS DEBE TENER COMO MINIMO 5 CARACTERES", "info");
+                return false;
+            }
+            Swal.fire({
+                title: 'CONFIRME',
+                text: "¿DESEAS CAMBIAR CONTRASEÑA?",
+                icon: 'warning',
+                showCancelButton: true,
+                confirmButtonColor: '#3085d6',
+                cancelButtonColor: '#e3e6f0',
+                confirmButtonText: 'CONFIRMAR',
+                cancelButtonText: 'CANCELAR'
+            }).then((result) => {
+                if (result.isConfirmed) {
+                    $.ajax({
+                        url: "@Url.Content("~/H//AJX_USER_EDIT_INFO_PW/")",
+                        data: { c: c, c2: c2, c3: c3 },
+                        cache: false,
+                        type: "GET",
+                        timeout: 10000,
+                        dataType: "json",
+                        success: function (result) {
+                            if (!result.Success) {
+                                Swal.fire("Información", result.Mensaje, "info");
+                            }
+                            else {
+                                Swal.fire("Información", "CONTRASEÑA ACTUALIZADA CORRECTAMENTE!", "success");
+                                setTimeout(function () { go('@Url.Action("LO","Default")'); }, 1000)
+
+                            }
+                        }
+                    });
+                }
+            });
+        });
+    });
+</script>

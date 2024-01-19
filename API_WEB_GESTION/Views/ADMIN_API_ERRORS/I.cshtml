@@ -1,0 +1,99 @@
+﻿@{
+    ViewBag.Title = "Listado de Errores";
+}
+<script src="~/Scripts/vendor/bootbox/bootbox.all.min.js"></script>
+<div class="container-fluid ">
+
+    <nav aria-label="breadcrumb w-30">
+        <ol class="breadcrumb  p-2 mb-2 bg-gray-200">
+            <li class="breadcrumb-item"><a href="@Url.Action("I","H")"><i class="fas fa-home"></i></a></li>
+            <li class="breadcrumb-item">PARÁMETROS</li>
+            <li class="breadcrumb-item" active aria-current="page">API Errors</li>
+        </ol>
+    </nav>
+
+    <div class="card shadow mb-1">
+        <div class="card-header  p-2 mb-2">
+            <h6 class="m-0 font-weight-bold text-primary"><i class="fas fa-list"></i> @ViewBag.Title</h6>
+        </div>
+        <div class="card-body pt-0">
+            @using (Ajax.BeginForm(new AjaxOptions
+            {
+                HttpMethod = "GET",
+                InsertionMode = InsertionMode.Replace,
+                UpdateTargetId = "myGrid"
+            }))
+            {
+                <div class="row  justify-content-end mb-2">
+                    <button class="btn btn-warning btn-icon-split btn-sm" type="button" onclick="go('@Url.Action("N")')">
+                        <span class="icon text-white-50">
+                            <i class="fas fa-plus-circle"></i>
+                        </span>
+                        <span class="text">NUEVO</span>
+                    </button>
+                    <div class="p-1"></div>
+                    <button class="btn btn-primary btn-icon-split btn-sm" type="submit">
+                        <span class="icon text-white-50">
+                            <i class="fas fa-search"></i>
+                        </span>
+                        <span class="text">BUSCAR</span>
+                    </button>
+                    <div class="p-1"></div>
+                    <button class="btn btn-info btn-icon-split btn-sm" type="button" onclick="goInfo()">
+                        <span class="icon text-white-50">
+                            <i class="fas fa-info-circle"></i>
+                        </span>
+                        <span class="text">INFO</span>
+                    </button>
+                </div>
+                <div class="row mb-2">
+                    <div class="col-lg-3 small text-right">CÓDIGO</div>
+                    <div class="col-lg-2">
+                        @Html.TextBox("filtro_codigo", "0", new { @class = "form-control input-sizing-esp" })
+                    </div>
+                    <div class="col-lg-3 small  text-right">NOMBRE</div>
+                    <div class="col-lg-3">
+                        @Html.TextBox("filtro_nombre", "", new { @class = "form-control input-sizing-esp" })
+                    </div>
+                </div>
+                <div class="row mb-2">
+                    <div class="col-lg-3 small text-right">TIPO</div>
+                    <div class="col-lg-2">
+                        <select class="form-control input-sizing-esp" id="filtro_tipo" name="filtro_tipo">
+                            <option value="-1" selected>-</option>
+                            <option value="0">SISTEMA</option>
+                            <option value="1">PERSONALIZADO</option>
+                        </select>
+                    </div>
+                    <div class="col-lg-3 small  text-right">ESTADO</div>
+                    <div class="col-lg-2">
+                        <select class="form-control input-sizing-esp" id="filtro_estado" name="filtro_estado">
+                            <option value="-1">-</option>
+                            <option value="0">NO VIGENTE</option>
+                            <option value="1" selected>VIGENTE</option>
+                        </select>
+                    </div>
+                </div>
+            }
+            <div id="myGrid">
+                @Html.Partial("_I_P")
+            </div>
+        </div>
+    </div>
+</div>
+
+<script>
+    function goInfo() {
+        var html = "";
+        html += "<p class='text-justify'>Códigos y mensajes de errores para API.</p>";
+        html += "<p class='text-justify'>Dentro de las validaciones internas de cada API se invocan con el campo <span class='text-info'>CÓDIGO</span>, y al ejecutarse despliega el campo <span class='text-info'>MENSAJE</span> como response de salida.</p>";
+        html += "<p class='text-justify'>El campo <span class='text-info'>CÓDIGO</span> debe ser único .</p>";
+        html += "<p  class='text-justify'>El campo <span class='text-info'>TIPO</span> es solo para diferenciar si el tipo de error es un error de validaciones base del API o es un nuevo error de un método en particular.</p>";
+
+        bootbox.alert({
+            title: "<i class='fas fa-info-circle'></i> INFORMACIÓN DEL MODULO",
+            message: html,
+            backdrop: true
+        });
+    }
+</script>

@@ -1,0 +1,58 @@
+﻿@*@model IEnumerable<API_WEB_GESTION.Controllers.ADMIN.ADMIN_API_GRANT_MODEL_LIST>*@
+@{
+    var grid = new WebGrid(null,
+canPage: true,
+rowsPerPage: 50,
+selectionFieldName: "selectedRow",
+ajaxUpdateContainerId: "myGrid");
+    grid.Bind(Model, autoSortAndPage: true);
+}
+
+    <div id="myGrid" class="small">
+        <br />
+        @grid.GetHtml(tableStyle: "table table-striped table-bordered table-hover small",
+    headerStyle: "header",
+    alternatingRowStyle: "alt",
+    selectedRowStyle: "select",
+    columns: grid.Columns(
+
+    grid.Column("UserName", header: "USERNAME", format: @<text>@item.UserName</text>, style: "")
+, grid.Column("ApellidoPat", header: "NOMBRE", format: @<text>
+                <a href="#" onclick="goE('@Url.Content("~/ADMIN_API_GRANT/E_AJX/")',{'Items':[{'Item1':'@item.UserName.Trim()'}]},'@Url.Action("E", "ADMIN_API_GRANT")');">
+                    @item.ApellidoPat @item.ApellidoMat @item.Nombres
+                </a>
+    </text>, style: "")
+, grid.Column("RazonSocial", header: "EMPRESA", format: @<text>
+                <small>@(item.Rut != null ? item.Rut : "-")  </small>
+                <p><small>@(item.RazonSocial != null ? item.RazonSocial : "-")</small></p>
+
+    </text>, style: "small")
+  , grid.Column("COUNT_TOKEN", header: "POSEE TOKEN?", format: @<text>
+                @if (item.COUNT_TOKEN == 0)
+                {
+                    <i class="fa fa-times-circle text-gray-400 fa-2x"></i>
+                }
+                else {
+                    <i class="fa fa-check-circle text-success fa-2x"></i>
+                }
+
+    </text>, style: "small text-center align-middle")
+
+
+
+    @*grid.Column("Usuario.UserName", header: "USERNAME", format: @<text>@item.Usuario.UserName</text>, style: "")
+    , grid.Column("Usuario.ApellidoPat", header: "NOMBRE COMPLETO", format: @<text>
+            <a href="#" onclick="goE('@Url.Content("~/ADMIN_API_GRANT/E_AJX/")',{'Items':[{'Item1':'@item.Usuario.UserName.Trim()'}]},'@Url.Action("E", "ADMIN_API_GRANT")');">
+                @item.Usuario.ApellidoPat @item.Usuario.ApellidoMat @item.Usuario.Nombres
+            </a>
+    </text>, style: "")
+    , grid.Column("Empresa.RazonSocial", header: "EMPRESA", format: @<text>
+            <small>@(item.Empresa.Rut!=null?item.Empresa.Rut:"-")  </small>
+            <p><small>@(item.Empresa.RazonSocial != null ?item.Empresa.RazonSocial:"-" )</small></p>
+
+    </text>, style: "small")
+    , grid.Column("API_USUARIOS.API_TOKEN", header: "TOKEN", format: @<text><small class="text-info">@item.API_USUARIOS.API_TOKEN</small></text>, style: "")*@
+),
+mode: WebGridPagerModes.All)
+
+    </div>

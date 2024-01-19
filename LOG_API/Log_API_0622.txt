@@ -1,0 +1,12 @@
+[CLIENTE/EVOLMESCLIENTE]. Fecha/Hora 22/06/2023 6:54. Estructura JSON: {"Empid":1,"Mes":0,"Ejercicio":0,"Limit":0,"Rowset":0}
+[CLIENTE/EVOLMESCLIENTE]. Fecha/Hora 22/06/2023 6:56. Estructura JSON: {"Empid":1,"Mes":0,"Ejercicio":0,"Limit":0,"Rowset":0}
+[CLIENTE/EVOLMESCLIENTE]. Fecha/Hora 22/06/2023 7:00. Estructura JSON: {"Empid":1,"Mes":0,"Ejercicio":0,"Limit":0,"Rowset":0}
+[CLIENTE/EVOLMESCLIENTE]. Fecha/Hora 22/06/2023 7:00. Estructura JSON: {"Empid":1,"Mes":0,"Ejercicio":0,"Limit":0,"Rowset":0}
+[CLIENTE/EVOLMESCLIENTE]. Fecha/Hora 22/06/2023 7:05. Estructura JSON: {"Empid":1,"Mes":0,"Ejercicio":0,"Limit":0,"Rowset":0}
+[CLIENTE/EVOLMESCLIENTE]. Fecha/Hora 22/06/2023 7:06. Estructura JSON: {"Empid":1,"Mes":5,"Ejercicio":2023,"Limit":100,"Rowset":0}
+[CLIENTE/EVOLMESCLIENTE]. Fecha/Hora 22/06/2023 7:06. Estructura JSON: {"Empid":1,"Mes":5,"Ejercicio":2023,"Limit":100,"Rowset":0}
+[CLIENTE/EVOLMESCLIENTE]. Fecha/Hora 22/06/2023 7:07. Estructura JSON: {"Empid":1,"Mes":5,"Ejercicio":2023,"Limit":100,"Rowset":0}
+[CLIENTE/EVOLMESCLIENTE]. Fecha/Hora 22/06/2023 7:09. Estructura JSON: {"Empid":0,"Mes":0,"Ejercicio":0,"Limit":0,"Rowset":0}
+[CLIENTE/EVOLMESCLIENTE]. Fecha/Hora 22/06/2023 7:10. Estructura JSON: {"Empid":0,"Mes":0,"Ejercicio":0,"Limit":0,"Rowset":0}
+[CLIENTE/EVOLMESCLIENTE]. Fecha/Hora 22/06/2023 7:10. Estructura JSON: {"Empid":1,"Mes":0,"Ejercicio":0,"Limit":0,"Rowset":0}
+[CLIENTE/EVOLMESCLIENTE]. Fecha/Hora 22/06/2023 7:10. Estructura JSON: {"Empid":1,"Mes":0,"Ejercicio":2023,"Limit":0,"Rowset":0}

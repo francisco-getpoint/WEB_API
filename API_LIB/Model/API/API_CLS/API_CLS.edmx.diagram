@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+ <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <edmx:Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <!-- Diagram content (shape and connector positions) -->
+    <edmx:Diagrams>
+      <Diagram DiagramId="5e1865b3972c411eb5705cacf5abedaa" Name="Diagram1" ZoomLevel="47">
+        <EntityTypeShape EntityType="API.CLS.API_ATTR_CONT_TYPE" Width="2.25" PointX="6.875" PointY="1.125" IsExpanded="true" />
+        <EntityTypeShape EntityType="API.CLS.API_ATTR_HTTP" Width="2.25" PointX="6.875" PointY="3.375" IsExpanded="true" />
+        <EntityTypeShape EntityType="API.CLS.API_PROF_ACCESOS" Width="2.25" PointX="0.5" PointY="9.625" IsExpanded="true" />
+        <EntityTypeShape EntityType="API.CLS.API_PROF_USERS" Width="2.25" PointX="3.375" PointY="9.625" IsExpanded="true" />
+        <EntityTypeShape EntityType="API.CLS.API_USUARIOS_PROY" Width="2.25" PointX="3.125" PointY="6" IsExpanded="true" />
+        <EntityTypeShape EntityType="API.CLS.API_USUARIOS_PROY_DET" Width="2.25" PointX="5.75" PointY="5.875" IsExpanded="true" />
+        <EntityTypeShape EntityType="API.CLS.API_USUARIOS" Width="2.25" PointX="0.5" PointY="6" />
+        <EntityTypeShape EntityType="API.CLS.API_RESPONSE_ERRORS" Width="2.25" PointX="9.75" PointY="1.125" />
+        <EntityTypeShape EntityType="API.CLS.API_PROY_CAB" Width="2.25" PointX="0.5" PointY="1" />
+        <EntityTypeShape EntityType="API.CLS.API_PROY_DET" Width="2.25" PointX="3" PointY="1" />
+      </Diagram>
+    </edmx:Diagrams>
+  </edmx:Designer>
+</edmx:Edmx>

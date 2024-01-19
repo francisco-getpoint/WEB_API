@@ -1,0 +1,66 @@
+﻿@{
+     Layout = "~/Views/Shared/_Layout_NULL.cshtml";
+     ViewBag.Title = "HA OCURRIDO UN ERROR";
+}
+<div class="row justify-content-center">
+    <div class="col-xl-10 col-lg-12 col-md-9">
+        <div class="card o-hidden border-0 shadow-lg my-5">
+            <div class="card-body p-0">
+                <div class="row">
+                    <div class="col-lg-12">
+                        <div class="p-5">
+                            <div class="alert alert-danger small"  >
+                                <div id="LS_INFO_TECH">
+                                    <p class="text-center m-2"><i class="fa fa-info-circle"></i><b>&nbsp;ERROR - INFORMACIÓN TECNICA</b></p>
+                                    <p class="m-2"><i class='fa fa-chevron-right'></i>&nbsp;&nbsp;@ViewBag.Error_M</p>
+                                    <p class="m-2"><i class=''></i>&nbsp;&nbsp;@ViewBag.Error_P</p>
+                                    <p class="m-2"><i class=''></i>&nbsp;&nbsp;1.- @ViewBag.Error_EX</p>
+                                    <p class="m-2"><i class=''></i>&nbsp;&nbsp;2.- @ViewBag.Error_EX2</p>
+                                    <p class="m-2"><i class=''></i>&nbsp;&nbsp;3.- @ViewBag.Error_EX3</p>
+                                </div>
+                                <hr />
+                                <div class="row justify-content-center m-1">
+                                    <button type="button" class="btn btn-danger btn-sm" onclick="LS_ERROR_COPY()" id="LS_BTN_COPY"><i class="fa fa-copy"></i> COPIAR ERROR</button>
+                                </div>
+
+                            </div>
+                            <div class="row justify-content-center m-1">
+                                <a href="@Url.Action("I","Default")" class="btn btn-primary  btn-sm">INGRESAR NUEVAMENTE</a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<script type="text/javascript">
+    function LS_ERROR_COPY() {
+        var text = $("#LS_INFO_TECH").text();
+        if (window.clipboardData && window.clipboardData.setData) {
+            return clipboardData.setData("Text", text);
+
+        } else if (document.queryCommandSupported && document.queryCommandSupported("copy")) {
+            var textarea = document.createElement("textarea");
+            textarea.textContent = text;
+            textarea.style.position = "fixed";
+            document.body.appendChild(textarea);
+            textarea.select();
+            try {
+                return document.execCommand("copy");
+            } catch (ex) {
+                alert("Copy to clipboard failed.", ex);
+                return false;
+            } finally {
+                document.body.removeChild(textarea);
+                $("#LS_BTN_COPY").html('<i class="fa fa-check"></i> ERROR COPIADO');
+                setTimeout(function () {
+                    $("#LS_BTN_COPY").html('<i class="fa fa-copy"></i> COPIAR ERROR');
+                }, 2500);
+            }
+        }
+    }
+    function LS_ERROR_SUPPORT() {
+        alert("NO DISPONIBLE");
+    }
+</script>

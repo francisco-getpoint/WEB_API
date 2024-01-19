@@ -1,0 +1,43 @@
+﻿.input-sizing-esp {
+    height: 30px;
+    font-size: 12px;
+}
+    .input-sizing-esp::placeholder {
+        color: #b7b9cc !important;
+        font-size: 12px;
+    }
+.field-validation-error {
+    color: #e74a3b !important;
+    font-size: 14px;
+}
+.small {
+    font-size: 14px;
+}
+.xs-small {
+    font-size: 12px;
+}
+.xxs-small {
+    font-size: 11px;
+}
+
+.item-menu-det {
+    word-wrap: break-word;
+    width: 90%;
+    display: table;
+    white-space: pre-wrap;
+    white-space: -moz-pre-wrap;
+    white-space: -pre-wrap;
+    white-space: -o-pre-wrap;
+    word-wrap: break-word;
+    font-size:10px
+}
+
+.sidebar .nav-item .collapse .collapse-inner .collapse-item, .sidebar .nav-item .collapsing .collapse-inner .collapse-item {
+    padding: .5rem 1rem;
+    margin: 0 .5rem;
+    display: block;
+    color: #3a3b45;
+    text-decoration: none;
+    border-radius: .35rem;
+    white-space: pre-wrap;
+}

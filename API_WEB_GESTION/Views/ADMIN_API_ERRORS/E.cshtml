@@ -1,0 +1,110 @@
+﻿@model API_LIB.Model.API.API_CLS.API_RESPONSE_ERRORS
+@{
+    ViewBag.Title = "Edición de Errores";
+}
+<div class="container-fluid ">
+
+    <nav aria-label="breadcrumb w-30">
+        <ol class="breadcrumb  p-2 mb-2 bg-gray-200">
+            <li class="breadcrumb-item"><a href="@Url.Action("I","H")"><i class="fas fa-home"></i></a></li>
+            <li class="breadcrumb-item">PARÁMETROS</li>
+            <li class="breadcrumb-item" active aria-current="page">API Errors</li>
+        </ol>
+    </nav>
+
+    <div class="card shadow mb-1">
+        <div class="card-header  p-2 mb-2">
+            <h6 class="m-0 font-weight-bold text-primary"><i class="fas fa-edit"></i> @ViewBag.Title</h6>
+        </div>
+        <div class="card-body pt-0">
+            @using (Html.BeginForm())
+            {
+                @Html.ValidationSummary(true)
+                <div class="row  justify-content-end mb-2">
+                    <button class="btn btn-light btn-icon-split btn-sm" type="button" onclick="go('@Url.Action("I")')">
+                        <span class="icon text-white-50">
+                            <i class="fas fa-backward"></i>
+                        </span>
+                        <span class="text">VOLVER</span>
+                    </button>
+                    <div class="p-1"></div>
+                    <button class="btn btn-warning btn-icon-split btn-sm" type="button" onclick="go('@Url.Action("N")')">
+                        <span class="icon text-white-50">
+                            <i class="fas fa-plus-circle"></i>
+                        </span>
+                        <span class="text">NUEVO</span>
+                    </button>
+                    <div class="p-1"></div>
+                    <button class="btn btn-success btn-icon-split btn-sm" type="submit">
+                        <span class="icon text-white-50">
+                            <i class="fas fa-refresh"></i>
+                        </span>
+                        <span class="text">ACTUALIZAR</span>
+                    </button>
+                </div>
+
+                if (ViewBag.ERR != "0")
+                {
+                    <div class="alert alert-warning alert-dismissable m-t-sm m-b-xxs ">
+                        <button aria-hidden="true" data-dismiss="alert" class="close" type="button">×</button>
+                        @Html.Raw(ViewBag.ERR)
+                    </div>
+                }
+                if (ViewBag.UPD != "0")
+                {
+                    <div class="alert alert-success alert-dismissable   justify-content-center ">
+                        <button aria-hidden="true" data-dismiss="alert" class="close" type="button">×</button>
+                        @Html.Raw(ViewBag.UPD)
+                    </div>
+                }
+
+                <div class="row mb-2">
+                    <div class="col-md-2 text-right ">CÓDIGO</div>
+                    <div class="col-md-2">
+                        <span class="text-primary h6">@Model.ErrID </span>
+                    </div>
+                </div>
+                <div class="row mb-2">
+                    <div class="col-md-2 text-right ">NOMBRE</div>
+                    <div class="col-md-4">
+                        @Html.TextBoxFor(model => model.Nombre, new { @class = "form-control input-sizing-esp", @placeholder = "NOMBRE TÉCNICO", @maxlength = "255" })
+                        @Html.ValidationMessageFor(model => model.Nombre)
+                    </div>
+                </div>
+                <div class="row mb-2">
+                    <div class="col-md-2 text-right ">MENSAJE</div>
+                    <div class="col-md-4">
+                        @Html.TextAreaFor(model => model.Mensaje, new { @class = "form-control input-sizing-esp", @placeholder = "MENSAJE DE ERROR", @maxlength = "1000" })
+                        @Html.ValidationMessageFor(model => model.Mensaje)
+                    </div>
+                </div>
+                <div class="row mb-2">
+                    <div class="col-md-2 text-right ">TIPO</div>
+                    <div class="col-md-2">
+                        <select class="form-control input-sizing-esp" id="Tipo" name="Tipo">
+                            <option value="False">SISTEMA</option>
+                            <option value="True">PERSONALIZADO</option>
+                        </select>
+                    </div>
+                </div>
+                <div class="row mb-2">
+                    <div class="col-md-2 text-right ">ESTADO</div>
+                    <div class="col-md-2">
+                        <select class="form-control input-sizing-esp" id="Estado" name="Estado">
+                            <option value="0" class="text-danger">NO VIGENTE</option>
+                            <option value="1" class="text-success" selected>VIGENTE</option>
+                        </select>
+                    </div>
+                </div>
+                @Html.HiddenFor(model => model.ErrID)
+
+            }
+
+        </div>
+    </div>
+</div>
+
+<script>
+        $("#Estado").val(@Model.Estado);
+        $("#Tipo").val('@Model.IndTipo');
+</script>

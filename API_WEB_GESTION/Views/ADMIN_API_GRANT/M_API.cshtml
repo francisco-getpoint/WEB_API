@@ -1,0 +1,57 @@
+﻿@{
+    Layout = null;
+    ViewBag.Title = " ASOCIAR APIS A USUARIO";
+}
+
+<div id="MOD_PROY" class="modal" tabindex="-1" role="dialog">
+    <div class="modal-dialog modal-lg" style="z-index: 99999">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h6 class="modal-title"><i class="fas fa-link"></i>@ViewBag.Title <label class="text-primary" id="MOD_PROY_USERNAME"></label></h6>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body p-3 m-0">
+
+                @using (Ajax.BeginForm("M_API_I", "ADMIN_API_GRANT", new AjaxOptions
+                {
+                    HttpMethod = "GET",
+                    InsertionMode = InsertionMode.Replace,
+                    UpdateTargetId = "MOD_PROY_div"
+                }))
+                {
+                    <button type="submit" class="invisible" id="MOD_PROY_btnBuscar"></button>
+                }
+                <div id="MOD_PROY_div">
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-dismiss="modal">CERRAR</button>
+            </div>
+        </div>
+    </div>
+</div>
+<script type="text/javascript">
+    function MOD_PROY(u)
+    {
+        $("#MOD_PROY_USERNAME").text(u);
+        $("#MOD_PROY_btnBuscar").click();
+        $("#MOD_PROY").modal("show");
+    }
+    function N_DEL_AJX_MOD_PROY(ope, pID, btn) {
+        $(btn).prop("disabled", true);
+        $.ajax({
+            url: "@Url.Content("~/ADMIN_API_GRANT/AJX_MOD_API_N_DEL/")",
+            data: {ope:ope, pID: pID  },
+            cache: false,
+            type: "GET",
+            timeout: 10000,
+            dataType: "json",
+            success: function (result) {
+                if (!result.Success) { }
+                else { $("#MOD_PROY_btnBuscar").click();AJX_REFRESH()}
+            }
+        });
+    }
+</script>
