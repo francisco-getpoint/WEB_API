@@ -45,6 +45,8 @@
           <Parameter Name="Fecha1" Type="datetime" Mode="In" />
           <Parameter Name="Fecha2" Type="datetime" Mode="In" />
           <Parameter Name="Fecha3" Type="datetime" Mode="In" />
+          <Parameter Name="Origen" Type="char" Mode="In" />
+          <Parameter Name="ArticulosKit" Type="varchar" Mode="In" />
         </Function>
         <Function Name="sp_in_API_ArticulosUMedidasJson" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
           <Parameter Name="EmpId" Type="int" Mode="In" />
@@ -1295,40 +1297,6 @@
             <Parameter Name="Mensaje" Mode="In" Type="String" />
             <Parameter Name="JSON" Mode="In" Type="String" />
           </FunctionImport>
-          <FunctionImport Name="sp_in_API_ArticulosJson" ReturnType="Collection(GP.ENT.sp_in_API_ArticulosJson_Result)">
-            <Parameter Name="EmpId" Mode="In" Type="Int32" />
-            <Parameter Name="CodigoArticulo" Mode="In" Type="String" />
-            <Parameter Name="DescripArt" Mode="In" Type="String" />
-            <Parameter Name="DescripTecnica" Mode="In" Type="String" />
-            <Parameter Name="DescripCorta" Mode="In" Type="String" />
-            <Parameter Name="LineaProducto" Mode="In" Type="Int32" />
-            <Parameter Name="TipoModelo" Mode="In" Type="String" />
-            <Parameter Name="Tipo" Mode="In" Type="Int32" />
-            <Parameter Name="VigenciaDesde" Mode="In" Type="DateTime" />
-            <Parameter Name="VigenciaHasta" Mode="In" Type="DateTime" />
-            <Parameter Name="Rotacion" Mode="In" Type="String" />
-            <Parameter Name="CodigoFabrica" Mode="In" Type="String" />
-            <Parameter Name="UsaSerie" Mode="In" Type="Int32" />
-            <Parameter Name="UsaLote" Mode="In" Type="Int32" />
-            <Parameter Name="EAN13" Mode="In" Type="String" />
-            <Parameter Name="DUN14" Mode="In" Type="String" />
-            <Parameter Name="UnidadMedidaCompra" Mode="In" Type="String" />
-            <Parameter Name="UnidadMedidaVenta" Mode="In" Type="String" />
-            <Parameter Name="CodigoProveedor" Mode="In" Type="String" />
-            <Parameter Name="Marca" Mode="In" Type="String" />
-            <Parameter Name="Usuario" Mode="In" Type="String" />
-            <Parameter Name="CodigoExt" Mode="In" Type="String" />
-            <Parameter Name="GlosaLineaProducto" Mode="In" Type="String" />
-            <Parameter Name="Dato1" Mode="In" Type="String" />
-            <Parameter Name="Dato2" Mode="In" Type="String" />
-            <Parameter Name="Dato3" Mode="In" Type="String" />
-            <Parameter Name="Valor1" Mode="In" Type="Decimal" />
-            <Parameter Name="Valor2" Mode="In" Type="Decimal" />
-            <Parameter Name="Valor3" Mode="In" Type="Decimal" />
-            <Parameter Name="Fecha1" Mode="In" Type="DateTime" />
-            <Parameter Name="Fecha2" Mode="In" Type="DateTime" />
-            <Parameter Name="Fecha3" Mode="In" Type="DateTime" />
-          </FunctionImport>
           <FunctionImport Name="sp_GP_INT_RecibosASN_LPN" ReturnType="Collection(GP.ENT.sp_GP_INT_RecibosASN_LPN_Result)">
             <Parameter Name="Archivo" Mode="In" Type="String" />
             <Parameter Name="UserName" Mode="In" Type="String" />
@@ -1722,6 +1690,42 @@
           <FunctionImport Name="sp_proc_API_TMPSolRecepcionJson" ReturnType="Collection(GP.ENT.sp_proc_API_TMPSolRecepcionJson_Result)">
             <Parameter Name="Archivo" Mode="In" Type="String" />
             <Parameter Name="UsuarioDig" Mode="In" Type="String" />
+          </FunctionImport>
+          <FunctionImport Name="sp_in_API_ArticulosJson" ReturnType="Collection(GP.ENT.sp_in_API_ArticulosJson_Result)">
+            <Parameter Name="EmpId" Mode="In" Type="Int32" />
+            <Parameter Name="CodigoArticulo" Mode="In" Type="String" />
+            <Parameter Name="DescripArt" Mode="In" Type="String" />
+            <Parameter Name="DescripTecnica" Mode="In" Type="String" />
+            <Parameter Name="DescripCorta" Mode="In" Type="String" />
+            <Parameter Name="LineaProducto" Mode="In" Type="Int32" />
+            <Parameter Name="TipoModelo" Mode="In" Type="String" />
+            <Parameter Name="Tipo" Mode="In" Type="Int32" />
+            <Parameter Name="VigenciaDesde" Mode="In" Type="DateTime" />
+            <Parameter Name="VigenciaHasta" Mode="In" Type="DateTime" />
+            <Parameter Name="Rotacion" Mode="In" Type="String" />
+            <Parameter Name="CodigoFabrica" Mode="In" Type="String" />
+            <Parameter Name="UsaSerie" Mode="In" Type="Int32" />
+            <Parameter Name="UsaLote" Mode="In" Type="Int32" />
+            <Parameter Name="EAN13" Mode="In" Type="String" />
+            <Parameter Name="DUN14" Mode="In" Type="String" />
+            <Parameter Name="UnidadMedidaCompra" Mode="In" Type="String" />
+            <Parameter Name="UnidadMedidaVenta" Mode="In" Type="String" />
+            <Parameter Name="CodigoProveedor" Mode="In" Type="String" />
+            <Parameter Name="Marca" Mode="In" Type="String" />
+            <Parameter Name="Usuario" Mode="In" Type="String" />
+            <Parameter Name="CodigoExt" Mode="In" Type="String" />
+            <Parameter Name="GlosaLineaProducto" Mode="In" Type="String" />
+            <Parameter Name="Dato1" Mode="In" Type="String" />
+            <Parameter Name="Dato2" Mode="In" Type="String" />
+            <Parameter Name="Dato3" Mode="In" Type="String" />
+            <Parameter Name="Valor1" Mode="In" Type="Decimal" />
+            <Parameter Name="Valor2" Mode="In" Type="Decimal" />
+            <Parameter Name="Valor3" Mode="In" Type="Decimal" />
+            <Parameter Name="Fecha1" Mode="In" Type="DateTime" />
+            <Parameter Name="Fecha2" Mode="In" Type="DateTime" />
+            <Parameter Name="Fecha3" Mode="In" Type="DateTime" />
+            <Parameter Name="Origen" Mode="In" Type="String" />
+            <Parameter Name="ArticulosKit" Mode="In" Type="String" />
           </FunctionImport>
         </EntityContainer>
         <ComplexType Name="sp_in_API_PickUp_Result">
@@ -2206,11 +2210,6 @@
           <Property Type="String" Name="CodigoCategoria" Nullable="true" MaxLength="20" />
           <Property Type="String" Name="DescripcionCat" Nullable="true" MaxLength="50" />
         </ComplexType>
-        <ComplexType Name="sp_in_API_ArticulosJson_Result">
-          <Property Type="Int32" Name="Count" Nullable="true" />
-          <Property Type="String" Name="Resultado" Nullable="true" />
-          <Property Type="String" Name="Descripcion" Nullable="true" />
-        </ComplexType>
         <ComplexType Name="sp_GP_INT_RecibosASN_LPN_Result">
           <Property Type="String" Name="GlosaEstado" Nullable="true" MaxLength="100" />
           <Property Type="Decimal" Name="ReciboAsnId" Nullable="true" Precision="18" Scale="0" />
@@ -2297,6 +2296,11 @@
           <Property Type="String" Name="Resultado" Nullable="true" />
           <Property Type="String" Name="Descripcion" Nullable="true" />
           <Property Type="Int32" Name="SolRecepId" Nullable="true" />
+        </ComplexType>
+        <ComplexType Name="sp_in_API_ArticulosJson_Result">
+          <Property Type="Int32" Name="Count" Nullable="true" />
+          <Property Type="String" Name="Resultado" Nullable="true" />
+          <Property Type="String" Name="Descripcion" Nullable="true" />
         </ComplexType>
       </Schema>
     </edmx:ConceptualModels>
@@ -2954,15 +2958,6 @@
               </ComplexTypeMapping>
             </ResultMapping>
           </FunctionImportMapping>
-          <FunctionImportMapping FunctionImportName="sp_in_API_ArticulosJson" FunctionName="GP.ENT.Store.sp_in_API_ArticulosJson">
-            <ResultMapping>
-              <ComplexTypeMapping TypeName="GP.ENT.sp_in_API_ArticulosJson_Result">
-                <ScalarProperty Name="Count" ColumnName="Count" />
-                <ScalarProperty Name="Resultado" ColumnName="Resultado" />
-                <ScalarProperty Name="Descripcion" ColumnName="Descripcion" />
-              </ComplexTypeMapping>
-            </ResultMapping>
-          </FunctionImportMapping>
           <FunctionImportMapping FunctionImportName="sp_GP_INT_RecibosASN_LPN" FunctionName="GP.ENT.Store.sp_GP_INT_RecibosASN_LPN">
             <ResultMapping>
               <ComplexTypeMapping TypeName="GP.ENT.sp_GP_INT_RecibosASN_LPN_Result">
@@ -3113,6 +3108,15 @@
                 <ScalarProperty Name="Resultado" ColumnName="Resultado" />
                 <ScalarProperty Name="Descripcion" ColumnName="Descripcion" />
                 <ScalarProperty Name="SolRecepId" ColumnName="SolRecepId" />
+              </ComplexTypeMapping>
+            </ResultMapping>
+          </FunctionImportMapping>
+          <FunctionImportMapping FunctionImportName="sp_in_API_ArticulosJson" FunctionName="GP.ENT.Store.sp_in_API_ArticulosJson">
+            <ResultMapping>
+              <ComplexTypeMapping TypeName="GP.ENT.sp_in_API_ArticulosJson_Result">
+                <ScalarProperty Name="Count" ColumnName="Count" />
+                <ScalarProperty Name="Resultado" ColumnName="Resultado" />
+                <ScalarProperty Name="Descripcion" ColumnName="Descripcion" />
               </ComplexTypeMapping>
             </ResultMapping>
           </FunctionImportMapping>

@@ -1614,139 +1614,6 @@ namespace API_LIB.Model.GET_POINT.GP_ENT
             return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<sp_in_API_LogAPI_Result>("sp_in_API_LogAPI", nombreProcesoParameter, referenciaParameter, mensajeParameter, jSONParameter);
         }
     
-        public virtual ObjectResult<sp_in_API_ArticulosJson_Result> sp_in_API_ArticulosJson(Nullable<int> empId, string codigoArticulo, string descripArt, string descripTecnica, string descripCorta, Nullable<int> lineaProducto, string tipoModelo, Nullable<int> tipo, Nullable<System.DateTime> vigenciaDesde, Nullable<System.DateTime> vigenciaHasta, string rotacion, string codigoFabrica, Nullable<int> usaSerie, Nullable<int> usaLote, string eAN13, string dUN14, string unidadMedidaCompra, string unidadMedidaVenta, string codigoProveedor, string marca, string usuario, string codigoExt, string glosaLineaProducto, string dato1, string dato2, string dato3, Nullable<decimal> valor1, Nullable<decimal> valor2, Nullable<decimal> valor3, Nullable<System.DateTime> fecha1, Nullable<System.DateTime> fecha2, Nullable<System.DateTime> fecha3)
-        {
-            var empIdParameter = empId.HasValue ?
-                new ObjectParameter("EmpId", empId) :
-                new ObjectParameter("EmpId", typeof(int));
-    
-            var codigoArticuloParameter = codigoArticulo != null ?
-                new ObjectParameter("CodigoArticulo", codigoArticulo) :
-                new ObjectParameter("CodigoArticulo", typeof(string));
-    
-            var descripArtParameter = descripArt != null ?
-                new ObjectParameter("DescripArt", descripArt) :
-                new ObjectParameter("DescripArt", typeof(string));
-    
-            var descripTecnicaParameter = descripTecnica != null ?
-                new ObjectParameter("DescripTecnica", descripTecnica) :
-                new ObjectParameter("DescripTecnica", typeof(string));
-    
-            var descripCortaParameter = descripCorta != null ?
-                new ObjectParameter("DescripCorta", descripCorta) :
-                new ObjectParameter("DescripCorta", typeof(string));
-    
-            var lineaProductoParameter = lineaProducto.HasValue ?
-                new ObjectParameter("LineaProducto", lineaProducto) :
-                new ObjectParameter("LineaProducto", typeof(int));
-    
-            var tipoModeloParameter = tipoModelo != null ?
-                new ObjectParameter("TipoModelo", tipoModelo) :
-                new ObjectParameter("TipoModelo", typeof(string));
-    
-            var tipoParameter = tipo.HasValue ?
-                new ObjectParameter("Tipo", tipo) :
-                new ObjectParameter("Tipo", typeof(int));
-    
-            var vigenciaDesdeParameter = vigenciaDesde.HasValue ?
-                new ObjectParameter("VigenciaDesde", vigenciaDesde) :
-                new ObjectParameter("VigenciaDesde", typeof(System.DateTime));
-    
-            var vigenciaHastaParameter = vigenciaHasta.HasValue ?
-                new ObjectParameter("VigenciaHasta", vigenciaHasta) :
-                new ObjectParameter("VigenciaHasta", typeof(System.DateTime));
-    
-            var rotacionParameter = rotacion != null ?
-                new ObjectParameter("Rotacion", rotacion) :
-                new ObjectParameter("Rotacion", typeof(string));
-    
-            var codigoFabricaParameter = codigoFabrica != null ?
-                new ObjectParameter("CodigoFabrica", codigoFabrica) :
-                new ObjectParameter("CodigoFabrica", typeof(string));
-    
-            var usaSerieParameter = usaSerie.HasValue ?
-                new ObjectParameter("UsaSerie", usaSerie) :
-                new ObjectParameter("UsaSerie", typeof(int));
-    
-            var usaLoteParameter = usaLote.HasValue ?
-                new ObjectParameter("UsaLote", usaLote) :
-                new ObjectParameter("UsaLote", typeof(int));
-    
-            var eAN13Parameter = eAN13 != null ?
-                new ObjectParameter("EAN13", eAN13) :
-                new ObjectParameter("EAN13", typeof(string));
-    
-            var dUN14Parameter = dUN14 != null ?
-                new ObjectParameter("DUN14", dUN14) :
-                new ObjectParameter("DUN14", typeof(string));
-    
-            var unidadMedidaCompraParameter = unidadMedidaCompra != null ?
-                new ObjectParameter("UnidadMedidaCompra", unidadMedidaCompra) :
-                new ObjectParameter("UnidadMedidaCompra", typeof(string));
-    
-            var unidadMedidaVentaParameter = unidadMedidaVenta != null ?
-                new ObjectParameter("UnidadMedidaVenta", unidadMedidaVenta) :
-                new ObjectParameter("UnidadMedidaVenta", typeof(string));
-    
-            var codigoProveedorParameter = codigoProveedor != null ?
-                new ObjectParameter("CodigoProveedor", codigoProveedor) :
-                new ObjectParameter("CodigoProveedor", typeof(string));
-    
-            var marcaParameter = marca != null ?
-                new ObjectParameter("Marca", marca) :
-                new ObjectParameter("Marca", typeof(string));
-    
-            var usuarioParameter = usuario != null ?
-                new ObjectParameter("Usuario", usuario) :
-                new ObjectParameter("Usuario", typeof(string));
-    
-            var codigoExtParameter = codigoExt != null ?
-                new ObjectParameter("CodigoExt", codigoExt) :
-                new ObjectParameter("CodigoExt", typeof(string));
-    
-            var glosaLineaProductoParameter = glosaLineaProducto != null ?
-                new ObjectParameter("GlosaLineaProducto", glosaLineaProducto) :
-                new ObjectParameter("GlosaLineaProducto", typeof(string));
-    
-            var dato1Parameter = dato1 != null ?
-                new ObjectParameter("Dato1", dato1) :
-                new ObjectParameter("Dato1", typeof(string));
-    
-            var dato2Parameter = dato2 != null ?
-                new ObjectParameter("Dato2", dato2) :
-                new ObjectParameter("Dato2", typeof(string));
-    
-            var dato3Parameter = dato3 != null ?
-                new ObjectParameter("Dato3", dato3) :
-                new ObjectParameter("Dato3", typeof(string));
-    
-            var valor1Parameter = valor1.HasValue ?
-                new ObjectParameter("Valor1", valor1) :
-                new ObjectParameter("Valor1", typeof(decimal));
-    
-            var valor2Parameter = valor2.HasValue ?
-                new ObjectParameter("Valor2", valor2) :
-                new ObjectParameter("Valor2", typeof(decimal));
-    
-            var valor3Parameter = valor3.HasValue ?
-                new ObjectParameter("Valor3", valor3) :
-                new ObjectParameter("Valor3", typeof(decimal));
-    
-            var fecha1Parameter = fecha1.HasValue ?
-                new ObjectParameter("Fecha1", fecha1) :
-                new ObjectParameter("Fecha1", typeof(System.DateTime));
-    
-            var fecha2Parameter = fecha2.HasValue ?
-                new ObjectParameter("Fecha2", fecha2) :
-                new ObjectParameter("Fecha2", typeof(System.DateTime));
-    
-            var fecha3Parameter = fecha3.HasValue ?
-                new ObjectParameter("Fecha3", fecha3) :
-                new ObjectParameter("Fecha3", typeof(System.DateTime));
-    
-            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<sp_in_API_ArticulosJson_Result>("sp_in_API_ArticulosJson", empIdParameter, codigoArticuloParameter, descripArtParameter, descripTecnicaParameter, descripCortaParameter, lineaProductoParameter, tipoModeloParameter, tipoParameter, vigenciaDesdeParameter, vigenciaHastaParameter, rotacionParameter, codigoFabricaParameter, usaSerieParameter, usaLoteParameter, eAN13Parameter, dUN14Parameter, unidadMedidaCompraParameter, unidadMedidaVentaParameter, codigoProveedorParameter, marcaParameter, usuarioParameter, codigoExtParameter, glosaLineaProductoParameter, dato1Parameter, dato2Parameter, dato3Parameter, valor1Parameter, valor2Parameter, valor3Parameter, fecha1Parameter, fecha2Parameter, fecha3Parameter);
-        }
-    
         public virtual ObjectResult<sp_GP_INT_RecibosASN_LPN_Result> sp_GP_INT_RecibosASN_LPN(string archivo, string userName, Nullable<System.DateTime> fechaProceso, string aux_Origen, Nullable<decimal> reciboAsnId)
         {
             var archivoParameter = archivo != null ?
@@ -3263,6 +3130,147 @@ namespace API_LIB.Model.GET_POINT.GP_ENT
                 new ObjectParameter("UsuarioDig", typeof(string));
     
             return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<sp_proc_API_TMPSolRecepcionJson_Result>("sp_proc_API_TMPSolRecepcionJson", archivoParameter, usuarioDigParameter);
+        }
+    
+        public virtual ObjectResult<sp_in_API_ArticulosJson_Result> sp_in_API_ArticulosJson(Nullable<int> empId, string codigoArticulo, string descripArt, string descripTecnica, string descripCorta, Nullable<int> lineaProducto, string tipoModelo, Nullable<int> tipo, Nullable<System.DateTime> vigenciaDesde, Nullable<System.DateTime> vigenciaHasta, string rotacion, string codigoFabrica, Nullable<int> usaSerie, Nullable<int> usaLote, string eAN13, string dUN14, string unidadMedidaCompra, string unidadMedidaVenta, string codigoProveedor, string marca, string usuario, string codigoExt, string glosaLineaProducto, string dato1, string dato2, string dato3, Nullable<decimal> valor1, Nullable<decimal> valor2, Nullable<decimal> valor3, Nullable<System.DateTime> fecha1, Nullable<System.DateTime> fecha2, Nullable<System.DateTime> fecha3, string origen, string articulosKit)
+        {
+            var empIdParameter = empId.HasValue ?
+                new ObjectParameter("EmpId", empId) :
+                new ObjectParameter("EmpId", typeof(int));
+    
+            var codigoArticuloParameter = codigoArticulo != null ?
+                new ObjectParameter("CodigoArticulo", codigoArticulo) :
+                new ObjectParameter("CodigoArticulo", typeof(string));
+    
+            var descripArtParameter = descripArt != null ?
+                new ObjectParameter("DescripArt", descripArt) :
+                new ObjectParameter("DescripArt", typeof(string));
+    
+            var descripTecnicaParameter = descripTecnica != null ?
+                new ObjectParameter("DescripTecnica", descripTecnica) :
+                new ObjectParameter("DescripTecnica", typeof(string));
+    
+            var descripCortaParameter = descripCorta != null ?
+                new ObjectParameter("DescripCorta", descripCorta) :
+                new ObjectParameter("DescripCorta", typeof(string));
+    
+            var lineaProductoParameter = lineaProducto.HasValue ?
+                new ObjectParameter("LineaProducto", lineaProducto) :
+                new ObjectParameter("LineaProducto", typeof(int));
+    
+            var tipoModeloParameter = tipoModelo != null ?
+                new ObjectParameter("TipoModelo", tipoModelo) :
+                new ObjectParameter("TipoModelo", typeof(string));
+    
+            var tipoParameter = tipo.HasValue ?
+                new ObjectParameter("Tipo", tipo) :
+                new ObjectParameter("Tipo", typeof(int));
+    
+            var vigenciaDesdeParameter = vigenciaDesde.HasValue ?
+                new ObjectParameter("VigenciaDesde", vigenciaDesde) :
+                new ObjectParameter("VigenciaDesde", typeof(System.DateTime));
+    
+            var vigenciaHastaParameter = vigenciaHasta.HasValue ?
+                new ObjectParameter("VigenciaHasta", vigenciaHasta) :
+                new ObjectParameter("VigenciaHasta", typeof(System.DateTime));
+    
+            var rotacionParameter = rotacion != null ?
+                new ObjectParameter("Rotacion", rotacion) :
+                new ObjectParameter("Rotacion", typeof(string));
+    
+            var codigoFabricaParameter = codigoFabrica != null ?
+                new ObjectParameter("CodigoFabrica", codigoFabrica) :
+                new ObjectParameter("CodigoFabrica", typeof(string));
+    
+            var usaSerieParameter = usaSerie.HasValue ?
+                new ObjectParameter("UsaSerie", usaSerie) :
+                new ObjectParameter("UsaSerie", typeof(int));
+    
+            var usaLoteParameter = usaLote.HasValue ?
+                new ObjectParameter("UsaLote", usaLote) :
+                new ObjectParameter("UsaLote", typeof(int));
+    
+            var eAN13Parameter = eAN13 != null ?
+                new ObjectParameter("EAN13", eAN13) :
+                new ObjectParameter("EAN13", typeof(string));
+    
+            var dUN14Parameter = dUN14 != null ?
+                new ObjectParameter("DUN14", dUN14) :
+                new ObjectParameter("DUN14", typeof(string));
+    
+            var unidadMedidaCompraParameter = unidadMedidaCompra != null ?
+                new ObjectParameter("UnidadMedidaCompra", unidadMedidaCompra) :
+                new ObjectParameter("UnidadMedidaCompra", typeof(string));
+    
+            var unidadMedidaVentaParameter = unidadMedidaVenta != null ?
+                new ObjectParameter("UnidadMedidaVenta", unidadMedidaVenta) :
+                new ObjectParameter("UnidadMedidaVenta", typeof(string));
+    
+            var codigoProveedorParameter = codigoProveedor != null ?
+                new ObjectParameter("CodigoProveedor", codigoProveedor) :
+                new ObjectParameter("CodigoProveedor", typeof(string));
+    
+            var marcaParameter = marca != null ?
+                new ObjectParameter("Marca", marca) :
+                new ObjectParameter("Marca", typeof(string));
+    
+            var usuarioParameter = usuario != null ?
+                new ObjectParameter("Usuario", usuario) :
+                new ObjectParameter("Usuario", typeof(string));
+    
+            var codigoExtParameter = codigoExt != null ?
+                new ObjectParameter("CodigoExt", codigoExt) :
+                new ObjectParameter("CodigoExt", typeof(string));
+    
+            var glosaLineaProductoParameter = glosaLineaProducto != null ?
+                new ObjectParameter("GlosaLineaProducto", glosaLineaProducto) :
+                new ObjectParameter("GlosaLineaProducto", typeof(string));
+    
+            var dato1Parameter = dato1 != null ?
+                new ObjectParameter("Dato1", dato1) :
+                new ObjectParameter("Dato1", typeof(string));
+    
+            var dato2Parameter = dato2 != null ?
+                new ObjectParameter("Dato2", dato2) :
+                new ObjectParameter("Dato2", typeof(string));
+    
+            var dato3Parameter = dato3 != null ?
+                new ObjectParameter("Dato3", dato3) :
+                new ObjectParameter("Dato3", typeof(string));
+    
+            var valor1Parameter = valor1.HasValue ?
+                new ObjectParameter("Valor1", valor1) :
+                new ObjectParameter("Valor1", typeof(decimal));
+    
+            var valor2Parameter = valor2.HasValue ?
+                new ObjectParameter("Valor2", valor2) :
+                new ObjectParameter("Valor2", typeof(decimal));
+    
+            var valor3Parameter = valor3.HasValue ?
+                new ObjectParameter("Valor3", valor3) :
+                new ObjectParameter("Valor3", typeof(decimal));
+    
+            var fecha1Parameter = fecha1.HasValue ?
+                new ObjectParameter("Fecha1", fecha1) :
+                new ObjectParameter("Fecha1", typeof(System.DateTime));
+    
+            var fecha2Parameter = fecha2.HasValue ?
+                new ObjectParameter("Fecha2", fecha2) :
+                new ObjectParameter("Fecha2", typeof(System.DateTime));
+    
+            var fecha3Parameter = fecha3.HasValue ?
+                new ObjectParameter("Fecha3", fecha3) :
+                new ObjectParameter("Fecha3", typeof(System.DateTime));
+    
+            var origenParameter = origen != null ?
+                new ObjectParameter("Origen", origen) :
+                new ObjectParameter("Origen", typeof(string));
+    
+            var articulosKitParameter = articulosKit != null ?
+                new ObjectParameter("ArticulosKit", articulosKit) :
+                new ObjectParameter("ArticulosKit", typeof(string));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<sp_in_API_ArticulosJson_Result>("sp_in_API_ArticulosJson", empIdParameter, codigoArticuloParameter, descripArtParameter, descripTecnicaParameter, descripCortaParameter, lineaProductoParameter, tipoModeloParameter, tipoParameter, vigenciaDesdeParameter, vigenciaHastaParameter, rotacionParameter, codigoFabricaParameter, usaSerieParameter, usaLoteParameter, eAN13Parameter, dUN14Parameter, unidadMedidaCompraParameter, unidadMedidaVentaParameter, codigoProveedorParameter, marcaParameter, usuarioParameter, codigoExtParameter, glosaLineaProductoParameter, dato1Parameter, dato2Parameter, dato3Parameter, valor1Parameter, valor2Parameter, valor3Parameter, fecha1Parameter, fecha2Parameter, fecha3Parameter, origenParameter, articulosKitParameter);
         }
     }
 }

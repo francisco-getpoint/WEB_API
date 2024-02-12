@@ -682,6 +682,8 @@ namespace API_GP_LOGISTICO.Controllers.util
             public int EmpId { get; set; }
             public List<API_REQUEST_TYPE_30_DETALLES> Articulos { get; set; }
         }
+
+        [DataContract]
         public class API_REQUEST_TYPE_30_DETALLES
         {
             [DataMember(Order = 1)]
@@ -752,34 +754,40 @@ namespace API_GP_LOGISTICO.Controllers.util
             public string GlosaLineaProducto { get; set; }
 
             [DataMember(Order = 22)]
-            public string Dato1 { get; set; }
+            public string Origen {  get; set; }
 
             [DataMember(Order = 23)]
-            public string Dato2 { get; set; }
+            public string Dato1 { get; set; }
 
             [DataMember(Order = 24)]
-            public string Dato3 { get; set; }
+            public string Dato2 { get; set; }
 
             [DataMember(Order = 25)]
-            public decimal Valor1 { get; set; }
+            public string Dato3 { get; set; }
 
             [DataMember(Order = 26)]
-            public decimal Valor2 { get; set; }
+            public decimal Valor1 { get; set; }
 
             [DataMember(Order = 27)]
-            public decimal Valor3 { get; set; }
+            public decimal Valor2 { get; set; }
 
             [DataMember(Order = 28)]
-            public string Fecha1 { get; set; }
+            public decimal Valor3 { get; set; }
 
             [DataMember(Order = 29)]
-            public string Fecha2 { get; set; }
+            public string Fecha1 { get; set; }
 
             [DataMember(Order = 30)]
+            public string Fecha2 { get; set; }
+
+            [DataMember(Order = 31)]
             public string Fecha3 { get; set; }
 
-            [DataMember(Order = 99)]
+            [DataMember(Order = 98)]
             public List<API_REQUEST_TYPE_30_DETALLES_UM> UnidadMedida { get; set; }
+
+            [DataMember(Order = 99)]
+            public List<API_REQUEST_TYPE_30_DETALLES_KIT> Kit = new List<API_REQUEST_TYPE_30_DETALLES_KIT>();
 
             //campos L_Articulos
             //CodigoDig int	4
@@ -820,6 +828,8 @@ namespace API_GP_LOGISTICO.Controllers.util
             //IndicadorCertif tinyint	1
             //CodigoBarra char	50
         }
+
+        [DataContract]
         public class API_REQUEST_TYPE_30_DETALLES_UM
         {
             [DataMember(Order = 1)]
@@ -857,6 +867,16 @@ namespace API_GP_LOGISTICO.Controllers.util
 
             [DataMember(Order = 12)]
             public int TiempoDesp { get; set; }
+        }
+
+        [DataContract]
+        public class API_REQUEST_TYPE_30_DETALLES_KIT
+        {
+            [DataMember(Order = 1)]
+            public string CodigoArticulo { get; set; }
+
+            [DataMember(Order = 2)]
+            public decimal CantidadRequerida { get; set; }
         }
         public class API_REQUEST_TYPE_31
         {
@@ -1306,6 +1326,33 @@ namespace API_GP_LOGISTICO.Controllers.util
 
             [DataMember(Order = 8)]
             public int IndTienePicking { get; set; }
+
+            [DataMember(Order = 9)]
+            public string Dato1 { get; set; }
+
+            [DataMember(Order = 10)]
+            public string Dato2 { get; set; }
+
+            [DataMember(Order = 11)]
+            public string Dato3 { get; set; }
+
+            [DataMember(Order = 12)]
+            public string Fecha1 { get; set; }
+
+            [DataMember(Order = 13)]
+            public string Fecha2 { get; set; }
+
+            [DataMember(Order = 14)]
+            public string Fecha3 { get; set; }
+
+            [DataMember(Order = 15)]
+            public decimal Valor1 { get; set; }
+
+            [DataMember(Order = 16)]
+            public decimal Valor2 { get; set; }
+
+            [DataMember(Order = 17)]
+            public decimal Valor3 { get; set; }
         }
 
         //JSON Confirma Cierre de Inventario 
@@ -1363,6 +1410,49 @@ namespace API_GP_LOGISTICO.Controllers.util
 
             [DataMember(Order = 5)]
             public string FechaEntrega { get; set; }
+        }
+
+        //JSON Guarda datos L_Forecast_ProduccionNB
+
+        [DataContract]
+        public class API_REQUEST_TYPE_49_Forecast_ProduccionNB
+        {
+            [DataMember(Order = 1)]
+            public int Empid { get; set; }
+
+            [DataMember(Order = 99)]
+            public List<API_REQUEST_TYPE_49_Forecast_ProduccionNB_Items> Items { get; set; }
+        }
+
+        [DataContract]
+        public class API_REQUEST_TYPE_49_Forecast_ProduccionNB_Items
+        {
+            [DataMember(Order = 1)]
+            public string CodigoArticulo { get; set; }
+
+            [DataMember(Order = 2)]
+            public decimal Canal1 { get; set; }
+
+            [DataMember(Order = 3)]
+            public decimal Canal2 { get; set; }
+
+            [DataMember(Order = 4)]
+            public decimal Canal3 { get; set; }
+
+            [DataMember(Order = 5)]
+            public decimal Canal4 { get; set; }
+
+            [DataMember(Order = 6)]
+            public string Periodo { get; set; }
+
+            [DataMember(Order = 7)]
+            public string FechaDesde { get; set; }
+
+            [DataMember(Order = 8)]
+            public string FechaHasta { get; set; }
+
+            [DataMember(Order = 9)]
+            public string Usuario { get; set; }
         }
 
         #endregion
