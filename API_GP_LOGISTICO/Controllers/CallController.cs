@@ -3224,24 +3224,35 @@ namespace API_GP_LOGISTICO.Controllers
             HttpStatusCode STATUS_CODE = new HttpStatusCode();
             string NombreProceso = "SOLRECEP/CREARJSON";
 
-            //Valida Token y Secret, retorna Usuario
-            #region VALIDA ACCESO API/RECURSO NOK
-            CONFIGURATION.RESOURCES_ID = (long)CONFIG_RESOURCES.RESO_9;
-            if (!ACCESS.RESOLVE_ACCESS(this.Request, CONFIGURATION, out USERNAME, out ERROR))
-            {
-                LogInfo(NombreProceso, ERROR.Mensaje.Trim(), true, true, "", "");
-
-                RESPONSE.resultado = "ERROR";
-                RESPONSE.descripcion = "";
-                RESPONSE.resultado_descripcion = ERROR.Mensaje;
-                RESPONSE.resultado_codigo = ERROR.ErrID;
-                STATUS_CODE = HttpStatusCode.Unauthorized;
-                return new HttpActionResult(Request, (ConfigurationManager.AppSettings["InformaStatusAPI"].ToString() == "SI" ? STATUS_CODE : HttpStatusCode.OK), RESPONSE);
-            }
-            #endregion
-
             //valida estructura json recibido sea valida ---
             #region VALIDA JSON RECIBIDO NOK
+
+            //Valida json en blanco ---
+            if (REQUEST == null)
+            {
+                #region RESPONSE NOK
+                ERROR = API_CLS.API_RESPONSE_ERRORS.Find(1015); //REQUEST - ERROR EN CUERPO RECIBIDO
+
+                LogInfo(NombreProceso, ERROR.Mensaje.Trim() + ". " + "El json viene vacio", true, true, "", "");
+
+                RESPONSE.resultado = "ERROR";
+                RESPONSE.descripcion = "El json viene vacio";
+                RESPONSE.resultado_descripcion = ERROR.Mensaje;
+                RESPONSE.resultado_codigo = ERROR.ErrID;
+                STATUS_CODE = HttpStatusCode.BadRequest;
+                return new HttpActionResult(Request, (ConfigurationManager.AppSettings["InformaStatusAPI"].ToString() == "SI" ? STATUS_CODE : HttpStatusCode.OK), RESPONSE);
+                #endregion
+            }
+
+            //Guarda JSON recibido en el log ----------
+            var body = JsonConvert.SerializeObject(REQUEST);
+            LogInfo(NombreProceso,
+                    "Creación SDR, JSON: " + body.ToString(),
+                    false,
+                    true,
+                    (REQUEST.NumeroReferencia == null ? "" : REQUEST.NumeroReferencia),
+                    body.ToString());
+
             if (!ModelState.IsValid)
             {
                 #region RESPONSE NOK
@@ -3271,33 +3282,23 @@ namespace API_GP_LOGISTICO.Controllers
                 #endregion
             }
 
-            //Valida json en blanco ---
-            if (REQUEST == null)
-            {
-                #region RESPONSE NOK
-                ERROR = API_CLS.API_RESPONSE_ERRORS.Find(1015); //REQUEST - ERROR EN CUERPO RECIBIDO
-
-                LogInfo(NombreProceso, ERROR.Mensaje.Trim() + ". " + "El json viene vacio", true, true, "", "");
-
-                RESPONSE.resultado = "ERROR";
-                RESPONSE.descripcion = "El json viene vacio";
-                RESPONSE.resultado_descripcion = ERROR.Mensaje;
-                RESPONSE.resultado_codigo = ERROR.ErrID;
-                STATUS_CODE = HttpStatusCode.BadRequest;
-                return new HttpActionResult(Request, (ConfigurationManager.AppSettings["InformaStatusAPI"].ToString() == "SI" ? STATUS_CODE : HttpStatusCode.OK), RESPONSE);
-                #endregion
-            }
-
             #endregion
 
-            //Guarda JSON recibido en el log ----------
-            var body = JsonConvert.SerializeObject(REQUEST);
-            LogInfo(NombreProceso, 
-                    "Creación SDR, JSON: " + body.ToString(), 
-                    false, 
-                    true, 
-                    REQUEST.NumeroReferencia, 
-                    body.ToString());
+            //Valida Token y Secret, retorna Usuario
+            #region VALIDA ACCESO API/RECURSO NOK
+            CONFIGURATION.RESOURCES_ID = (long)CONFIG_RESOURCES.RESO_9;
+            if (!ACCESS.RESOLVE_ACCESS(this.Request, CONFIGURATION, out USERNAME, out ERROR))
+            {
+                LogInfo(NombreProceso, ERROR.Mensaje.Trim(), true, true, "", "");
+
+                RESPONSE.resultado = "ERROR";
+                RESPONSE.descripcion = "";
+                RESPONSE.resultado_descripcion = ERROR.Mensaje;
+                RESPONSE.resultado_codigo = ERROR.ErrID;
+                STATUS_CODE = HttpStatusCode.Unauthorized;
+                return new HttpActionResult(Request, (ConfigurationManager.AppSettings["InformaStatusAPI"].ToString() == "SI" ? STATUS_CODE : HttpStatusCode.OK), RESPONSE);
+            }
+            #endregion
 
             //valida usuario empresa ---
             #region VALIDA EMPRESA NOK
@@ -3524,7 +3525,7 @@ namespace API_GP_LOGISTICO.Controllers
                         body.ToString());
 
                 RESPONSE.resultado = "ERROR";
-                RESPONSE.descripcion = "";
+                RESPONSE.descripcion = ex.Message.Trim();
                 RESPONSE.resultado_codigo = ERROR.ErrID;
                 RESPONSE.resultado_descripcion = ERROR.Mensaje;
                 STATUS_CODE = HttpStatusCode.BadRequest;
@@ -3612,7 +3613,7 @@ namespace API_GP_LOGISTICO.Controllers
                                     body.ToString());
 
                             RESPONSE.resultado = "ERROR";
-                            RESPONSE.descripcion = "";
+                            RESPONSE.descripcion = ex.Message.Trim();
                             RESPONSE.resultado_codigo = ERROR.ErrID;
                             RESPONSE.resultado_descripcion = ERROR.Mensaje;
                             STATUS_CODE = HttpStatusCode.BadRequest;
@@ -3762,6 +3763,66 @@ namespace API_GP_LOGISTICO.Controllers
             HttpStatusCode STATUS_CODE = new HttpStatusCode();
             string NombreProceso = "SOLDESP/CREARJSON";
 
+            //Valida estructura JSON recibido sea valida
+            #region VALIDACIONES JSON RECIBIDO NOK
+
+            //Si no se envia json ---
+            if (REQUEST == null)
+            {
+                #region RESPONSE NOK
+                ERROR = API_CLS.API_RESPONSE_ERRORS.Find(1015); //REQUEST - ERROR EN CUERPO RECIBIDO
+
+                LogInfo(NombreProceso, ERROR.Mensaje.Trim() + ". " + "El json viene vacio", true, true, "", "");
+
+                RESPONSE.resultado = "ERROR";
+                RESPONSE.descripcion = "El json viene vacio";
+                RESPONSE.resultado_codigo = ERROR.ErrID;
+                RESPONSE.resultado_descripcion = ERROR.Mensaje;
+                STATUS_CODE = HttpStatusCode.BadRequest;
+                return new HttpActionResult(Request, (ConfigurationManager.AppSettings["InformaStatusAPI"].ToString() == "SI" ? STATUS_CODE : HttpStatusCode.OK), RESPONSE);
+                #endregion
+            }
+
+            //Guarda JSON recibido como parametro ----------
+            var body = JsonConvert.SerializeObject(REQUEST);
+            LogInfo(NombreProceso,
+                    "Creación SDD, JSON: " + body.ToString(),
+                    false,
+                    true,
+                    (REQUEST.NumeroReferencia == null ? "" : REQUEST.NumeroReferencia),
+                    body.ToString());
+
+            if (!ModelState.IsValid)
+            {
+                #region RESPONSE NOK
+                //Rescata lista de errores del ModelState y lo agrega al mensaje de error 
+                List<string> ErroresModelo = ErroresModelo = ModelState.Values.SelectMany(v => v.Errors).Select(v => v.ErrorMessage + " " + v.Exception.Message).ToList();
+                string MensajeError = "";
+
+                //Si retorna resultados carga JSON de retorno
+                if (ErroresModelo.Count > 0)
+                {
+                    foreach (var ErrorModelo in ErroresModelo)
+                    {
+                        MensajeError = MensajeError.Trim() + " " + ErrorModelo.ToString().Trim() + ".";
+                    }
+                }
+
+                ERROR = API_CLS.API_RESPONSE_ERRORS.Find(1015); //REQUEST - ERROR EN CUERPO RECIBIDO
+
+                LogInfo(NombreProceso, ERROR.Mensaje.Trim() + ". " + "Problemas en el formato del JSON enviado. " + MensajeError.Trim(), true, true, "", "");
+
+                RESPONSE.resultado = "ERROR";
+                RESPONSE.descripcion = "Problemas en el formato del JSON enviado. " + MensajeError.Trim();
+                RESPONSE.resultado_codigo = ERROR.ErrID;
+                RESPONSE.resultado_descripcion = ERROR.Mensaje;
+                STATUS_CODE = HttpStatusCode.BadRequest;
+                return new HttpActionResult(Request, (ConfigurationManager.AppSettings["InformaStatusAPI"].ToString() == "SI" ? STATUS_CODE : HttpStatusCode.OK), RESPONSE);
+                #endregion
+            }
+
+            #endregion
+
             //valida token y retorna usuario
             #region VALIDA ACCESO API/RECURSO NOK
             CONFIGURATION.RESOURCES_ID = (long)CONFIG_RESOURCES.RESO_9;
@@ -3792,65 +3853,6 @@ namespace API_GP_LOGISTICO.Controllers
                 #endregion
             }
             #endregion
-
-            //Valida estructura JSON recibido sea valida
-            #region VALIDACIONES JSON RECIBIDO NOK
-            if (!ModelState.IsValid)
-            {
-                #region RESPONSE NOK
-                //Rescata lista de errores del ModelState y lo agrega al mensaje de error 
-                List<string> ErroresModelo = ErroresModelo = ModelState.Values.SelectMany(v => v.Errors).Select(v => v.ErrorMessage + " " + v.Exception.Message).ToList();
-                string MensajeError = "";
-
-                //Si retorna resultados carga JSON de retorno
-                if (ErroresModelo.Count > 0)
-                {
-                    foreach (var ErrorModelo in ErroresModelo)
-                    {
-                        MensajeError = MensajeError.Trim() + " " + ErrorModelo.ToString().Trim() + ".";
-                    }
-                }
-
-                ERROR = API_CLS.API_RESPONSE_ERRORS.Find(1015); //REQUEST - ERROR EN CUERPO RECIBIDO
-
-                LogInfo(NombreProceso, ERROR.Mensaje.Trim() + ". " + "Problemas en el formato del JSON enviado. " + MensajeError.Trim(), true, true, "", "");
-
-                RESPONSE.resultado = "ERROR";
-                RESPONSE.descripcion = "Problemas en el formato del JSON enviado. " + MensajeError.Trim();
-                RESPONSE.resultado_codigo = ERROR.ErrID;
-                RESPONSE.resultado_descripcion = ERROR.Mensaje;
-                STATUS_CODE = HttpStatusCode.BadRequest;
-                return new HttpActionResult(Request, (ConfigurationManager.AppSettings["InformaStatusAPI"].ToString() == "SI" ? STATUS_CODE : HttpStatusCode.OK), RESPONSE);
-                #endregion
-            }
-
-            //Si no se envia json ---
-            if (REQUEST == null)
-            {
-                #region RESPONSE NOK
-                ERROR = API_CLS.API_RESPONSE_ERRORS.Find(1015); //REQUEST - ERROR EN CUERPO RECIBIDO
-
-                LogInfo(NombreProceso, ERROR.Mensaje.Trim() + ". " + "El json viene vacio", true, true, "", "");
-
-                RESPONSE.resultado = "ERROR";
-                RESPONSE.descripcion = "El json viene vacio";
-                RESPONSE.resultado_codigo = ERROR.ErrID;
-                RESPONSE.resultado_descripcion = ERROR.Mensaje;
-                STATUS_CODE = HttpStatusCode.BadRequest;
-                return new HttpActionResult(Request, (ConfigurationManager.AppSettings["InformaStatusAPI"].ToString() == "SI" ? STATUS_CODE : HttpStatusCode.OK), RESPONSE);
-                #endregion
-            }
-            #endregion
-
-            //Guarda JSON recibido como parametro ----------
-            var body = JsonConvert.SerializeObject(REQUEST);
-            LogInfo(NombreProceso, 
-                    "Creación SDD, JSON: " + body.ToString(), 
-                    false, 
-                    true, 
-                    REQUEST.NumeroReferencia, 
-                    body.ToString());
-
 
             string ListadoCodigoArticulo = "";
 
@@ -4083,14 +4085,14 @@ namespace API_GP_LOGISTICO.Controllers
                 ERROR = API_CLS.API_RESPONSE_ERRORS.Find(1017);//REQUEST - ERROR PROCESO BASE DE DATOS
 
                 LogInfo(NombreProceso,
-                        ERROR.Mensaje.Trim(),
+                        ERROR.Mensaje.Trim() + ". " + ex.Message.Trim(),
                         true,
                         true,
                         REQUEST.NumeroReferencia,
                         body.ToString());
 
                 RESPONSE.resultado = "ERROR";
-                RESPONSE.descripcion = "";
+                RESPONSE.descripcion = ex.Message.Trim();
                 RESPONSE.resultado_codigo = ERROR.ErrID;
                 RESPONSE.resultado_descripcion = ERROR.Mensaje;
                 STATUS_CODE = HttpStatusCode.BadRequest;
@@ -4149,14 +4151,14 @@ namespace API_GP_LOGISTICO.Controllers
                             ERROR = API_CLS.API_RESPONSE_ERRORS.Find(1017);//REQUEST - ERROR PROCESO BASE DE DATOS
 
                             LogInfo(NombreProceso,
-                                    ERROR.Mensaje.Trim(),
+                                    ERROR.Mensaje.Trim() + ". " + ex.Message.Trim(),
                                     true,
                                     true,
                                     REQUEST.NumeroReferencia,
                                     body.ToString());
 
                             RESPONSE.resultado = "ERROR";
-                            RESPONSE.descripcion = "";
+                            RESPONSE.descripcion = ex.Message.Trim();
                             RESPONSE.resultado_codigo = ERROR.ErrID;
                             RESPONSE.resultado_descripcion = ERROR.Mensaje;
                             STATUS_CODE = HttpStatusCode.BadRequest;
@@ -4206,14 +4208,14 @@ namespace API_GP_LOGISTICO.Controllers
                         ERROR = API_CLS.API_RESPONSE_ERRORS.Find(1017);//REQUEST - ERROR PROCESO BASE DE DATOS
 
                         LogInfo(NombreProceso,
-                                ERROR.Mensaje.Trim(),
+                                ERROR.Mensaje.Trim() + ". " + ex.Message.Trim(),
                                 true,
                                 true,
                                 REQUEST.NumeroReferencia,
                                 body.ToString());
 
                         RESPONSE.resultado = "ERROR";
-                        RESPONSE.descripcion = "";
+                        RESPONSE.descripcion = ex.Message.Trim();
                         RESPONSE.resultado_codigo = ERROR.ErrID;
                         RESPONSE.resultado_descripcion = ERROR.Mensaje;
                         STATUS_CODE = HttpStatusCode.BadRequest;
@@ -5418,24 +5420,26 @@ namespace API_GP_LOGISTICO.Controllers
             HttpStatusCode STATUS_CODE = new HttpStatusCode();
             string NombreProceso = "PRODUCTO/CREARJSON";
 
-            //valida token y retorna usuario
-            #region VALIDA ACCESO API/RECURSO NOK
-            CONFIGURATION.RESOURCES_ID = (long)CONFIG_RESOURCES.RESO_9;
-            if (!ACCESS.RESOLVE_ACCESS(this.Request, CONFIGURATION, out USERNAME, out ERROR))
-            {
-                LogInfo(NombreProceso, ERROR.Mensaje.Trim(), true, true, "", "");
-
-                RESPONSE.resultado = "ERROR";
-                RESPONSE.descripcion = "";
-                RESPONSE.resultado_codigo = ERROR.ErrID;
-                RESPONSE.resultado_descripcion = ERROR.Mensaje;
-                STATUS_CODE = HttpStatusCode.Unauthorized;
-                return new HttpActionResult(Request, (ConfigurationManager.AppSettings["InformaStatusAPI"].ToString() == "SI" ? STATUS_CODE : HttpStatusCode.OK), RESPONSE);
-            }
-            #endregion
-
             //Valida estructura JSON recibido sea valida
             #region VALIDACIONES JSON RECIBIDO NOK
+
+            //Si no se envia json ---
+            if (REQUEST == null)
+            {
+                #region RESPONSE NOK
+                ERROR = API_CLS.API_RESPONSE_ERRORS.Find(1015); //REQUEST - ERROR EN CUERPO RECIBIDO
+
+                LogInfo(NombreProceso, ERROR.Mensaje.Trim() + ". " + "El json viene vacio", true, true, "", "");
+
+                RESPONSE.resultado = "ERROR";
+                RESPONSE.descripcion = "El json viene vacio";
+                RESPONSE.resultado_codigo = ERROR.ErrID;
+                RESPONSE.resultado_descripcion = ERROR.Mensaje;
+                STATUS_CODE = HttpStatusCode.BadRequest;
+                return new HttpActionResult(Request, (ConfigurationManager.AppSettings["InformaStatusAPI"].ToString() == "SI" ? STATUS_CODE : HttpStatusCode.OK), RESPONSE);
+                #endregion
+            }
+
             if (!ModelState.IsValid) //si hay errores en el json
             {
                 #region RESPONSE NOK
@@ -5465,21 +5469,21 @@ namespace API_GP_LOGISTICO.Controllers
                 #endregion
             }
 
-            //Si no se envia json ---
-            if (REQUEST == null)
-            {
-                #region RESPONSE NOK
-                ERROR = API_CLS.API_RESPONSE_ERRORS.Find(1015); //REQUEST - ERROR EN CUERPO RECIBIDO
+            #endregion
 
-                LogInfo(NombreProceso, ERROR.Mensaje.Trim() + ". " + "El json viene vacio", true, true, "", "");
+            //valida token y retorna usuario
+            #region VALIDA ACCESO API/RECURSO NOK
+            CONFIGURATION.RESOURCES_ID = (long)CONFIG_RESOURCES.RESO_9;
+            if (!ACCESS.RESOLVE_ACCESS(this.Request, CONFIGURATION, out USERNAME, out ERROR))
+            {
+                LogInfo(NombreProceso, ERROR.Mensaje.Trim(), true, true, "", "");
 
                 RESPONSE.resultado = "ERROR";
-                RESPONSE.descripcion = "El json viene vacio";
+                RESPONSE.descripcion = "";
                 RESPONSE.resultado_codigo = ERROR.ErrID;
                 RESPONSE.resultado_descripcion = ERROR.Mensaje;
-                STATUS_CODE = HttpStatusCode.BadRequest;
+                STATUS_CODE = HttpStatusCode.Unauthorized;
                 return new HttpActionResult(Request, (ConfigurationManager.AppSettings["InformaStatusAPI"].ToString() == "SI" ? STATUS_CODE : HttpStatusCode.OK), RESPONSE);
-                #endregion
             }
             #endregion
 
@@ -6985,6 +6989,7 @@ namespace API_GP_LOGISTICO.Controllers
         }
         #endregion
 
+        //Especial TOYOTA
         //Asocia la OC de SAP con la SDR generada con datos de TOPAS a traves de datos de referencia (36) ----------
         #region ACTUALIZA REFERENCIA SDR (36)
         [HttpPost]
@@ -11709,8 +11714,9 @@ namespace API_GP_LOGISTICO.Controllers
         }
         #endregion
 
-        //recurso 51 Cambio Estado RDM --------
-        #region Cambio Estado RDM (51)
+        //recurso 51 Adjunta Archivo Base64 a la SDD --------
+        #region Adjunta Archivo Base64 a la SDD (51)
+        [HttpGet]
         [HttpPost]
         [Route("SOLDESP/ADJUNTARARCHIVO")]
         public IHttpActionResult recurso51([FromBody] API_REQUEST_TYPE_47_CambioEstadoRDM REQUEST)
@@ -11828,6 +11834,300 @@ namespace API_GP_LOGISTICO.Controllers
                 REQUEST.TipoReferencia = (REQUEST.TipoReferencia == null ? "" : REQUEST.TipoReferencia); //opcional
                 REQUEST.NumeroReferencia = (REQUEST.NumeroReferencia == null ? "" : REQUEST.NumeroReferencia); //opcional
                 if (REQUEST.Estado <= 0) { throw new Exception("Debe informar un Estado");    } //requerido
+            }
+            catch (Exception ex)
+            {
+                #region NOK
+                ERROR = API_CLS.API_RESPONSE_ERRORS.Find(1015); //REQUEST - ERROR EN CUERPO RECIBIDO
+                RESPONSE.Resultado = "ERROR";
+                RESPONSE.Descripcion = ex.Message.Trim();
+                RESPONSE.Resultado_Codigo = ERROR.ErrID;
+                RESPONSE.Resultado_Descripcion = ERROR.Mensaje;
+                STATUS_CODE = HttpStatusCode.BadRequest;
+                return new HttpActionResult(Request, (ConfigurationManager.AppSettings["InformaStatusAPI"].ToString() == "SI" ? STATUS_CODE : HttpStatusCode.OK), RESPONSE);
+                #endregion
+            }
+            #endregion
+
+            //Luego de cumplir las validaciones iniciales realiza el proceso ---
+            #region PROCESAMIENTO
+
+            //crea variables de lista para recuperar retorno de los procedimientos almacenados
+            List<sp_in_API_Integraciones_Result> INTEGRACIONES = new List<sp_in_API_Integraciones_Result>();
+            List<Sp_Proc_IntegracionApi_Result> INTEGRACIONES_PROCESA = new List<Sp_Proc_IntegracionApi_Result>();
+
+            string Proceso = "INT-CAMBIOESTADO-RDM";
+
+            string Archivo = "CAMBIOESTADO_RDM_" + DateTime.Now.ToString("yyyyMMddHHmmss");
+            DateTime Fecha = DateTime.Now;
+            int Linea = 1;
+
+            //Inserta linea de cabecera/detalle a tabla temporal ----------------------
+            //Se llama a la funcion INSERTA_sp_in_API_Integraciones
+            //  - Esta funcion llama al procedimiento almacenado sp_in_API_Integraciones, que inserta hasta el Texto100
+            //  - La funcion Permite enviar los textos como parametros opcionales
+
+            INTEGRACIONES = INSERTA_sp_in_API_Integraciones(GP_ENT,
+                                                            Archivo,
+                                                            USERNAME,
+                                                            Fecha,
+                                                            Linea,
+                                                            Proceso.Trim(),
+                                                            REQUEST.Empid.ToString(),
+                                                            REQUEST.RecepcionId.ToString(),
+                                                            REQUEST.TipoReferencia.Trim(),
+                                                            REQUEST.NumeroReferencia.Trim(),
+                                                            REQUEST.Estado.ToString()
+                                                            ).ToList();
+            if (INTEGRACIONES.Count > 0)
+            {
+                if (INTEGRACIONES[0].Count == 0) //pregunta por el CAMPO Count, si es mayor a cero procesó OK el detalle
+                {
+                    #region NOK
+                    ERROR = API_CLS.API_RESPONSE_ERRORS.Find(1017);//REQUEST - ERROR NO ESPECIFICADO
+
+                    LogInfo(NombreProceso,
+                            ERROR.Mensaje.Trim() + ". " + INTEGRACIONES[0].Descripcion,
+                            true,
+                            true,
+                            "",
+                            body.ToString());
+
+                    RESPONSE.Resultado = "ERROR";
+                    RESPONSE.Descripcion = "Error procesando Recepcion: " + REQUEST.RecepcionId.ToString() + ", " + INTEGRACIONES[0].Descripcion;
+                    RESPONSE.Resultado_Codigo = ERROR.ErrID;
+                    RESPONSE.Resultado_Descripcion = ERROR.Mensaje;
+                    STATUS_CODE = HttpStatusCode.BadRequest;
+                    return new HttpActionResult(Request, (ConfigurationManager.AppSettings["InformaStatusAPI"].ToString() == "SI" ? STATUS_CODE : HttpStatusCode.OK), RESPONSE);
+                    #endregion
+                }
+            }
+            else
+            {
+                #region NOK
+                ERROR = API_CLS.API_RESPONSE_ERRORS.Find(1000);//REQUEST - ERROR NO ESPECIFICADO
+
+                LogInfo(NombreProceso,
+                        ERROR.Mensaje.Trim(),
+                        true,
+                        true,
+                        "",
+                        body.ToString());
+
+                RESPONSE.Resultado = "ERROR";
+                RESPONSE.Descripcion = "";
+                RESPONSE.Resultado_Codigo = ERROR.ErrID;
+                RESPONSE.Resultado_Descripcion = ERROR.Mensaje;
+                STATUS_CODE = HttpStatusCode.BadRequest;
+                return new HttpActionResult(Request, (ConfigurationManager.AppSettings["InformaStatusAPI"].ToString() == "SI" ? STATUS_CODE : HttpStatusCode.OK), RESPONSE);
+                #endregion
+            }
+
+            try
+            {
+                //--------------------------------------------------------------------------------------------------------------------------------
+                //Si finalizo ok el ciclo de los items, llama a procedimiento que realiza validacion de informacion generada encabecera y detalle
+                //--------------------------------------------------------------------------------------------------------------------------------
+                INTEGRACIONES_PROCESA = GP_ENT.Sp_Proc_IntegracionApi(Archivo,
+                                                                      "INTEGRADOR_API",
+                                                                      Fecha).ToList();
+                if (INTEGRACIONES_PROCESA.Count > 0)
+                {
+                    if (INTEGRACIONES_PROCESA[0].Generacion == 1)
+                    {
+                        RESPONSE.Resultado = "OK";
+                        RESPONSE.Descripcion = INTEGRACIONES_PROCESA[0].GlosaEstado;
+                    }
+                    else
+                    {
+                        #region NOK
+                        ERROR = API_CLS.API_RESPONSE_ERRORS.Find(1017);//REQUEST - ERROR NO ESPECIFICADO
+
+                        LogInfo(NombreProceso,
+                                ERROR.Mensaje.Trim() + ". " + INTEGRACIONES_PROCESA[0].GlosaEstado,
+                                true,
+                                true,
+                                "",
+                                body.ToString());
+
+                        RESPONSE.Resultado = "ERROR";
+                        RESPONSE.Descripcion = INTEGRACIONES_PROCESA[0].GlosaEstado;
+                        RESPONSE.Resultado_Codigo = ERROR.ErrID;
+                        RESPONSE.Resultado_Descripcion = ERROR.Mensaje;
+                        STATUS_CODE = HttpStatusCode.BadRequest;
+                        return new HttpActionResult(Request, (ConfigurationManager.AppSettings["InformaStatusAPI"].ToString() == "SI" ? STATUS_CODE : HttpStatusCode.OK), RESPONSE);
+                        #endregion
+                    }
+                }
+                else
+                {
+                    #region NOK
+                    ERROR = API_CLS.API_RESPONSE_ERRORS.Find(1000);//REQUEST - ERROR NO ESPECIFICADO
+
+                    LogInfo(NombreProceso,
+                            ERROR.Mensaje.Trim(),
+                            true,
+                            true,
+                            "",
+                            body.ToString());
+
+                    RESPONSE.Resultado = "ERROR";
+                    RESPONSE.Descripcion = "";
+                    RESPONSE.Resultado_Codigo = ERROR.ErrID;
+                    RESPONSE.Resultado_Descripcion = ERROR.Mensaje;
+                    STATUS_CODE = HttpStatusCode.BadRequest;
+                    return new HttpActionResult(Request, (ConfigurationManager.AppSettings["InformaStatusAPI"].ToString() == "SI" ? STATUS_CODE : HttpStatusCode.OK), RESPONSE);
+                    #endregion
+                }
+            }
+            catch (Exception ex)
+            {
+                #region NOK
+                ERROR = API_CLS.API_RESPONSE_ERRORS.Find(1017);//REQUEST - ERROR PROCESO BASE DE DATOS
+
+                LogInfo(NombreProceso,
+                        ERROR.Mensaje.Trim() + ". " + ex.Message.Trim(),
+                        true,
+                        true,
+                        REQUEST.RecepcionId.ToString(),
+                        body.ToString());
+
+                RESPONSE.Resultado = "ERROR";
+                RESPONSE.Descripcion = ex.Message.Trim();
+                RESPONSE.Resultado_Codigo = ERROR.ErrID;
+                RESPONSE.Resultado_Descripcion = ERROR.Mensaje;
+                STATUS_CODE = HttpStatusCode.BadRequest;
+                return new HttpActionResult(Request, (ConfigurationManager.AppSettings["InformaStatusAPI"].ToString() == "SI" ? STATUS_CODE : HttpStatusCode.OK), RESPONSE);
+                #endregion
+            }
+
+            //Si llega hasta aca significa que realizó correctamente el proceso -------------------------------------
+            return new HttpActionResult(Request, (ConfigurationManager.AppSettings["InformaStatusAPI"].ToString() == "SI" ? STATUS_CODE : HttpStatusCode.OK), RESPONSE);
+
+            #endregion
+        }
+        #endregion
+
+        //recurso 52 Adjunta Archivo Base64 a la SDR --------
+        #region Adjunta Archivo Base64 a la SDR (52)
+        [HttpGet]
+        [HttpPost]
+        [Route("SOLRECEP/ADJUNTARARCHIVO")]
+        public IHttpActionResult recurso52([FromBody] API_REQUEST_TYPE_47_CambioEstadoRDM REQUEST)
+        {
+            API_RESPONSE_TYPE_0 RESPONSE = new API_RESPONSE_TYPE_0();
+            ERROR = new API_RESPONSE_ERRORS();
+            string USERNAME = "";
+            HttpStatusCode STATUS_CODE = new HttpStatusCode();
+            string NombreProceso = "SOLDESP/ADJUNTARARCHIVO";
+
+            //Valida estructura JSON recibido sea valida 
+            #region VALIDACIONES JSON RECIBIDO NOK
+
+            //Si no se envia json ---
+            if (REQUEST == null)
+            {
+                #region RESPONSE NOK
+                ERROR = API_CLS.API_RESPONSE_ERRORS.Find(1015); //REQUEST - ERROR EN CUERPO RECIBIDO
+                RESPONSE.Resultado = "ERROR";
+                RESPONSE.Descripcion = "La estructura JSON viene vacia";
+                RESPONSE.Resultado_Codigo = ERROR.ErrID;
+                RESPONSE.Resultado_Descripcion = ERROR.Mensaje;
+                STATUS_CODE = HttpStatusCode.BadRequest;
+                return new HttpActionResult(Request, (ConfigurationManager.AppSettings["InformaStatusAPI"].ToString() == "SI" ? STATUS_CODE : HttpStatusCode.OK), RESPONSE);
+                #endregion
+            }
+
+            //Guarda JSON recibido en el log ----------
+            var body = JsonConvert.SerializeObject(REQUEST);
+            LogInfo(NombreProceso,
+                    "Estructura JSON: " + body.ToString(),
+                    true,
+                    true,
+                    "",
+                    body.ToString());
+
+            if (!ModelState.IsValid)
+            {
+                #region RESPONSE NOK
+                //Rescata lista de errores del ModelState y lo agrega al mensaje de error 
+                List<string> ErroresModelo = ErroresModelo = ModelState.Values.SelectMany(v => v.Errors).Select(v => v.ErrorMessage + " " + v.Exception.Message).ToList();
+                string MensajeError = "";
+
+                //Si retorna resultados carga JSON de retorno
+                if (ErroresModelo.Count > 0)
+                {
+                    foreach (var ErrorModelo in ErroresModelo)
+                    {
+                        MensajeError = MensajeError.Trim() + " " + ErrorModelo.ToString().Trim() + ".";
+                    }
+                }
+
+                ERROR = API_CLS.API_RESPONSE_ERRORS.Find(1015); //REQUEST - ERROR EN CUERPO RECIBIDO
+                RESPONSE.Resultado = "ERROR";
+                RESPONSE.Descripcion = "Problemas en el formato del JSON enviado. " + MensajeError.Trim();
+                RESPONSE.Resultado_Codigo = ERROR.ErrID;
+                RESPONSE.Resultado_Descripcion = ERROR.Mensaje;
+                STATUS_CODE = HttpStatusCode.BadRequest;
+                return new HttpActionResult(Request, (ConfigurationManager.AppSettings["InformaStatusAPI"].ToString() == "SI" ? STATUS_CODE : HttpStatusCode.OK), RESPONSE);
+                #endregion
+            }
+
+            #endregion
+
+            //valida token y retorna usuario
+            #region VALIDA ACCESO API/RECURSO NOK
+            CONFIGURATION.RESOURCES_ID = (long)CONFIG_RESOURCES.RESO_9;
+            if (!ACCESS.RESOLVE_ACCESS(this.Request, CONFIGURATION, out USERNAME, out ERROR))
+            {
+                RESPONSE.Resultado = "ERROR";
+                RESPONSE.Descripcion = "";
+                RESPONSE.Resultado_Codigo = ERROR.ErrID;
+                RESPONSE.Resultado_Descripcion = ERROR.Mensaje;
+                STATUS_CODE = HttpStatusCode.Unauthorized;
+                return new HttpActionResult(Request, (ConfigurationManager.AppSettings["InformaStatusAPI"].ToString() == "SI" ? STATUS_CODE : HttpStatusCode.OK), RESPONSE);
+            }
+            #endregion
+
+            //Valida Usuario - Empresa
+            #region VALIDA EMPRESA NOK
+            if (!ACCESS.VALIDATE_USUARIO_EMPRESA(REQUEST.Empid, USERNAME, out ERROR))
+            {
+                #region RESPONSE ERROR
+                RESPONSE.Resultado = "ERROR";
+                RESPONSE.Descripcion = "";
+                RESPONSE.Resultado_Codigo = ERROR.ErrID;
+                RESPONSE.Resultado_Descripcion = ERROR.Mensaje;
+                STATUS_CODE = HttpStatusCode.Unauthorized;
+                return new HttpActionResult(Request, (ConfigurationManager.AppSettings["InformaStatusAPI"].ToString() == "SI" ? STATUS_CODE : HttpStatusCode.OK), RESPONSE);
+                #endregion
+            }
+            #endregion
+
+            //Setea salida en OK ---------------
+            STATUS_CODE = HttpStatusCode.OK;
+            RESPONSE.Count = 1;
+            RESPONSE.Resultado = "OK";
+            RESPONSE.Descripcion = "";
+            RESPONSE.Resultado_Codigo = 0;
+            RESPONSE.Resultado_Descripcion = "";
+
+            #region VALIDA CAMPOS REQUERIDOS Y OPCIONALES
+            // Consideraciones:
+            // - campos string       : si no vienen en el JSON quedan null
+            // - campos numericos    : si no vienen en el JSON quedan en cero, o sea siempre tomará un valor independiente se envie o no
+            // - un campo string se puede dejar opcional dandole un valor por defecto 
+            // - un campo numerico como traera siempre un valor, es por defecto opcional 
+
+            try
+            {
+                //Valida datos cabecera json ----
+
+                //REQUEST.Empid // se valida con el usuario
+                if (REQUEST.RecepcionId <= 0) { throw new Exception("Debe informar una Recepcion > 0"); } //requerido
+                REQUEST.TipoReferencia = (REQUEST.TipoReferencia == null ? "" : REQUEST.TipoReferencia); //opcional
+                REQUEST.NumeroReferencia = (REQUEST.NumeroReferencia == null ? "" : REQUEST.NumeroReferencia); //opcional
+                if (REQUEST.Estado <= 0) { throw new Exception("Debe informar un Estado"); } //requerido
             }
             catch (Exception ex)
             {
