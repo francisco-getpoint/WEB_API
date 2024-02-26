@@ -3224,10 +3224,10 @@ namespace API_GP_LOGISTICO.Controllers
             HttpStatusCode STATUS_CODE = new HttpStatusCode();
             string NombreProceso = "SOLRECEP/CREARJSON";
 
+            //Valida json en blanco ---
             //valida estructura json recibido sea valida ---
             #region VALIDA JSON RECIBIDO NOK
 
-            //Valida json en blanco ---
             if (REQUEST == null)
             {
                 #region RESPONSE NOK
@@ -3244,7 +3244,7 @@ namespace API_GP_LOGISTICO.Controllers
                 #endregion
             }
 
-            //Guarda JSON recibido en el log ----------
+            //Guarda JSON recibido en el log ---------------
             var body = JsonConvert.SerializeObject(REQUEST);
             LogInfo(NombreProceso,
                     "Creación SDR, JSON: " + body.ToString(),
@@ -5724,42 +5724,65 @@ namespace API_GP_LOGISTICO.Controllers
                     }
                 }
 
-                //Insert producto -----------------------------------------------------
-                ARTICULOJSON = GP_ENT.sp_in_API_ArticulosJson(REQUEST.EmpId,
-                                                              Articulo.CodigoArticulo,
-                                                              Articulo.DescripArt,
-                                                              Articulo.DescripTecnica,
-                                                              Articulo.DescripCorta,
-                                                              Articulo.LineaProducto,
-                                                              Articulo.TipoProducto,
-                                                              Articulo.TipoArticulo,
-                                                              VigenciaDesde,
-                                                              VigenciaHasta,
-                                                              Articulo.Rotacion,
-                                                              Articulo.CodigoFabrica,
-                                                              Articulo.UsaSerie,
-                                                              Articulo.UsaLote,
-                                                              Articulo.EAN13,
-                                                              Articulo.DUN14,
-                                                              Articulo.UnidadMedidaCompra,
-                                                              Articulo.UnidadMedidaVenta,
-                                                              Articulo.CodigoProveedor,
-                                                              Articulo.Marca,
-                                                              USERNAME,
-                                                              Articulo.CodigoExt,
-                                                              Articulo.GlosaLineaProducto,
-                                                              Articulo.Dato1, 
-                                                              Articulo.Dato2, 
-                                                              Articulo.Dato3, 
-                                                              Articulo.Valor1, 
-                                                              Articulo.Valor2, 
-                                                              Articulo.Valor3,
-                                                              Fecha1, 
-                                                              Fecha2, 
-                                                              Fecha3,
-                                                              Articulo.Origen,
-                                                              Item_Kit
-                                                              ).ToList();
+                try
+                {
+                    //Insert producto -----------------------------------------------------
+                    ARTICULOJSON = GP_ENT.sp_in_API_ArticulosJson(REQUEST.EmpId,
+                                                                  Articulo.CodigoArticulo,
+                                                                  Articulo.DescripArt,
+                                                                  Articulo.DescripTecnica,
+                                                                  Articulo.DescripCorta,
+                                                                  Articulo.LineaProducto,
+                                                                  Articulo.TipoProducto,
+                                                                  Articulo.TipoArticulo,
+                                                                  VigenciaDesde,
+                                                                  VigenciaHasta,
+                                                                  Articulo.Rotacion,
+                                                                  Articulo.CodigoFabrica,
+                                                                  Articulo.UsaSerie,
+                                                                  Articulo.UsaLote,
+                                                                  Articulo.EAN13,
+                                                                  Articulo.DUN14,
+                                                                  Articulo.UnidadMedidaCompra,
+                                                                  Articulo.UnidadMedidaVenta,
+                                                                  Articulo.CodigoProveedor,
+                                                                  Articulo.Marca,
+                                                                  USERNAME,
+                                                                  Articulo.CodigoExt,
+                                                                  Articulo.GlosaLineaProducto,
+                                                                  Articulo.Dato1,
+                                                                  Articulo.Dato2,
+                                                                  Articulo.Dato3,
+                                                                  Articulo.Valor1,
+                                                                  Articulo.Valor2,
+                                                                  Articulo.Valor3,
+                                                                  Fecha1,
+                                                                  Fecha2,
+                                                                  Fecha3,
+                                                                  Articulo.Origen,
+                                                                  Item_Kit
+                                                                  ).ToList();
+                }
+                catch (Exception ex)
+                {
+                    #region NOK
+                    ERROR = API_CLS.API_RESPONSE_ERRORS.Find(1017);//REQUEST - ERROR PROCESO BASE DE DATOS
+
+                    LogInfo(NombreProceso,
+                            "ERROR: " + ex.Message.Trim(),
+                            true,
+                            true,
+                            Articulo.CodigoArticulo,
+                            body.ToString());
+
+                    RESPONSE.resultado = "ERROR";
+                    RESPONSE.descripcion = ex.Message.Trim();
+                    RESPONSE.resultado_codigo = ERROR.ErrID;
+                    RESPONSE.resultado_descripcion = ERROR.Mensaje;
+                    STATUS_CODE = HttpStatusCode.BadRequest;
+                    return new HttpActionResult(Request, (ConfigurationManager.AppSettings["InformaStatusAPI"].ToString() == "SI" ? STATUS_CODE : HttpStatusCode.OK), RESPONSE);
+                    #endregion
+                }
                 //Crea un detalle de respuesta
                 API_RESPONSE_TYPE_30_DET RESPONSE_DETALLE = new API_RESPONSE_TYPE_30_DET();
 
@@ -5772,22 +5795,46 @@ namespace API_GP_LOGISTICO.Controllers
                         //La primera queda como unidad medida base del producto
                         foreach (var UnidadMedida in Articulo.UnidadMedida.ToList())
                         {
-                            UNIDADMEDIDAJSON = GP_ENT.sp_in_API_ArticulosUMedidasJson(REQUEST.EmpId,
-                                                                                      Articulo.CodigoArticulo,
-                                                                                      USERNAME,
-                                                                                      UnidadMedida.CodigoUM,
-                                                                                      UnidadMedida.PesoNeto,
-                                                                                      UnidadMedida.PesoBruto,
-                                                                                      UnidadMedida.Ancho,
-                                                                                      UnidadMedida.Alto,
-                                                                                      UnidadMedida.Profundidad,
-                                                                                      UnidadMedida.Volumen,
-                                                                                      UnidadMedida.Factor,
-                                                                                      UnidadMedida.UNBase,
-                                                                                      UnidadMedida.UNTotal,
-                                                                                      UnidadMedida.TiempoRecep,
-                                                                                      UnidadMedida.TiempoDesp
-                                                                                      ).ToList();
+                            try
+                            {
+                                UNIDADMEDIDAJSON = GP_ENT.sp_in_API_ArticulosUMedidasJson(REQUEST.EmpId,
+                                                                                          Articulo.CodigoArticulo,
+                                                                                          USERNAME,
+                                                                                          UnidadMedida.CodigoUM,
+                                                                                          UnidadMedida.PesoNeto,
+                                                                                          UnidadMedida.PesoBruto,
+                                                                                          UnidadMedida.Ancho,
+                                                                                          UnidadMedida.Alto,
+                                                                                          UnidadMedida.Profundidad,
+                                                                                          UnidadMedida.Volumen,
+                                                                                          UnidadMedida.Factor,
+                                                                                          UnidadMedida.UNBase,
+                                                                                          UnidadMedida.UNTotal,
+                                                                                          UnidadMedida.TiempoRecep,
+                                                                                          UnidadMedida.TiempoDesp
+                                                                                          ).ToList();
+                            }
+                            catch (Exception ex)
+                            {
+                                #region NOK
+                                ERROR = API_CLS.API_RESPONSE_ERRORS.Find(1017);//REQUEST - ERROR PROCESO BASE DE DATOS
+
+                                LogInfo(NombreProceso,
+                                        "ERROR: " + ex.Message.Trim(),
+                                        true,
+                                        true,
+                                        Articulo.CodigoArticulo,
+                                        body.ToString());
+
+                                RESPONSE.resultado = "ERROR";
+                                RESPONSE.descripcion = ex.Message.Trim();
+                                RESPONSE.resultado_codigo = ERROR.ErrID;
+                                RESPONSE.resultado_descripcion = ERROR.Mensaje;
+                                STATUS_CODE = HttpStatusCode.BadRequest;
+                                return new HttpActionResult(Request, (ConfigurationManager.AppSettings["InformaStatusAPI"].ToString() == "SI" ? STATUS_CODE : HttpStatusCode.OK), RESPONSE);
+                                #endregion
+                            }
+
                             if (UNIDADMEDIDAJSON.Count > 0)
                             {
                                 if (UNIDADMEDIDAJSON[0].Resultado != "OK")
@@ -8406,7 +8453,7 @@ namespace API_GP_LOGISTICO.Controllers
                 #endregion
             }
 
-            //Guarda JSON recibido en el log ----------
+            //Guarda JSON recibido en el log --------------
             var body = JsonConvert.SerializeObject(REQUEST);
             LogInfo(NombreProceso,
                     "Estructura JSON recibida",
@@ -9035,6 +9082,15 @@ namespace API_GP_LOGISTICO.Controllers
                 REQUEST.Certificado2 = (REQUEST.Certificado2 == null ? "" : REQUEST.Certificado2); //opcional 
                 REQUEST.FechaCertificado2 = (REQUEST.FechaCertificado2 == null ? "" : REQUEST.FechaCertificado2); //opcional 
                 //int CodigoBodega //opcional numerico, toma cero
+                REQUEST.Dato1 = (REQUEST.Dato1 == null ? "" : REQUEST.Dato1); //opcional
+                REQUEST.Dato2 = (REQUEST.Dato2 == null ? "" : REQUEST.Dato2); //opcional
+                REQUEST.Dato3 = (REQUEST.Dato3 == null ? "" : REQUEST.Dato3); //opcional
+                //decimal Valor1 //opcional numerico, toma cero
+                //decimal Valor2 //opcional numerico, toma cero
+                //decimal Valor3 //opcional numerico, toma cero
+                REQUEST.Fecha1 = (REQUEST.Fecha1 == null ? "" : REQUEST.Fecha1); //opcional                    
+                REQUEST.Fecha2 = (REQUEST.Fecha2 == null ? "" : REQUEST.Fecha2); //opcional
+                REQUEST.Fecha3 = (REQUEST.Fecha3 == null ? "" : REQUEST.Fecha3); //opcional
 
                 //Valida que el json tenga items ---
                 if (REQUEST.Items == null) { throw new Exception("Debe informar Items"); } //requerido
@@ -9049,6 +9105,15 @@ namespace API_GP_LOGISTICO.Controllers
                     if (item.Cantidad <= 0) { throw new Exception("Debe informar Cantidad > 0"); } //requerido
                     if (item.NuevoLote == null || item.NuevoLote == "") { throw new Exception("Debe informar nuevo Lote"); } //requerido 
                     if (item.NuevoFecVecto == null || item.NuevoFecVecto == "") { throw new Exception("Debe informar nueva Fecha de Vencimiento del nuevo Lote"); } //requerido 
+                    item.Dato1 = (item.Dato1 == null ? "" : item.Dato1); //opcional
+                    item.Dato2 = (item.Dato2 == null ? "" : item.Dato2); //opcional
+                    item.Dato3 = (item.Dato3 == null ? "" : item.Dato3); //opcional
+                    //decimal Valor1 //opcional numerico, toma cero
+                    //decimal Valor2 //opcional numerico, toma cero
+                    //decimal Valor3 //opcional numerico, toma cero
+                    item.Fecha1 = (item.Fecha1 == null ? "" : item.Fecha1); //opcional 
+                    item.Fecha2 = (item.Fecha2 == null ? "" : item.Fecha2); //opcional
+                    item.Fecha3 = (item.Fecha3 == null ? "" : item.Fecha3); //opcional
                 }
             }
             catch (Exception ex)
@@ -9074,6 +9139,12 @@ namespace API_GP_LOGISTICO.Controllers
             DateTime FechaCertificado = new DateTime();
             DateTime FechaCertificado2 = new DateTime();
             DateTime NuevoFecVecto = new DateTime();
+            DateTime Fecha1Cab = new DateTime(); //fecha1 cabecera
+            DateTime Fecha2Cab = new DateTime(); //fecha2 cabecera
+            DateTime Fecha3Cab = new DateTime(); //fecha3 cabecera
+            DateTime Fecha1det = new DateTime(); //Fecha1 detalle
+            DateTime Fecha2det = new DateTime(); //Fecha2 detalle
+            DateTime Fecha3det = new DateTime(); //Fecha3 detalle
 
             try
             {
@@ -9082,11 +9153,17 @@ namespace API_GP_LOGISTICO.Controllers
                 FechaProceso = ValidaCampoFecha(REQUEST.FechaProceso, "Fecha Proceso");
                 FechaCertificado = ValidaCampoFecha(REQUEST.FechaCertificado, "Fecha Certificado");
                 FechaCertificado2 = ValidaCampoFecha(REQUEST.FechaCertificado2, "Fecha Certificado2");
+                Fecha1Cab = ValidaCampoFecha(REQUEST.Fecha1, "Fecha1 cabecera");
+                Fecha2Cab = ValidaCampoFecha(REQUEST.Fecha2, "Fecha2 cabecera");
+                Fecha3Cab = ValidaCampoFecha(REQUEST.Fecha3, "Fecha3 cabecera");
 
                 //VALIDA FECHAS ITEMS DETALLE JSON -----
                 foreach (var item in REQUEST.Items.ToList())
                 {
                     NuevoFecVecto = ValidaCampoFecha(item.NuevoFecVecto, "nueva Fecha vencimiento Lote");
+                    Fecha1det = ValidaCampoFecha(item.Fecha1, "Fecha1 detalle");
+                    Fecha2det = ValidaCampoFecha(item.Fecha2, "Fecha2 detalle");
+                    Fecha3det = ValidaCampoFecha(item.Fecha3, "Fecha3 detalle");
                 } //FIN ciclo items
             }
             catch (Exception ex)
@@ -9122,6 +9199,9 @@ namespace API_GP_LOGISTICO.Controllers
             {
                 //carga variables fecha item detalle (variables fechas cabecera quedaron cargadas al validar formato) -----------------
                 NuevoFecVecto = ValidaCampoFecha(item2.NuevoFecVecto, "nueva Fecha vencimiento Lote");
+                Fecha1det = ValidaCampoFecha(item2.Fecha1, "Fecha1");
+                Fecha2det = ValidaCampoFecha(item2.Fecha2, "Fecha2");
+                Fecha3det = ValidaCampoFecha(item2.Fecha3, "Fecha3");
 
                 //Inserta linea de cabecera/detalle a tabla temporal SDR ----------------------
                 //Se llama a la funcion INSERTA_sp_in_API_Integraciones
@@ -9153,7 +9233,25 @@ namespace API_GP_LOGISTICO.Controllers
                                                                 item2.Cantidad.ToString(),
                                                                 item2.NuevoLote,
                                                                 NuevoFecVecto.ToString("yyyyMMdd"),
-                                                                USERNAME
+                                                                USERNAME,
+                                                                REQUEST.Dato1,
+                                                                REQUEST.Dato2,
+                                                                REQUEST.Dato3,
+                                                                REQUEST.Valor1.ToString(),
+                                                                REQUEST.Valor2.ToString(),
+                                                                REQUEST.Valor3.ToString(),
+                                                                Fecha1Cab.ToString("yyyyMMdd"),
+                                                                Fecha2Cab.ToString("yyyyMMdd"),
+                                                                Fecha3Cab.ToString("yyyyMMdd"),
+                                                                item2.Dato1,
+                                                                item2.Dato2,
+                                                                item2.Dato3,
+                                                                item2.Valor1.ToString(),
+                                                                item2.Valor2.ToString(),
+                                                                item2.Valor3.ToString(),
+                                                                Fecha1det.ToString("yyyyMMdd"),
+                                                                Fecha2det.ToString("yyyyMMdd"),
+                                                                Fecha3det.ToString("yyyyMMdd")
                                                                 ).ToList();
                 if (INTEGRACIONES.Count > 0)
                 {

@@ -1,0 +1,6 @@
+[RECEPCION/CAMBIOESTADORDM]. Fecha/Hora 21/02/2024 17:49. Estructura JSON: {"Empid":10,"RecepcionId":1,"TipoReferencia":"OC","NumeroReferencia":"12345","Estado":1}
+[RECEPCION/CAMBIOESTADORDM]. Fecha/Hora 21/02/2024 17:50. Estructura JSON: {"Empid":10,"RecepcionId":1,"TipoReferencia":"OC","NumeroReferencia":null,"Estado":1}
+[RECEPCION/CAMBIOESTADORDM]. Fecha/Hora 21/02/2024 17:50. Estructura JSON: {"Empid":10,"RecepcionId":0,"TipoReferencia":"OC","NumeroReferencia":null,"Estado":1}
+[RECEPCION/CAMBIOESTADORDM]. Fecha/Hora 21/02/2024 17:50. Estructura JSON: {"Empid":10,"RecepcionId":0,"TipoReferencia":"OC","NumeroReferencia":null,"Estado":1}
+[RECEPCION/CAMBIOESTADORDM]. Fecha/Hora 21/02/2024 17:51. Estructura JSON: {"Empid":10,"RecepcionId":0,"TipoReferencia":"OC","NumeroReferencia":null,"Estado":0}
+[RECEPCION/CAMBIOESTADORDM]. Fecha/Hora 21/02/2024 17:52. Estructura JSON: {"Empid":10,"RecepcionId":1,"TipoReferencia":"OC","NumeroReferencia":"12345","Estado":0}

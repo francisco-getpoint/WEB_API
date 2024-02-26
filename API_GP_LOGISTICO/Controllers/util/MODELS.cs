@@ -1122,6 +1122,33 @@ namespace API_GP_LOGISTICO.Controllers.util
             [DataMember(Order = 12)]
             public int CodigoBodega { get; set; }
 
+            [DataMember(Order = 13)]
+            public string Dato1 { get; set; }
+
+            [DataMember(Order = 14)]
+            public string Dato2 { get; set; }
+
+            [DataMember(Order = 15)]
+            public string Dato3 { get; set; }
+
+            [DataMember(Order = 16)]
+            public decimal Valor1 { get; set; }
+
+            [DataMember(Order = 17)]
+            public decimal Valor2 { get; set; }
+
+            [DataMember(Order = 18)]
+            public decimal Valor3 { get; set; }
+
+            [DataMember(Order = 19)]
+            public string Fecha1 { get; set; }
+
+            [DataMember(Order = 20)]
+            public string Fecha2 { get; set; }
+
+            [DataMember(Order = 21)]
+            public string Fecha3 { get; set; }
+
             [DataMember(Order = 99)]
             public List<API_REQUEST_TYPE_41_CambioEstado_DET> Items { get; set; }
         }
@@ -1147,6 +1174,33 @@ namespace API_GP_LOGISTICO.Controllers.util
 
             [DataMember(Order = 6)]
             public string NuevoFecVecto { get; set; }
+
+            [DataMember(Order = 7)]
+            public string Dato1 { get; set; }
+
+            [DataMember(Order = 8)]
+            public string Dato2 { get; set; }
+
+            [DataMember(Order = 9)]
+            public string Dato3 { get; set; }
+
+            [DataMember(Order = 10)]
+            public decimal Valor1 { get; set; }
+
+            [DataMember(Order = 11)]
+            public decimal Valor2 { get; set; }
+
+            [DataMember(Order = 12)]
+            public decimal Valor3 { get; set; }
+
+            [DataMember(Order = 13)]
+            public string Fecha1 { get; set; }
+
+            [DataMember(Order = 14)]
+            public string Fecha2 { get; set; }
+
+            [DataMember(Order = 15)]
+            public string Fecha3 { get; set; }
         }
 
         //JSON Evolutivo por Mes en Posiciones Cliente
