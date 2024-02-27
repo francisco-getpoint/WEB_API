@@ -1509,6 +1509,106 @@ namespace API_GP_LOGISTICO.Controllers.util
             public string Usuario { get; set; }
         }
 
+        //50 WEBHOOK
+
+        //JSON Adjunta archivo SDR base 64 
+        [DataContract]
+        public class API_REQUEST_TYPE_51_AdjuntaArchivoSDR
+        {
+            [DataMember(Order = 1)]
+            public int Empid { get; set; }
+
+            [DataMember(Order = 2)]
+            public int SolRecepId { get; set; }
+
+            [DataMember(Order = 3)]
+            public string TipoReferencia { get; set; }
+
+            [DataMember(Order = 4)]
+            public string NumeroReferencia { get; set; }
+
+            [DataMember(Order = 5)]
+            public string ArchivoBase64 { get; set; }
+
+            [DataMember(Order = 6)]
+            public string NombreArchivo { get; set; }
+        }
+
+        //JSON Adjunta archivo SDD base 64 
+        [DataContract]
+        public class API_REQUEST_TYPE_52_AdjuntaArchivoSDD
+        {
+            [DataMember(Order = 1)]
+            public int Empid { get; set; }
+
+            [DataMember(Order = 2)]
+            public int SolDespId { get; set; }
+
+            [DataMember(Order = 3)]
+            public string TipoReferencia { get; set; }
+
+            [DataMember(Order = 4)]
+            public string NumeroReferencia { get; set; }
+
+            [DataMember(Order = 5)]
+            public string ArchivoBase64 { get; set; }
+
+            [DataMember(Order = 6)]
+            public string NombreArchivo { get; set; }
+        }
+
+        //JSON Anula Solicitud Traslado 
+        [DataContract]
+        public class API_REQUEST_TYPE_53_AnulaSolTraslado
+        {
+            [DataMember(Order = 1)]
+            public int Empid { get; set; }
+
+            [DataMember(Order = 2)]
+            public int SolDespId { get; set; }
+
+            [DataMember(Order = 3)]
+            public string TipoReferencia { get; set; }
+
+            [DataMember(Order = 4)]
+            public string NumeroReferencia { get; set; }
+
+            [DataMember(Order = 5)]
+            public string FechaEntrega { get; set; }
+
+            [DataMember(Order = 6)]
+            public int Motivo { get; set; }
+
+            [DataMember(Order = 7)]
+            public string GlosaAnula { get; set; }
+        }
+
+        //JSON Anula Solicitud Despacho
+        [DataContract]
+        public class API_REQUEST_TYPE_54_AnulaSolDespacho
+        {
+            [DataMember(Order = 1)]
+            public int Empid { get; set; }
+
+            [DataMember(Order = 2)]
+            public int SolDespId { get; set; }
+
+            [DataMember(Order = 3)]
+            public string TipoReferencia { get; set; }
+
+            [DataMember(Order = 4)]
+            public string NumeroReferencia { get; set; }
+
+            [DataMember(Order = 5)]
+            public string FechaEntrega { get; set; }
+
+            [DataMember(Order = 6)]
+            public int Motivo { get; set; }
+
+            [DataMember(Order = 7)]
+            public string GlosaAnula { get; set; }
+        }
+
         #endregion
 
         #region RESPONSE MODELS       
