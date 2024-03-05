@@ -10925,7 +10925,8 @@ namespace API_GP_LOGISTICO.Controllers
             List<sp_in_API_Integraciones_Result> INTEGRACIONES = new List<sp_in_API_Integraciones_Result>();
             List<Sp_Proc_IntegracionApi_Result> INTEGRACIONES_PROCESA = new List<Sp_Proc_IntegracionApi_Result>();
 
-            string Proceso = "INT-CAMBIOESTADO-RDM";
+            //string Proceso = "INT-CAMBIOESTADO-RDM";
+            string Proceso = "INT-CAMBIOESTADOART-PORRDM";
 
             string Archivo = "CAMBIOESTADO_RDM_" + DateTime.Now.ToString("yyyyMMddHHmmss");
             DateTime Fecha = DateTime.Now;
@@ -11929,9 +11930,15 @@ namespace API_GP_LOGISTICO.Controllers
                 //Valida datos cabecera json ----
                                 
                 //REQUEST.Empid // se valida con el usuario
-                if (REQUEST.SolRecepId <= 0) { throw new Exception("Debe informar una Solicitud de Recepcion > 0"); } //requerido
+                //if (REQUEST.SolRecepId <= 0) { throw new Exception("Debe informar una Solicitud de Recepcion > 0"); } //opcional
                 REQUEST.TipoReferencia = (REQUEST.TipoReferencia == null ? "" : REQUEST.TipoReferencia); //opcional
                 REQUEST.NumeroReferencia = (REQUEST.NumeroReferencia == null ? "" : REQUEST.NumeroReferencia); //opcional
+
+                if (REQUEST.SolRecepId == 0 && REQUEST.TipoReferencia == "" && REQUEST.NumeroReferencia == "")
+                { 
+                    throw new Exception("Debe informar Solicitud de Recepcion o Tipo y Numero referencia"); 
+                } 
+
                 if (REQUEST.ArchivoBase64 == null || REQUEST.ArchivoBase64 == "") { throw new Exception("Debe informar Archivo en formato base64"); } //requerido
                 if (REQUEST.NombreArchivo == null || REQUEST.NombreArchivo == "") { throw new Exception("Debe informar nombre del archivo y su extension"); } //requerido
             }
@@ -12262,9 +12269,15 @@ namespace API_GP_LOGISTICO.Controllers
                 //Valida datos cabecera json ----
 
                 //REQUEST.Empid // se valida con el usuario
-                if (REQUEST.SolDespId <= 0) { throw new Exception("Debe informar una Solicitud de Despacho > 0"); } //requerido
+                //if (REQUEST.SolDespId <= 0) { throw new Exception("Debe informar una Solicitud de Despacho > 0"); } //opcional
                 REQUEST.TipoReferencia = (REQUEST.TipoReferencia == null ? "" : REQUEST.TipoReferencia); //opcional
                 REQUEST.NumeroReferencia = (REQUEST.NumeroReferencia == null ? "" : REQUEST.NumeroReferencia); //opcional
+
+                if (REQUEST.SolDespId == 0 && REQUEST.TipoReferencia == "" && REQUEST.NumeroReferencia == "")
+                {
+                    throw new Exception("Debe informar Solicitud de Despacho o Tipo y Numero referencia");
+                }
+
                 if (REQUEST.ArchivoBase64 == null || REQUEST.ArchivoBase64 == "") { throw new Exception("Debe informar Archivo en formato base64"); } //requerido
                 if (REQUEST.NombreArchivo == null || REQUEST.NombreArchivo == "") { throw new Exception("Debe informar nombre del archivo y su extension"); } //requerido
             }
@@ -12596,9 +12609,15 @@ namespace API_GP_LOGISTICO.Controllers
                 //Valida datos cabecera json ----
 
                 //REQUEST.Empid // se valida con el usuario
-                if (REQUEST.SolDespId <= 0) { throw new Exception("Debe informar Id de Solicitud de Despacho > 0"); } //requerido
+                //if (REQUEST.SolDespId <= 0) { throw new Exception("Debe informar Id de Solicitud de Despacho > 0"); } //requerido
                 REQUEST.TipoReferencia = (REQUEST.TipoReferencia == null ? "" : REQUEST.TipoReferencia); //opcional
                 REQUEST.NumeroReferencia = (REQUEST.NumeroReferencia == null ? "" : REQUEST.NumeroReferencia); //opcional
+
+                if (REQUEST.SolDespId == 0 && REQUEST.TipoReferencia == "" && REQUEST.NumeroReferencia == "")
+                {
+                    throw new Exception("Debe informar Solicitud de Despacho o Tipo y Numero referencia");
+                }
+
                 REQUEST.FechaEntrega = (REQUEST.FechaEntrega == null ? "" : REQUEST.FechaEntrega); //opcional
                 if (REQUEST.Motivo <= 0) { throw new Exception("Debe informar motivo anula traslado"); } //requerido
                 if (REQUEST.GlosaAnula == null || REQUEST.GlosaAnula == "") { throw new Exception("Debe informar glosa anulacion"); } //requerido
@@ -12928,9 +12947,15 @@ namespace API_GP_LOGISTICO.Controllers
                 //Valida datos cabecera json ----
 
                 //REQUEST.Empid // se valida con el usuario
-                if (REQUEST.SolDespId <= 0) { throw new Exception("Debe informar Id de Solicitud de Despacho > 0"); } //requerido
+                //if (REQUEST.SolDespId <= 0) { throw new Exception("Debe informar Id de Solicitud de Despacho > 0"); } //opcional
                 REQUEST.TipoReferencia = (REQUEST.TipoReferencia == null ? "" : REQUEST.TipoReferencia); //opcional
                 REQUEST.NumeroReferencia = (REQUEST.NumeroReferencia == null ? "" : REQUEST.NumeroReferencia); //opcional
+
+                if (REQUEST.SolDespId == 0 && REQUEST.TipoReferencia == "" && REQUEST.NumeroReferencia == "")
+                {
+                    throw new Exception("Debe informar Solicitud de Despacho o Tipo y Numero referencia");
+                }
+
                 REQUEST.FechaEntrega = (REQUEST.FechaEntrega == null ? "" : REQUEST.FechaEntrega); //opcional
                 if (REQUEST.Motivo <= 0) { throw new Exception("Debe informar motivo anula traslado"); } //requerido
                 if (REQUEST.GlosaAnula == null || REQUEST.GlosaAnula == "") { throw new Exception("Debe informar glosa anulacion"); } //requerido
@@ -13139,6 +13164,55 @@ namespace API_GP_LOGISTICO.Controllers
             //Si llega hasta aca significa que realizó correctamente el proceso -------------------------------------
             return new HttpActionResult(Request, (ConfigurationManager.AppSettings["InformaStatusAPI"].ToString() == "SI" ? STATUS_CODE : HttpStatusCode.OK), RESPONSE);
 
+            #endregion
+        }
+        #endregion
+
+        //Webhook Estandar que inserta en tabla de Webhook (copia de metodo llamado WebhookBSale)
+        #region WebhookGP (55)
+        [HttpPost]
+        [HttpGet]
+        [Route("WEBHOOK/DRIVINRUTA")]
+        public IHttpActionResult recurso55(object data)
+        {
+
+            API_RESPONSE_TYPE_17 RESPONSE = new API_RESPONSE_TYPE_17();
+            ERROR = new API_RESPONSE_ERRORS();
+
+            string USERNAME = "";
+            HttpStatusCode STATUS_CODE = new HttpStatusCode();
+
+            #region VALIDA ACCESO API/RECURSO NOK
+            CONFIGURATION.RESOURCES_ID = (long)CONFIG_RESOURCES.RESO_10;
+            if (!ACCESS.RESOLVE_ACCESS(this.Request, CONFIGURATION, out USERNAME, out ERROR))
+            {
+                RESPONSE.Resultado = "Error";
+                RESPONSE.Descripcion = ERROR.Mensaje;
+                STATUS_CODE = HttpStatusCode.Unauthorized;
+                return new HttpActionResult(Request, (ConfigurationManager.AppSettings["InformaStatusAPI"].ToString() == "SI" ? STATUS_CODE : HttpStatusCode.OK), RESPONSE);
+            }
+            #endregion
+
+            #region PROCESO
+            STATUS_CODE = HttpStatusCode.OK;
+            try
+            {
+                List<sp_in_API_Webhook_Bsale_Result> WBSL = GP_ENT.sp_in_API_Webhook_Bsale(data.ToString()).ToList();
+
+                RESPONSE.Resultado = WBSL.ElementAt(0).Resultado;
+                RESPONSE.Descripcion = WBSL.ElementAt(0).Descripcion;
+            }
+            catch (Exception ex)
+            {
+                #region NOK
+                ERROR = API_CLS.API_RESPONSE_ERRORS.Find(1000);//REQUEST - ERROR NO ESPECIFICADO
+                RESPONSE.Resultado = "Error";
+                RESPONSE.Descripcion = ERROR.Mensaje + ". " + ex.Message.Trim();
+                STATUS_CODE = HttpStatusCode.InternalServerError;
+                return new HttpActionResult(Request, (ConfigurationManager.AppSettings["InformaStatusAPI"].ToString() == "SI" ? STATUS_CODE : HttpStatusCode.OK), RESPONSE);
+                #endregion
+            }
+            return new HttpActionResult(Request, (ConfigurationManager.AppSettings["InformaStatusAPI"].ToString() == "SI" ? STATUS_CODE : HttpStatusCode.OK), RESPONSE);
             #endregion
         }
         #endregion
