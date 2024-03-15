@@ -1609,6 +1609,115 @@ namespace API_GP_LOGISTICO.Controllers.util
             public string GlosaAnula { get; set; }
         }
 
+        //JSON Webhook Ruta DRIVIN
+        public class API_REQUEST_TYPE_55_WebhookRutaDRIVIN
+        {
+            public string vehicle { get; set; }
+            public string vehicle_detail { get; set; }
+            public int route_id { get; set; }
+            public string route_code { get; set; }
+            public string description { get; set; }
+            public string deploy_date { get; set; }
+            public string supplier_code { get; set; }
+            public string scenario_token { get; set; }
+            public string schema_code { get; set; }
+            public string schema_name { get; set; }
+            public string approved_at { get; set; }
+            public string platform { get; set; }
+            public string started_at { get; set; }
+            public string fleet_sequence { get; set; }
+            public string login_url { get; set; }
+            public List<string> tags { get; set; }
+            public API_REQUEST_TYPE_55_Driver driver { get; set; }
+            public API_REQUEST_TYPE_55_Summary summary { get; set; }
+            public List<API_REQUEST_TYPE_55_Trip> trips { get; set; }
+        }
+        public class API_REQUEST_TYPE_55_Driver
+        {
+            public string email { get; set; }
+            public string full_name { get; set; }
+            public string phone { get; set; }
+        }
+        public class API_REQUEST_TYPE_55_Summary
+        {
+            public int total_trips { get; set; }
+            public int total_orders { get; set; }
+            public int total_addresses { get; set; }
+            public int total_distance { get; set; }
+            public int total_time { get; set; }
+            public int trip_number { get; set; }
+        }
+        public class API_REQUEST_TYPE_55_Trip
+        {
+            public API_REQUEST_TYPE_55_Summary summary { get; set; }
+            public List<API_REQUEST_TYPE_55_Result> results { get; set; }
+        }
+        public class API_REQUEST_TYPE_55_Result
+        {
+            public string deposit { get; set; }
+            public int position { get; set; }
+            public int eta_mode { get; set; }
+            public string eta { get; set; }
+            public string eta_approved { get; set; }
+            public string eta_started { get; set; }
+            public API_REQUEST_TYPE_55_Stop stop { get; set; }
+            public List<API_REQUEST_TYPE_55_Order> orders { get; set; }
+        }
+        public class API_REQUEST_TYPE_55_Stop
+        {
+            public string code { get; set; }
+            public string name { get; set; }
+            public string client { get; set; }
+            public string address_type { get; set; }
+            public string address { get; set; }
+            public string reference { get; set; }
+            public string city { get; set; }
+            public string country { get; set; }
+            public string lat { get; set; }
+            public string lng { get; set; }
+            public string postal_code { get; set; }
+            public int service_time { get; set; }
+            public int priority { get; set; }
+            public List<string> skills { get; set; }
+            public List<API_REQUEST_TYPE_55_TimeWindow> time_windows { get; set; }
+        }
+        public class API_REQUEST_TYPE_55_TimeWindow
+        {
+            public string start { get; set; }
+            public string end { get; set; }
+        }
+        public class API_REQUEST_TYPE_55_Order
+        {
+            public string idx { get; set; }
+            public string code { get; set; }
+            public string alt_code { get; set; }
+            public string delivery_date { get; set; }
+            public string supplier_code { get; set; }
+            public string supplier_name { get; set; }
+            public string client_code { get; set; }
+            public string client_name { get; set; }
+            public int units_1 { get; set; }
+            public int units_2 { get; set; }
+            public int units_3 { get; set; }
+            public string custom_1 { get; set; }
+            public string custom_2 { get; set; }
+            public string custom_3 { get; set; }
+            public string custom_4 { get; set; }
+            public string custom_5 { get; set; }
+            public string custom_6 { get; set; }
+            public string custom_7 { get; set; }
+            public string custom_8 { get; set; }
+            public string custom_9 { get; set; }
+            public string custom_10 { get; set; }
+            public string custom_11 { get; set; }
+            public string number_1 { get; set; }
+            public string number_2 { get; set; }
+            public string number_3 { get; set; }
+            public string number_4 { get; set; }
+            public List<string> items { get; set; }
+            public List<string> pickups { get; set; }
+        }
+
         #endregion
 
         #region RESPONSE MODELS       

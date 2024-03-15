@@ -9834,6 +9834,8 @@ namespace API_GP_LOGISTICO.Controllers
             DateTime Fecha = DateTime.Now;
             int Linea = 1;
 
+            USERNAME = "INTEGRADOR_API";
+
             //recorre items json
             foreach (var item2 in REQUEST.Items.ToList())
             {
@@ -13168,19 +13170,22 @@ namespace API_GP_LOGISTICO.Controllers
         }
         #endregion
 
-        //Webhook Estandar que inserta en tabla de Webhook (copia de metodo llamado WebhookBSale)
-        #region WebhookGP (55)
+        //Webhook que recibe info de "Webhook Rutas" de DRIVIN 
+        #region Webhook Ruta DRIVIN (55)
         [HttpPost]
         [HttpGet]
         [Route("WEBHOOK/DRIVINRUTA")]
-        public IHttpActionResult recurso55(object data)
+        public IHttpActionResult recurso55([FromBody] API_REQUEST_TYPE_55_WebhookRutaDRIVIN REQUEST)
         {
 
-            API_RESPONSE_TYPE_17 RESPONSE = new API_RESPONSE_TYPE_17();
+            API_RESPONSE_TYPE_0 RESPONSE = new API_RESPONSE_TYPE_0();
             ERROR = new API_RESPONSE_ERRORS();
 
             string USERNAME = "";
             HttpStatusCode STATUS_CODE = new HttpStatusCode();
+            string NombreProceso = "WEBHOOK/DRIVINRUTA";
+
+            STATUS_CODE = HttpStatusCode.OK; //Por defecto status OK
 
             #region VALIDA ACCESO API/RECURSO NOK
             CONFIGURATION.RESOURCES_ID = (long)CONFIG_RESOURCES.RESO_10;
@@ -13193,26 +13198,365 @@ namespace API_GP_LOGISTICO.Controllers
             }
             #endregion
 
-            #region PROCESO
-            STATUS_CODE = HttpStatusCode.OK;
+            //Si no se envia json ---
+            if (REQUEST == null)
+            {
+                #region RESPONSE NOK
+                ERROR = API_CLS.API_RESPONSE_ERRORS.Find(1015); //REQUEST - ERROR EN CUERPO RECIBIDO
+                RESPONSE.Resultado = "ERROR";
+                RESPONSE.Descripcion = "La estructura JSON viene vacia";
+                RESPONSE.Resultado_Codigo = ERROR.ErrID;
+                RESPONSE.Resultado_Descripcion = ERROR.Mensaje;
+                STATUS_CODE = HttpStatusCode.BadRequest;
+                return new HttpActionResult(Request, (ConfigurationManager.AppSettings["InformaStatusAPI"].ToString() == "SI" ? STATUS_CODE : HttpStatusCode.OK), RESPONSE);
+                #endregion
+            }
+
+            //Guarda JSON recibido en el log ----------
+            var body = JsonConvert.SerializeObject(REQUEST);
+            LogInfo(NombreProceso,
+                    "Estructura JSON: " + body.ToString(),
+                    true,
+                    false,
+                    "",
+                    body.ToString());
+
+            //#region PROCESO
+            //STATUS_CODE = HttpStatusCode.OK;
+            //try
+            //{
+            //    List<sp_in_API_Webhook_Bsale_Result> WBSL = GP_ENT.sp_in_API_Webhook_Bsale(data.ToString()).ToList();
+
+            //    RESPONSE.Resultado = WBSL.ElementAt(0).Resultado;
+            //    RESPONSE.Descripcion = WBSL.ElementAt(0).Descripcion;
+            //}
+            //catch (Exception ex)
+            //{
+            //    #region NOK
+            //    ERROR = API_CLS.API_RESPONSE_ERRORS.Find(1000);//REQUEST - ERROR NO ESPECIFICADO
+            //    RESPONSE.Resultado = "Error";
+            //    RESPONSE.Descripcion = ERROR.Mensaje + ". " + ex.Message.Trim();
+            //    STATUS_CODE = HttpStatusCode.InternalServerError;
+            //    return new HttpActionResult(Request, (ConfigurationManager.AppSettings["InformaStatusAPI"].ToString() == "SI" ? STATUS_CODE : HttpStatusCode.OK), RESPONSE);
+            //    #endregion
+            //}
+            //return new HttpActionResult(Request, (ConfigurationManager.AppSettings["InformaStatusAPI"].ToString() == "SI" ? STATUS_CODE : HttpStatusCode.OK), RESPONSE);
+            //#endregion
+
+            //===============================================================================================================
+            //===============================================================================================================
+            //===============================================================================================================
+
+            #region PROCESAMIENTO
+
+            //crea variables de lista para recuperar retorno de los procedimientos almacenados
+            List<sp_in_API_Integraciones_Result> INTEGRACIONES = new List<sp_in_API_Integraciones_Result>();
+            List<Sp_Proc_IntegracionApi_Result> INTEGRACIONES_PROCESA = new List<Sp_Proc_IntegracionApi_Result>();
+
+            string Proceso = "INT-WEBHOOK-DRIVINRUTA";
+            string Archivo = "WEBHOOK_DRIVINRUTA_" + DateTime.Now.ToString("yyyyMMddHHmmss");
+            DateTime Fecha = DateTime.Now;
+            int Linea = 1;
+
+            //recorre estructura json del Webhook, insertamos campos importantes
+            foreach (var trips in REQUEST.trips.ToList())
+            {
+                foreach (var results in trips.results.ToList())
+                {
+                    foreach (var orders in results.orders.ToList())
+                    {
+                        //Inserta linea de cabecera/detalle a tabla temporal ----------------------
+                        //Se llama a la funcion INSERTA_sp_in_API_Integraciones
+                        //  - Esta funcion llama al procedimiento almacenado sp_in_API_Integraciones, que inserta hasta el Texto100
+                        //  - La funcion Permite enviar los textos como parametros opcionales
+                        //  - En el procedimiento indicar la cantidad de textos que envia la integracion para optimizar la inserción 
+
+                        //controla nulos
+                        REQUEST.vehicle = (REQUEST.vehicle == null ? "" : REQUEST.vehicle);
+                        REQUEST.vehicle_detail = (REQUEST.vehicle_detail == null ? "" : REQUEST.vehicle_detail);
+                        //REQUEST.route_id = (REQUEST.route_id == null ? "" : REQUEST.route_id);
+                        REQUEST.route_code = (REQUEST.route_code == null ? "" : REQUEST.route_code);
+                        REQUEST.description = (REQUEST.description == null ? "" : REQUEST.description);
+                        REQUEST.deploy_date = (REQUEST.deploy_date == null ? "" : REQUEST.deploy_date);
+                        REQUEST.supplier_code = (REQUEST.supplier_code == null ? "" : REQUEST.supplier_code);
+                        REQUEST.scenario_token = (REQUEST.scenario_token == null ? "" : REQUEST.scenario_token);
+                        REQUEST.schema_code = (REQUEST.schema_code == null ? "" : REQUEST.schema_code);
+                        REQUEST.schema_name = (REQUEST.schema_name == null ? "" : REQUEST.schema_name);
+                        REQUEST.approved_at = (REQUEST.approved_at == null ? "" : REQUEST.approved_at);
+                        REQUEST.platform = (REQUEST.platform == null ? "" : REQUEST.platform);
+                        REQUEST.started_at = (REQUEST.started_at == null ? "" : REQUEST.started_at);
+                        REQUEST.fleet_sequence = (REQUEST.fleet_sequence == null ? "" : REQUEST.fleet_sequence);
+                        REQUEST.login_url = (REQUEST.login_url == null ? "" : REQUEST.login_url);
+                        REQUEST.driver.email = (REQUEST.driver.email == null ? "" : REQUEST.driver.email);
+                        REQUEST.driver.full_name = (REQUEST.driver.full_name == null ? "" : REQUEST.driver.full_name);
+                        REQUEST.driver.phone = (REQUEST.driver.phone == null ? "" : REQUEST.driver.phone);
+                        //REQUEST.summary.total_trips = (REQUEST.summary.total_trips == null ? "" : REQUEST.summary.total_trips);
+                        //REQUEST.summary.total_orders = (REQUEST.summary.total_orders == null ? "" : REQUEST.summary.total_orders);
+                        //REQUEST.summary.total_addresses = (REQUEST.summary.total_addresses == null ? "" : REQUEST.summary.total_addresses);
+                        //REQUEST.summary.total_distance = (REQUEST.summary.total_distance == null ? "" : REQUEST.summary.total_distance);
+                        //REQUEST.summary.total_time = (REQUEST.summary.total_time == null ? "" : REQUEST.summary.total_time);
+                        //trips.summary.trip_number = (trips.summary.trip_number == null ? "" : trips.summary.trip_number);
+                        //trips.summary.total_orders = (trips.summary.total_orders == null ? "" : trips.summary.total_orders);
+                        //trips.summary.total_addresses = (trips.summary.total_addresses == null ? "" : trips.summary.total_addresses);
+                        //trips.summary.total_distance = (trips.summary.total_distance == null ? "" : trips.summary.total_distance);
+                        //trips.summary.total_time = (trips.summary.total_time == null ? "" : trips.summary.total_time);
+                        results.deposit = (results.deposit == null ? "" : results.deposit);
+                        //results.position = (results.position == null ? "" : results.position);
+                        //results.eta_mode = (results.eta_mode == null ? "" : results.eta_mode);
+                        results.eta = (results.eta == null ? "" : results.eta);
+                        results.eta_approved = (results.eta_approved == null ? "" : results.eta_approved);
+                        results.eta_started = (results.eta_started == null ? "" : results.eta_started);
+                        results.stop.code = (results.stop.code == null ? "" : results.stop.code);
+                        results.stop.name = (results.stop.name == null ? "" : results.stop.name);
+                        results.stop.client = (results.stop.client == null ? "" : results.stop.client);
+                        results.stop.address_type = (results.stop.address_type == null ? "" : results.stop.address_type);
+                        results.stop.address = (results.stop.address == null ? "" : results.stop.address);
+                        results.stop.reference = (results.stop.reference == null ? "" : results.stop.reference);
+                        results.stop.city = (results.stop.city == null ? "" : results.stop.city);
+                        results.stop.country = (results.stop.country == null ? "" : results.stop.country);
+                        results.stop.lat = (results.stop.lat == null ? "" : results.stop.lat);
+                        results.stop.lng = (results.stop.lng == null ? "" : results.stop.lng);
+                        results.stop.postal_code = (results.stop.postal_code == null ? "" : results.stop.postal_code);
+                        //results.stop.service_time = (results.stop.service_time == null ? "" : results.stop.service_time);
+                        //results.stop.priority = (results.stop.priority == null ? "" : results.stop.priority);
+                        orders.idx = (orders.idx == null ? "" : orders.idx);
+                        orders.code = (orders.code == null ? "" : orders.code);
+                        orders.alt_code = (orders.alt_code == null ? "" : orders.alt_code);
+                        orders.delivery_date = (orders.delivery_date == null ? "" : orders.delivery_date);
+                        orders.supplier_code = (orders.supplier_code == null ? "" : orders.supplier_code);
+                        orders.supplier_name = (orders.supplier_name == null ? "" : orders.supplier_name);
+                        orders.client_code = (orders.client_code == null ? "" : orders.client_code);
+                        orders.client_name = (orders.client_name == null ? "" : orders.client_name);
+                        //orders.units_1 = (orders.units_1 == null ? "" : orders.units_1);
+                        //orders.units_2 = (orders.units_2 == null ? "" : orders.units_2);
+                        //orders.units_3 = (orders.units_3 == null ? "" : orders.units_3);
+                        orders.custom_1 = (orders.custom_1 == null ? "" : orders.custom_1);
+                        orders.custom_2 = (orders.custom_2 == null ? "" : orders.custom_2);
+                        orders.custom_3 = (orders.custom_3 == null ? "" : orders.custom_3);
+                        orders.custom_4 = (orders.custom_4 == null ? "" : orders.custom_4);
+                        orders.custom_5 = (orders.custom_5 == null ? "" : orders.custom_5);
+                        orders.custom_6 = (orders.custom_6 == null ? "" : orders.custom_6);
+                        orders.custom_7 = (orders.custom_7 == null ? "" : orders.custom_7);
+                        orders.custom_8 = (orders.custom_8 == null ? "" : orders.custom_8);
+                        orders.custom_9 = (orders.custom_9 == null ? "" : orders.custom_9);
+                        orders.custom_10 = (orders.custom_10 == null ? "" : orders.custom_10);
+                        orders.custom_11 = (orders.custom_11 == null ? "" : orders.custom_11);
+                        orders.number_1 = (orders.number_1 == null ? "" : orders.number_1);
+                        orders.number_2 = (orders.number_2 == null ? "" : orders.number_2);
+                        orders.number_3 = (orders.number_3 == null ? "" : orders.number_3);
+                        orders.number_4 = (orders.number_4 == null ? "" : orders.number_4);
+
+                        INTEGRACIONES = INSERTA_sp_in_API_Integraciones(GP_ENT,
+                                                                        Archivo,
+                                                                        USERNAME,
+                                                                        Fecha,
+                                                                        Linea,
+                                                                        Proceso.Trim(),
+                                                                        REQUEST.vehicle,
+                                                                        REQUEST.vehicle_detail,
+                                                                        REQUEST.route_id.ToString(),
+                                                                        REQUEST.route_code,
+                                                                        REQUEST.description,
+                                                                        REQUEST.deploy_date,
+                                                                        REQUEST.supplier_code,
+                                                                        REQUEST.scenario_token,
+                                                                        REQUEST.schema_code,
+                                                                        REQUEST.schema_name,
+                                                                        REQUEST.approved_at,
+                                                                        REQUEST.platform,
+                                                                        REQUEST.started_at,
+                                                                        REQUEST.fleet_sequence,
+                                                                        REQUEST.login_url,
+                                                                        REQUEST.driver.email.Trim(),
+                                                                        REQUEST.driver.full_name.Trim(),
+                                                                        REQUEST.driver.phone.Trim(),
+                                                                        REQUEST.summary.total_trips.ToString(),
+                                                                        REQUEST.summary.total_orders.ToString(),
+                                                                        REQUEST.summary.total_addresses.ToString(),
+                                                                        REQUEST.summary.total_distance.ToString(),
+                                                                        REQUEST.summary.total_time.ToString(),
+                                                                        trips.summary.trip_number.ToString(),
+                                                                        trips.summary.total_orders.ToString(),
+                                                                        trips.summary.total_addresses.ToString(),
+                                                                        trips.summary.total_distance.ToString(),
+                                                                        trips.summary.total_time.ToString(),
+                                                                        results.deposit.Trim(),
+                                                                        results.position.ToString(),
+                                                                        results.eta_mode.ToString(),
+                                                                        results.eta,
+                                                                        results.eta_approved,
+                                                                        results.eta_started,
+                                                                        results.stop.code,
+                                                                        results.stop.name,
+                                                                        results.stop.client,
+                                                                        results.stop.address_type,
+                                                                        results.stop.address,
+                                                                        results.stop.reference,
+                                                                        results.stop.city,
+                                                                        results.stop.country,
+                                                                        results.stop.lat,
+                                                                        results.stop.lng,
+                                                                        results.stop.postal_code,
+                                                                        results.stop.service_time.ToString(),
+                                                                        results.stop.priority.ToString(),
+                                                                        orders.idx,
+                                                                        orders.code,
+                                                                        orders.alt_code,
+                                                                        orders.delivery_date,
+                                                                        orders.supplier_code,
+                                                                        orders.supplier_name,
+                                                                        orders.client_code,
+                                                                        orders.client_name,
+                                                                        orders.units_1.ToString(),
+                                                                        orders.units_2.ToString(),
+                                                                        orders.units_3.ToString(),
+                                                                        orders.custom_1,
+                                                                        orders.custom_2,
+                                                                        orders.custom_3,
+                                                                        orders.custom_4,
+                                                                        orders.custom_5,
+                                                                        orders.custom_6,
+                                                                        orders.custom_7,
+                                                                        orders.custom_8,
+                                                                        orders.custom_9,
+                                                                        orders.custom_10,
+                                                                        orders.custom_11,
+                                                                        orders.number_1,
+                                                                        orders.number_2,
+                                                                        orders.number_3,
+                                                                        orders.number_4
+                                                                        ).ToList();
+                        if (INTEGRACIONES.Count > 0)
+                        {
+                            if (INTEGRACIONES[0].Count == 0) //pregunta por el CAMPO Count, si es mayor a cero procesó OK el detalle
+                            {
+                                #region NOK
+                                ERROR = API_CLS.API_RESPONSE_ERRORS.Find(1017);//REQUEST - ERROR NO ESPECIFICADO
+
+                                LogInfo(NombreProceso,
+                                        ERROR.Mensaje.Trim() + ". " + INTEGRACIONES[0].Descripcion,
+                                        true,
+                                        false,
+                                        "",
+                                        body.ToString());
+
+                                RESPONSE.Resultado = "ERROR";
+                                RESPONSE.Descripcion = "Error procesando Webhook";
+                                RESPONSE.Resultado_Codigo = ERROR.ErrID;
+                                RESPONSE.Resultado_Descripcion = ERROR.Mensaje;
+                                STATUS_CODE = HttpStatusCode.BadRequest;
+                                return new HttpActionResult(Request, (ConfigurationManager.AppSettings["InformaStatusAPI"].ToString() == "SI" ? STATUS_CODE : HttpStatusCode.OK), RESPONSE);
+                                #endregion
+                            }
+                        }
+                        else
+                        {
+                            #region NOK
+                            ERROR = API_CLS.API_RESPONSE_ERRORS.Find(1000);//REQUEST - ERROR NO ESPECIFICADO
+
+                            LogInfo(NombreProceso,
+                                    ERROR.Mensaje.Trim(),
+                                    true,
+                                    false,
+                                    "",
+                                    body.ToString());
+
+                            RESPONSE.Resultado = "ERROR";
+                            RESPONSE.Descripcion = "";
+                            RESPONSE.Resultado_Codigo = ERROR.ErrID;
+                            RESPONSE.Resultado_Descripcion = ERROR.Mensaje;
+                            STATUS_CODE = HttpStatusCode.BadRequest;
+                            return new HttpActionResult(Request, (ConfigurationManager.AppSettings["InformaStatusAPI"].ToString() == "SI" ? STATUS_CODE : HttpStatusCode.OK), RESPONSE);
+                            #endregion
+                        }
+                    }                        
+                }                    
+
+            } //fin ciclo items del JSON
+
             try
             {
-                List<sp_in_API_Webhook_Bsale_Result> WBSL = GP_ENT.sp_in_API_Webhook_Bsale(data.ToString()).ToList();
+                USERNAME = "INTEGRADOR_API";
 
-                RESPONSE.Resultado = WBSL.ElementAt(0).Resultado;
-                RESPONSE.Descripcion = WBSL.ElementAt(0).Descripcion;
+                //--------------------------------------------------------------------------------------------------------------------------------
+                //Si finalizo ok el ciclo de los items, llama a procedimiento que realiza validacion de informacion generada encabecera y detalle
+                //--------------------------------------------------------------------------------------------------------------------------------
+                INTEGRACIONES_PROCESA = GP_ENT.Sp_Proc_IntegracionApi(Archivo,
+                                                                      USERNAME,
+                                                                      Fecha).ToList();
+                if (INTEGRACIONES_PROCESA.Count > 0)
+                {
+                    if (INTEGRACIONES_PROCESA[0].Generacion == 1)
+                    {
+                        RESPONSE.Resultado = "OK";
+                        RESPONSE.Descripcion = INTEGRACIONES_PROCESA[0].GlosaEstado;
+                    }
+                    else
+                    {
+                        #region NOK
+                        ERROR = API_CLS.API_RESPONSE_ERRORS.Find(1017);//REQUEST - ERROR NO ESPECIFICADO
+
+                        LogInfo(NombreProceso,
+                                ERROR.Mensaje.Trim() + ". " + INTEGRACIONES_PROCESA[0].GlosaEstado,
+                                true,
+                                false,
+                                "",
+                                body.ToString());
+
+                        RESPONSE.Resultado = "ERROR";
+                        RESPONSE.Descripcion = INTEGRACIONES_PROCESA[0].GlosaEstado;
+                        RESPONSE.Resultado_Codigo = ERROR.ErrID;
+                        RESPONSE.Resultado_Descripcion = ERROR.Mensaje;
+                        STATUS_CODE = HttpStatusCode.BadRequest;
+                        return new HttpActionResult(Request, (ConfigurationManager.AppSettings["InformaStatusAPI"].ToString() == "SI" ? STATUS_CODE : HttpStatusCode.OK), RESPONSE);
+                        #endregion
+                    }
+                }
+                else
+                {
+                    #region NOK
+                    ERROR = API_CLS.API_RESPONSE_ERRORS.Find(1000);//REQUEST - ERROR NO ESPECIFICADO
+
+                    LogInfo(NombreProceso,
+                            ERROR.Mensaje.Trim(),
+                            true,
+                            false,
+                            "",
+                            body.ToString());
+
+                    RESPONSE.Resultado = "ERROR";
+                    RESPONSE.Descripcion = "";
+                    RESPONSE.Resultado_Codigo = ERROR.ErrID;
+                    RESPONSE.Resultado_Descripcion = ERROR.Mensaje;
+                    STATUS_CODE = HttpStatusCode.BadRequest;
+                    return new HttpActionResult(Request, (ConfigurationManager.AppSettings["InformaStatusAPI"].ToString() == "SI" ? STATUS_CODE : HttpStatusCode.OK), RESPONSE);
+                    #endregion
+                }
             }
             catch (Exception ex)
             {
                 #region NOK
-                ERROR = API_CLS.API_RESPONSE_ERRORS.Find(1000);//REQUEST - ERROR NO ESPECIFICADO
-                RESPONSE.Resultado = "Error";
-                RESPONSE.Descripcion = ERROR.Mensaje + ". " + ex.Message.Trim();
-                STATUS_CODE = HttpStatusCode.InternalServerError;
+                ERROR = API_CLS.API_RESPONSE_ERRORS.Find(1017);//REQUEST - ERROR PROCESO BASE DE DATOS
+
+                LogInfo(NombreProceso,
+                        ERROR.Mensaje.Trim() + ". " + ex.Message.Trim(),
+                        true,
+                        false,
+                        "",
+                        body.ToString());
+
+                RESPONSE.Resultado = "ERROR";
+                RESPONSE.Descripcion = ex.Message.Trim();
+                RESPONSE.Resultado_Codigo = ERROR.ErrID;
+                RESPONSE.Resultado_Descripcion = ERROR.Mensaje;
+                STATUS_CODE = HttpStatusCode.BadRequest;
                 return new HttpActionResult(Request, (ConfigurationManager.AppSettings["InformaStatusAPI"].ToString() == "SI" ? STATUS_CODE : HttpStatusCode.OK), RESPONSE);
                 #endregion
             }
+
+            //Si llega hasta aca significa que realizó correctamente el proceso -------------------------------------
             return new HttpActionResult(Request, (ConfigurationManager.AppSettings["InformaStatusAPI"].ToString() == "SI" ? STATUS_CODE : HttpStatusCode.OK), RESPONSE);
+
             #endregion
         }
         #endregion
