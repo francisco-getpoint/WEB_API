@@ -7952,6 +7952,7 @@ namespace API_GP_LOGISTICO.Controllers
             #endregion
 
             //Valida Usuario - Empresa
+
             #region VALIDA EMPRESA NOK
             if (!ACCESS.VALIDATE_USUARIO_EMPRESA(REQUEST.Empid, USERNAME, out ERROR))
             {
@@ -7973,7 +7974,6 @@ namespace API_GP_LOGISTICO.Controllers
                 #endregion
             }
             #endregion
-
             //Guarda JSON recibido en el log ----------
             //body = JsonConvert.SerializeObject(REQUEST);
             //LogInfo(NombreProceso,
