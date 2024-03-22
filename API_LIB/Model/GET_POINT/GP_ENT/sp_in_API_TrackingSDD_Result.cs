@@ -13,6 +13,7 @@ namespace API_LIB.Model.GET_POINT.GP_ENT
     
     public partial class sp_in_API_TrackingSDD_Result
     {
+        public Nullable<int> Count { get; set; }
         public string Resultado { get; set; }
         public Nullable<int> Limit { get; set; }
         public Nullable<int> RowSet { get; set; }
@@ -23,6 +24,9 @@ namespace API_LIB.Model.GET_POINT.GP_ENT
         public Nullable<int> Estado { get; set; }
         public string EstadoGlosa { get; set; }
         public Nullable<System.DateTime> FechaEstado { get; set; }
-        public Nullable<int> Count { get; set; }
+        public Nullable<System.DateTime> FechaDigitacion { get; set; }
+        public Nullable<System.DateTime> FechaProceso { get; set; }
+        public string Usuario { get; set; }
+        public string GlosaAnula { get; set; }
     }
 }

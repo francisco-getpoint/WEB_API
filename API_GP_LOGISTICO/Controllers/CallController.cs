@@ -1458,8 +1458,15 @@ namespace API_GP_LOGISTICO.Controllers
                 }
                 catch { throw new Exception("ERROR - FECHATERMINO DEBE SER FORMATO FECHA dd-MM-yyyy HH:mm:ss, por ejemplo 06-11-2020 20:18:11"); }
 
-                if (REQUEST.tipoReferencia.Trim().Length > 80) { throw new Exception("ERROR - TIPOREFERENCIA > QUE EL LARGO PERMITIDO 80"); }
-                if (REQUEST.rutCliente.Trim().Length > 12) { throw new Exception("ERROR - NOMBRECLIENTE > QUE EL LARGO PERMITIDO 12"); }
+                if (REQUEST.tipoReferencia.Trim().Length > 80) 
+                { 
+                    throw new Exception("ERROR - TIPOREFERENCIA > QUE EL LARGO PERMITIDO 80"); 
+                }
+
+                if (REQUEST.rutCliente.Trim().Length > 12) 
+                { 
+                    throw new Exception("ERROR - NOMBRECLIENTE > QUE EL LARGO PERMITIDO 12"); 
+                }
             }
             catch (Exception ex)
             {
@@ -1473,32 +1480,42 @@ namespace API_GP_LOGISTICO.Controllers
             #endregion
             #endregion
 
-            List<sp_in_API_TrackingSDD_Result> TRACKINGSDD = GP_ENT.sp_in_API_TrackingSDD(
-            REQUEST.empId,
-            fi,
-            ft,
-            REQUEST.solDespId,
-            REQUEST.tipoReferencia,
-            REQUEST.numeroReferencia,
-            REQUEST.rutCliente,
-            REQUEST.limit,
-            REQUEST.rowset
-            ).ToList();
+            List<sp_in_API_TrackingSDD_Result> TRACKINGSDD = GP_ENT.sp_in_API_TrackingSDD(REQUEST.empId,
+                                                                                          fi,
+                                                                                          ft,
+                                                                                          REQUEST.solDespId,
+                                                                                          REQUEST.tipoReferencia,
+                                                                                          REQUEST.numeroReferencia,
+                                                                                          REQUEST.rutCliente,
+                                                                                          REQUEST.limit,
+                                                                                          REQUEST.rowset
+                                                                                          ).ToList();
 
-            foreach (var item in TRACKINGSDD) { HELPERS.TrimModelProperties(typeof(sp_in_API_TrackingSDD_Result), item); }
-            if (TRACKINGSDD.Count() > 0) { RESPONSE.count = (int)TRACKINGSDD.ElementAt(0).Count; }
-            else { RESPONSE.count = 0; }
+            foreach (var item in TRACKINGSDD) 
+            { 
+                HELPERS.TrimModelProperties(typeof(sp_in_API_TrackingSDD_Result), item); 
+            }
 
-            RESPONSE.items = TRACKINGSDD
-            .Select(m => new
-            {
-                SolDespId = m.SolDespId,
-                TipoReferencia = m.TipoReferencia,
-                NumeroReferencia = m.NumeroReferencia,
-                RutCliente = m.RutCliente,
-                Estado = m.Estado,
-                EstadoGlosa = m.EstadoGlosa,
-                FechaEstado = m.FechaEstado
+            if (TRACKINGSDD.Count() > 0) 
+            { 
+                RESPONSE.count = (int)TRACKINGSDD.ElementAt(0).Count; 
+            }
+            else 
+            { 
+                RESPONSE.count = 0; 
+            }
+
+            RESPONSE.items = TRACKINGSDD.Select(m => new {
+                                                            SolDespId = m.SolDespId,
+                                                            TipoReferencia = m.TipoReferencia,
+                                                            NumeroReferencia = m.NumeroReferencia,
+                                                            RutCliente = m.RutCliente,
+                                                            Estado = m.Estado,
+                                                            EstadoGlosa = m.EstadoGlosa,
+                                                            FechaEstado = m.FechaEstado,
+                                                            FechaDigitacion = m.FechaDigitacion,
+                                                            Usuario = m.Usuario,
+                                                            GlosaAnula = m.GlosaAnula
             })
             .Cast<dynamic>().ToList();
             return new HttpActionResult(Request, (ConfigurationManager.AppSettings["InformaStatusAPI"].ToString() == "SI" ? STATUS_CODE : HttpStatusCode.OK), RESPONSE);
@@ -9760,7 +9777,7 @@ namespace API_GP_LOGISTICO.Controllers
                     item.Lote = item.Lote == null ? "" : item.Lote; //opcional
                     item.FechaVencimiento = (item.FechaVencimiento == null ? "" : item.FechaVencimiento); //opcional
                     //if (item.Estado <= 0) { throw new Exception("Debe informar Estado > 0 "); } //opcional
-                    item.CodigoUbicacion = item.CodigoUbicacion == null ? "" : item.CodigoUbicacion; //opcional
+                    item.CodigoUbicacion = (item.CodigoUbicacion == null ? "" : item.CodigoUbicacion); //opcional
 
                     //REQUEST.items.Count --> cantidad items que trae el json 
                 }
