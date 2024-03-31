@@ -57,6 +57,179 @@
                     <span>INICIO</span>
                 </a>
             </li>
+
+            @*
+        @foreach (var ITEM_LEVEL_1 in LIST_API_PROY_CAB.ToList())
+        {
+            <li class="nav-item">
+                <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#MENUID_@ITEM_LEVEL_1.ProyID" aria-expanded="true" aria-controls="MENUID_@ITEM_LEVEL_1.ProyID">
+                    <i class="fas fa-link"></i>
+                    <span>@ITEM_LEVEL_1.Nombre</span>
+                </a>
+                <div id="MENUID_@ITEM_LEVEL_1.ProyID" class="collapse" aria-labelledby="HEAD_@ITEM_LEVEL_1.ProyID" data-parent="#accordionSidebar">
+                    <div class="bg-white py-2 collapse-inner rounded">
+                        @foreach (var ITEM_LEVEL_2 in LIST_API_PROY_DET.Where(m => m.ProyID == ITEM_LEVEL_1.ProyID))
+                        {
+                            <a class="collapse-item item-menu-det" href="javascript:{}" id="LINK_@ITEM_LEVEL_2.ProyID@ITEM_LEVEL_2.DetID" onclick="AJX_SET_NAVID('@ITEM_LEVEL_2.ProyID@ITEM_LEVEL_2.DetID','@Url.Action("I","R")','@Url.Content("~/H/AJX_R/")',@ITEM_LEVEL_2.ProyID,@ITEM_LEVEL_2.DetID)">@ITEM_LEVEL_2.Nombre</a>
+                        }
+                    </div>
+                </div>
+            </li>
+        }
+            *@
+
+            @foreach (var ITEM_LEVEL_1 in LIST_API_PROY_CAB.ToList())
+            {
+                <li class="nav-item">
+                    <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#MENUID_1000001" aria-expanded="true" aria-controls="MENUID_1000001">
+                        <i class="fas fa-link"></i>
+                        <span>RECEPCION</span>
+                    </a>
+                    <div id="MENUID_1000001" class="collapse" aria-labelledby="HEAD_MENUID_1000001" data-parent="#accordionSidebar">
+                        <div class="bg-white py-2 collapse-inner rounded">
+                            @foreach (var ITEM_LEVEL_2 in LIST_API_PROY_DET.Where(m => m.ProyID == ITEM_LEVEL_1.ProyID))
+                            {
+                                if (@ITEM_LEVEL_2.Nombre.Contains("RECEPCION") == true)
+                                {
+                                    <a class="collapse-item item-menu-det" href="javascript:{}" id="LINK_@ITEM_LEVEL_2.ProyID@ITEM_LEVEL_2.DetID" onclick="AJX_SET_NAVID('@ITEM_LEVEL_2.ProyID@ITEM_LEVEL_2.DetID','@Url.Action("I", "R")','@Url.Content("~/H/AJX_R/")',@ITEM_LEVEL_2.ProyID,@ITEM_LEVEL_2.DetID)">@ITEM_LEVEL_2.Nombre</a>
+                                }
+                            }
+                        </div>
+                    </div>
+                </li>
+            }
+
+            @foreach (var ITEM_LEVEL_1 in LIST_API_PROY_CAB.ToList())
+            {
+                <li class="nav-item">
+                    <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#MENUID_1000002" aria-expanded="false" aria-controls="MENUID_1000002">
+                        <i class="fas fa-link"></i>
+                        <span>DESPACHOS</span>
+                    </a>
+                    <div id="MENUID_1000002" class="collapse" aria-labelledby="HEAD_MENUID_1000002" data-parent="#accordionSidebar">
+                        <div class="bg-white py-2 collapse-inner rounded">
+                            @foreach (var ITEM_LEVEL_2 in LIST_API_PROY_DET.Where(m => m.ProyID == ITEM_LEVEL_1.ProyID))
+                            {
+                                if (@ITEM_LEVEL_2.Nombre.Contains("DESPACHO") == true)
+                                {
+                                    <a class="collapse-item item-menu-det" href="javascript:{}" id="LINK_@ITEM_LEVEL_2.ProyID@ITEM_LEVEL_2.DetID" onclick="AJX_SET_NAVID('@ITEM_LEVEL_2.ProyID@ITEM_LEVEL_2.DetID','@Url.Action("I", "R")','@Url.Content("~/H/AJX_R/")',@ITEM_LEVEL_2.ProyID,@ITEM_LEVEL_2.DetID)">@ITEM_LEVEL_2.Nombre</a>
+                                }
+                            }
+                        </div>
+                    </div>
+                </li>
+            }
+
+            @foreach (var ITEM_LEVEL_1 in LIST_API_PROY_CAB.ToList())
+            {
+                <li class="nav-item">
+                    <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#MENUID_1000003" aria-expanded="true" aria-controls="MENUID_1000003">
+                        <i class="fas fa-link"></i>
+                        <span>PRODUCTO</span>
+                    </a>
+                    <div id="MENUID_1000003" class="collapse" aria-labelledby="HEAD_MENUID_1000003" data-parent="#accordionSidebar">
+                        <div class="bg-white py-2 collapse-inner rounded">
+                            @foreach (var ITEM_LEVEL_2 in LIST_API_PROY_DET.Where(m => m.ProyID == ITEM_LEVEL_1.ProyID))
+                            {
+                                if (@ITEM_LEVEL_2.Nombre.Contains("PRODUCTO") == true)
+                                {
+                                    <a class="collapse-item item-menu-det" href="javascript:{}" id="LINK_@ITEM_LEVEL_2.ProyID@ITEM_LEVEL_2.DetID" onclick="AJX_SET_NAVID('@ITEM_LEVEL_2.ProyID@ITEM_LEVEL_2.DetID','@Url.Action("I", "R")','@Url.Content("~/H/AJX_R/")',@ITEM_LEVEL_2.ProyID,@ITEM_LEVEL_2.DetID)">@ITEM_LEVEL_2.Nombre</a>
+                                }
+                            }
+                        </div>
+                    </div>
+                </li>
+            }
+
+            @foreach (var ITEM_LEVEL_1 in LIST_API_PROY_CAB.ToList())
+            {
+                <li class="nav-item">
+                    <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#MENUID_1000004" aria-expanded="true" aria-controls="MENUID_1000004">
+                        <i class="fas fa-link"></i>
+                        <span>STOCK</span>
+                    </a>
+                    <div id="MENUID_1000004" class="collapse" aria-labelledby="HEAD_MENUID_1000004" data-parent="#accordionSidebar">
+                        <div class="bg-white py-2 collapse-inner rounded">
+                            @foreach (var ITEM_LEVEL_2 in LIST_API_PROY_DET.Where(m => m.ProyID == ITEM_LEVEL_1.ProyID))
+                            {
+                                if (@ITEM_LEVEL_2.Nombre.Contains("STOCK") == true)
+                                {
+                                    <a class="collapse-item item-menu-det" href="javascript:{}" id="LINK_@ITEM_LEVEL_2.ProyID@ITEM_LEVEL_2.DetID" onclick="AJX_SET_NAVID('@ITEM_LEVEL_2.ProyID@ITEM_LEVEL_2.DetID','@Url.Action("I", "R")','@Url.Content("~/H/AJX_R/")',@ITEM_LEVEL_2.ProyID,@ITEM_LEVEL_2.DetID)">@ITEM_LEVEL_2.Nombre</a>
+                                }
+                            }
+                        </div>
+                    </div>
+                </li>
+            }
+
+            @foreach (var ITEM_LEVEL_1 in LIST_API_PROY_CAB.ToList())
+            {
+                <li class="nav-item">
+                    <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#MENUID_1000005" aria-expanded="true" aria-controls="MENUID_1000005">
+                        <i class="fas fa-link"></i>
+                        <span>MOVIMIENTOS</span>
+                    </a>
+                    <div id="MENUID_1000005" class="collapse" aria-labelledby="HEAD_MENUID_1000005" data-parent="#accordionSidebar">
+                        <div class="bg-white py-2 collapse-inner rounded">
+                            @foreach (var ITEM_LEVEL_2 in LIST_API_PROY_DET.Where(m => m.ProyID == ITEM_LEVEL_1.ProyID))
+                            {
+                                if (@ITEM_LEVEL_2.Nombre.Contains("MOVIMIENTOS") == true)
+                                {
+                                    <a class="collapse-item item-menu-det" href="javascript:{}" id="LINK_@ITEM_LEVEL_2.ProyID@ITEM_LEVEL_2.DetID" onclick="AJX_SET_NAVID('@ITEM_LEVEL_2.ProyID@ITEM_LEVEL_2.DetID','@Url.Action("I", "R")','@Url.Content("~/H/AJX_R/")',@ITEM_LEVEL_2.ProyID,@ITEM_LEVEL_2.DetID)">@ITEM_LEVEL_2.Nombre</a>
+                                }
+                            }
+                        </div>
+                    </div>
+                </li>
+            }
+
+            @foreach (var ITEM_LEVEL_1 in LIST_API_PROY_CAB.ToList())
+            {
+                <li class="nav-item">
+                    <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#MENUID_1000006" aria-expanded="true" aria-controls="MENUID_1000006">
+                        <i class="fas fa-link"></i>
+                        <span>WEBHOOK</span>
+                    </a>
+                    <div id="MENUID_1000006" class="collapse" aria-labelledby="HEAD_MENUID_1000006" data-parent="#accordionSidebar">
+                        <div class="bg-white py-2 collapse-inner rounded">
+                            @foreach (var ITEM_LEVEL_2 in LIST_API_PROY_DET.Where(m => m.ProyID == ITEM_LEVEL_1.ProyID))
+                            {
+                                if (@ITEM_LEVEL_2.Nombre.Contains("WEBHOOK") == true)
+                                {
+                                    <a class="collapse-item item-menu-det" href="javascript:{}" id="LINK_@ITEM_LEVEL_2.ProyID@ITEM_LEVEL_2.DetID" onclick="AJX_SET_NAVID('@ITEM_LEVEL_2.ProyID@ITEM_LEVEL_2.DetID','@Url.Action("I", "R")','@Url.Content("~/H/AJX_R/")',@ITEM_LEVEL_2.ProyID,@ITEM_LEVEL_2.DetID)">@ITEM_LEVEL_2.Nombre</a>
+                                }
+                            }
+                        </div>
+                    </div>
+                </li>
+            }
+
+            @foreach (var ITEM_LEVEL_1 in LIST_API_PROY_CAB.ToList())
+            {
+                <li class="nav-item">
+                    <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#MENUID_1000007" aria-expanded="true" aria-controls="MENUID_1000007">
+                        <i class="fas fa-link"></i>
+                        <span>OTRAS APIs</span>
+                    </a>
+                    <div id="MENUID_1000007" class="collapse" aria-labelledby="HEAD_MENUID_1000007" data-parent="#accordionSidebar">
+                        <div class="bg-white py-2 collapse-inner rounded">
+                            @foreach (var ITEM_LEVEL_2 in LIST_API_PROY_DET.Where(m => m.ProyID == ITEM_LEVEL_1.ProyID))
+                            {
+                                if ((@ITEM_LEVEL_2.Nombre.Contains("RECEPCION") == false) &&
+                                    (@ITEM_LEVEL_2.Nombre.Contains("DESPACHO") == false) &&
+                                    (@ITEM_LEVEL_2.Nombre.Contains("PRODUCTO") == false) &&
+                                    (@ITEM_LEVEL_2.Nombre.Contains("STOCK") == false) &&
+                                    (@ITEM_LEVEL_2.Nombre.Contains("MOVIMIENTOS") == false) &&
+                                    (@ITEM_LEVEL_2.Nombre.Contains("WEBHOOK") == false))
+                                {
+                                    <a class="collapse-item item-menu-det" href="javascript:{}" id="LINK_@ITEM_LEVEL_2.ProyID@ITEM_LEVEL_2.DetID" onclick="AJX_SET_NAVID('@ITEM_LEVEL_2.ProyID@ITEM_LEVEL_2.DetID','@Url.Action("I", "R")','@Url.Content("~/H/AJX_R/")',@ITEM_LEVEL_2.ProyID,@ITEM_LEVEL_2.DetID)">@ITEM_LEVEL_2.Nombre</a>
+                                }
+                            }
+                        </div>
+                    </div>
+                </li>
+            }
+
             <li class="nav-item active">
                 <a class="nav-link" href="@Url.Action("I", "ERR_INFO")">
                     <i class="fas fa-info-circle"></i>
@@ -64,23 +237,16 @@
                 </a>
             </li>
 
-            @foreach (var ITEM_LEVEL_1 in LIST_API_PROY_CAB.ToList())
-            {
-                <li class="nav-item">
-                    <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#MENUID_@ITEM_LEVEL_1.ProyID" aria-expanded="true" aria-controls="MENUID_@ITEM_LEVEL_1.ProyID">
-                        <i class="fas fa-link"></i>
-                        <span>@ITEM_LEVEL_1.Nombre</span>
-                    </a>
-                    <div id="MENUID_@ITEM_LEVEL_1.ProyID" class="collapse" aria-labelledby="HEAD_@ITEM_LEVEL_1.ProyID" data-parent="#accordionSidebar">
-                        <div class="bg-white py-2 collapse-inner rounded">
-                            @foreach (var ITEM_LEVEL_2 in LIST_API_PROY_DET.Where(m => m.ProyID == ITEM_LEVEL_1.ProyID))
-                            {
-                                <a class="collapse-item item-menu-det" href="javascript:{}" id="LINK_@ITEM_LEVEL_2.ProyID@ITEM_LEVEL_2.DetID" onclick="AJX_SET_NAVID('@ITEM_LEVEL_2.ProyID@ITEM_LEVEL_2.DetID','@Url.Action("I","R")','@Url.Content("~/H/AJX_R/")',@ITEM_LEVEL_2.ProyID,@ITEM_LEVEL_2.DetID)">@ITEM_LEVEL_2.Nombre</a>
-                            }
-                        </div>
-                    </div>
-                </li>
-            }
+            @*ejemplo submenu*@
+            @*<li class="nav-item dropdown" id="ddropDown04" runat="server" Visible="true">
+            <a runat="server" class="nav-link dropdown-toggle" href="#" id="dropdown04" data-toggle="dropdown" aria-expanded="true" aria-haspopup="false">Link With Sub Menu</a>
+            <div class="dropdown-menu" aria-labelledby="dropdown04">
+                <a class="dropdown-item" href="#">Sublink 01</a>
+                <a class="dropdown-item" href="#">Sublink 02</a>
+                <a class="dropdown-item" href="#">SubLink 03</a>
+            </div>
+        </li>*@
+
         </ul>
         <div id="content-wrapper" class="d-flex flex-column">
             <div id="content">
