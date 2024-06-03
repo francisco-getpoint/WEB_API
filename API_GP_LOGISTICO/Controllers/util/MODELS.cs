@@ -631,13 +631,6 @@ namespace API_GP_LOGISTICO.Controllers.util
             public int numeroDoc { get; set; }
             public string rutCliente { get; set; }
         }
-        public class API_REQUEST_TYPE_19
-        {
-            public int empId { get; set; }
-            public int numeroReferencia { get; set; }
-            public int sdr { get; set; }
-            public int estado { get; set; }
-        }
         public class API_REQUEST_TYPE_20
         {
             public int empId { get; set; }
@@ -659,12 +652,43 @@ namespace API_GP_LOGISTICO.Controllers.util
             public int solDespId { get; set; }
             public string archivo { get; set; }
         }
+
+        [DataContract]
         public class API_REQUEST_TYPE_23
         {
-            public int empId { get; set; }
-            public int numeroReferencia { get; set; }
-            public int sdd { get; set; }
-            public int estado { get; set; }
+            [DataMember(Order = 1)]
+            public int EmpId { get; set; }
+
+            [DataMember(Order = 2)]
+            public string TipoReferencia { get; set; }
+
+            [DataMember(Order = 3)]
+            public string NumeroReferencia { get; set; }
+
+            [DataMember(Order = 4)]
+            public int SDD { get; set; }
+
+            [DataMember(Order = 5)]
+            public int Estado { get; set; }
+        }
+
+        [DataContract]
+        public class API_REQUEST_TYPE_24
+        {
+            [DataMember(Order = 1)]
+            public int EmpId { get; set; }
+
+            [DataMember(Order = 2)]
+            public string TipoReferencia { get; set; }
+
+            [DataMember(Order = 3)]
+            public string NumeroReferencia { get; set; }
+
+            [DataMember(Order = 4)]
+            public int SDR { get; set; }
+
+            [DataMember(Order = 5)]
+            public int Estado { get; set; }
         }
         public class API_REQUEST_TYPE_27
         {
@@ -1512,6 +1536,7 @@ namespace API_GP_LOGISTICO.Controllers.util
         //50 WEBHOOK
 
         //JSON Adjunta archivo SDR base 64 
+
         [DataContract]
         public class API_REQUEST_TYPE_51_AdjuntaArchivoSDR
         {
@@ -1714,8 +1739,61 @@ namespace API_GP_LOGISTICO.Controllers.util
             public string number_2 { get; set; }
             public string number_3 { get; set; }
             public string number_4 { get; set; }
-            public List<string> items { get; set; }
+            public List<API_REQUEST_TYPE_55_Items> items { get; set; }
             public List<string> pickups { get; set; }
+        }
+        public class API_REQUEST_TYPE_55_Items
+        {
+            public string code { get; set; }
+            public string description { get; set; }
+            public string units { get; set; }
+            public string units_1 { get; set; }
+            public string units_2 { get; set; }
+            public string units_3 { get; set; }
+        }
+
+        //JSON Webhook Tracking ENVIAME
+        [DataContract]
+        public class API_REQUEST_TYPE_56_WebhookTrackingENVIAME
+        {
+            [DataMember(Order = 1)]
+            public string identifier { get; set; } //(número único de Envíame),   
+
+            [DataMember(Order = 2)]
+            public string order_number { get; set; } //(referencia o número de pedido del seller)",
+
+            [DataMember(Order = 3)]
+            public string tracking_number { get; set; } //(orden de transporte proporcionado por el carrier)",
+
+            [DataMember(Order = 4)]
+            public string carrier_tracking_number { get; set; } //(N/A),
+
+            [DataMember(Order = 5)]
+            public string carrier_name { get; set; } //(Nombre del carrier)",
+
+            [DataMember(Order = 6)]
+            public string carrier_code { get; set; } //(Código del carrier en Envíame)",
+
+            [DataMember(Order = 7)]
+            public string dead_line_date { get; set; } //(fecha de compromiso de entrega, si aplica)",
+
+            [DataMember(Order = 8)]
+            public string status_id { get; set; } //(id interno del estado del envío),
+
+            [DataMember(Order = 9)]
+            public string status_name { get; set; } //(Nombre del estado en Envíame)",
+
+            [DataMember(Order = 10)]
+            public string status_information { get; set; } //(Comentario del estado)",
+
+            [DataMember(Order = 11)]
+            public string status_date { get; set; } //(Fecha del último estado en formato aaaa-mm-dd hh:mm)",
+
+            [DataMember(Order = 12)]
+            public string tracking_url { get; set; } //https://api.enviame.io/s2/companies/{{company_id}}/deliveries/{{identifier}}/tracking"
+
+            [DataMember(Order = 13)]
+            public string reference2 { get; set; } //NumeroReferencia: Identificador Pedido de California,
         }
 
         #endregion

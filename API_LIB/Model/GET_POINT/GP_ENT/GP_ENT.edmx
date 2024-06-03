@@ -852,15 +852,17 @@
         <Function Name="sp_upd_cambEstado_SDD_Api" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
           <Parameter Name="EmpId" Type="int" Mode="In" />
           <Parameter Name="Usuario" Type="char" Mode="In" />
-          <Parameter Name="NumeroReferencia" Type="int" Mode="In" />
-          <Parameter Name="SDD" Type="int" Mode="In" />
+          <Parameter Name="TipoReferencia" Type="char" Mode="In" />
+          <Parameter Name="NumeroReferencia" Type="char" Mode="In" />
+          <Parameter Name="SDD" Type="numeric" Mode="In" />
           <Parameter Name="Estado" Type="int" Mode="In" />
         </Function>
         <Function Name="sp_upd_cambEstado_SDR_Api" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
           <Parameter Name="EmpId" Type="int" Mode="In" />
           <Parameter Name="Usuario" Type="char" Mode="In" />
-          <Parameter Name="NumeroReferencia" Type="int" Mode="In" />
-          <Parameter Name="SDR" Type="int" Mode="In" />
+          <Parameter Name="TipoReferencia" Type="char" Mode="In" />
+          <Parameter Name="NumeroReferencia" Type="char" Mode="In" />
+          <Parameter Name="SDR" Type="numeric" Mode="In" />
           <Parameter Name="Estado" Type="int" Mode="In" />
         </Function>
         <EntityContainer Name="GPENTStoreContainer" />
@@ -1083,20 +1085,6 @@
           </FunctionImport>
           <FunctionImport Name="sp_sel_API_TrackingPickingDet" ReturnType="Collection(GP.ENT.sp_sel_API_TrackingPickingDet_Result)">
           <Parameter Name="GenPickId" Mode="In" Type="Int32" />
-          </FunctionImport>
-          <FunctionImport Name="sp_upd_cambEstado_SDD_Api" ReturnType="Collection(GP.ENT.sp_upd_cambEstado_SDD_Api_Result)">
-            <Parameter Name="EmpId" Mode="In" Type="Int32" />
-            <Parameter Name="Usuario" Mode="In" Type="String" />
-            <Parameter Name="NumeroReferencia" Mode="In" Type="Int32" />
-            <Parameter Name="SDD" Mode="In" Type="Int32" />
-            <Parameter Name="Estado" Mode="In" Type="Int32" />
-          </FunctionImport>
-          <FunctionImport Name="sp_upd_cambEstado_SDR_Api" ReturnType="Collection(GP.ENT.sp_upd_cambEstado_SDR_Api_Result)">
-            <Parameter Name="EmpId" Mode="In" Type="Int32" />
-            <Parameter Name="Usuario" Mode="In" Type="String" />
-            <Parameter Name="NumeroReferencia" Mode="In" Type="Int32" />
-            <Parameter Name="SDR" Mode="In" Type="Int32" />
-            <Parameter Name="Estado" Mode="In" Type="Int32" />
           </FunctionImport>
           <FunctionImport Name="sp_sel_API_Consulta_Stock_Bodega_Ubicacion" ReturnType="Collection(GP.ENT.sp_sel_API_Consulta_Stock_Bodega_Ubicacion_Result)">
             <Parameter Name="EmpId" Mode="In" Type="Int32" />
@@ -1727,6 +1715,22 @@
             <Parameter Name="Limit" Mode="In" Type="Int32" />
             <Parameter Name="RowSet" Mode="In" Type="Int32" />
           </FunctionImport>
+          <FunctionImport Name="sp_upd_cambEstado_SDD_Api" ReturnType="Collection(GP.ENT.sp_upd_cambEstado_SDD_Api_Result)">
+            <Parameter Name="EmpId" Mode="In" Type="Int32" />
+            <Parameter Name="Usuario" Mode="In" Type="String" />
+            <Parameter Name="TipoReferencia" Mode="In" Type="String" />
+            <Parameter Name="NumeroReferencia" Mode="In" Type="String" />
+            <Parameter Name="SDD" Mode="In" Type="Decimal" />
+            <Parameter Name="Estado" Mode="In" Type="Int32" />
+          </FunctionImport>
+          <FunctionImport Name="sp_upd_cambEstado_SDR_Api" ReturnType="Collection(GP.ENT.sp_upd_cambEstado_SDR_Api_Result)">
+            <Parameter Name="EmpId" Mode="In" Type="Int32" />
+            <Parameter Name="Usuario" Mode="In" Type="String" />
+            <Parameter Name="TipoReferencia" Mode="In" Type="String" />
+            <Parameter Name="NumeroReferencia" Mode="In" Type="String" />
+            <Parameter Name="SDR" Mode="In" Type="Decimal" />
+            <Parameter Name="Estado" Mode="In" Type="Int32" />
+          </FunctionImport>
         </EntityContainer>
         <ComplexType Name="sp_in_API_PickUp_Result">
           <Property Type="Int32" Name="GenPickId" Nullable="false" />
@@ -1857,14 +1861,6 @@
           <Property Type="Int32" Name="Cantidad" Nullable="false" />
           <Property Type="Int32" Name="HUID" Nullable="false" />
           <Property Type="Decimal" Name="Bulto" Nullable="false" Precision="18" Scale="0" />
-        </ComplexType>
-        <ComplexType Name="sp_upd_cambEstado_SDD_Api_Result">
-          <Property Type="Int32" Name="resultado_codigo" Nullable="false" />
-          <Property Type="String" Name="resultado_descripcion" Nullable="false" MaxLength="29" />
-        </ComplexType>
-        <ComplexType Name="sp_upd_cambEstado_SDR_Api_Result">
-          <Property Type="Int32" Name="resultado_codigo" Nullable="false" />
-          <Property Type="String" Name="resultado_descripcion" Nullable="false" MaxLength="29" />
         </ComplexType>
         <ComplexType Name="sp_sel_API_Consulta_Stock_Bodega_Ubicacion_Result">
           <Property Type="String" Name="CodigoArticulo" Nullable="true" />
@@ -2306,6 +2302,14 @@
           <Property Type="String" Name="Usuario" Nullable="true" MaxLength="50" />
           <Property Type="String" Name="GlosaAnula" Nullable="true" />
         </ComplexType>
+        <ComplexType Name="sp_upd_cambEstado_SDD_Api_Result">
+          <Property Type="Int32" Name="resultado_codigo" Nullable="false" />
+          <Property Type="String" Name="resultado_descripcion" Nullable="false" MaxLength="29" />
+        </ComplexType>
+        <ComplexType Name="sp_upd_cambEstado_SDR_Api_Result">
+          <Property Type="Int32" Name="resultado_codigo" Nullable="false" />
+          <Property Type="String" Name="resultado_descripcion" Nullable="false" MaxLength="29" />
+        </ComplexType>
       </Schema>
     </edmx:ConceptualModels>
     <!-- C-S mapping content -->
@@ -2503,22 +2507,6 @@
                 <ScalarProperty Name="Cantidad" ColumnName="Cantidad" />
                 <ScalarProperty Name="HUID" ColumnName="HUID" />
                 <ScalarProperty Name="Bulto" ColumnName="Bulto" />
-              </ComplexTypeMapping>
-            </ResultMapping>
-          </FunctionImportMapping>
-          <FunctionImportMapping FunctionImportName="sp_upd_cambEstado_SDD_Api" FunctionName="GP.ENT.Store.sp_upd_cambEstado_SDD_Api">
-            <ResultMapping>
-              <ComplexTypeMapping TypeName="GP.ENT.sp_upd_cambEstado_SDD_Api_Result">
-                <ScalarProperty Name="resultado_codigo" ColumnName="resultado_codigo" />
-                <ScalarProperty Name="resultado_descripcion" ColumnName="resultado_descripcion" />
-              </ComplexTypeMapping>
-            </ResultMapping>
-          </FunctionImportMapping>
-          <FunctionImportMapping FunctionImportName="sp_upd_cambEstado_SDR_Api" FunctionName="GP.ENT.Store.sp_upd_cambEstado_SDR_Api">
-            <ResultMapping>
-              <ComplexTypeMapping TypeName="GP.ENT.sp_upd_cambEstado_SDR_Api_Result">
-                <ScalarProperty Name="resultado_codigo" ColumnName="resultado_codigo" />
-                <ScalarProperty Name="resultado_descripcion" ColumnName="resultado_descripcion" />
               </ComplexTypeMapping>
             </ResultMapping>
           </FunctionImportMapping>
@@ -3125,6 +3113,22 @@
                 <ScalarProperty Name="FechaProceso" ColumnName="FechaProceso" />
                 <ScalarProperty Name="Usuario" ColumnName="Usuario" />
                 <ScalarProperty Name="GlosaAnula" ColumnName="GlosaAnula" />
+              </ComplexTypeMapping>
+            </ResultMapping>
+          </FunctionImportMapping>
+          <FunctionImportMapping FunctionImportName="sp_upd_cambEstado_SDD_Api" FunctionName="GP.ENT.Store.sp_upd_cambEstado_SDD_Api">
+            <ResultMapping>
+              <ComplexTypeMapping TypeName="GP.ENT.sp_upd_cambEstado_SDD_Api_Result">
+                <ScalarProperty Name="resultado_codigo" ColumnName="resultado_codigo" />
+                <ScalarProperty Name="resultado_descripcion" ColumnName="resultado_descripcion" />
+              </ComplexTypeMapping>
+            </ResultMapping>
+          </FunctionImportMapping>
+          <FunctionImportMapping FunctionImportName="sp_upd_cambEstado_SDR_Api" FunctionName="GP.ENT.Store.sp_upd_cambEstado_SDR_Api">
+            <ResultMapping>
+              <ComplexTypeMapping TypeName="GP.ENT.sp_upd_cambEstado_SDR_Api_Result">
+                <ScalarProperty Name="resultado_codigo" ColumnName="resultado_codigo" />
+                <ScalarProperty Name="resultado_descripcion" ColumnName="resultado_descripcion" />
               </ComplexTypeMapping>
             </ResultMapping>
           </FunctionImportMapping>

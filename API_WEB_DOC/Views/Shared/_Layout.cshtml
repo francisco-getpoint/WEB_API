@@ -89,9 +89,9 @@
                         <div class="bg-white py-2 collapse-inner rounded">
                             @foreach (var ITEM_LEVEL_2 in LIST_API_PROY_DET.Where(m => m.ProyID == ITEM_LEVEL_1.ProyID))
                             {
-                                if (@ITEM_LEVEL_2.Nombre.Contains("RECEPCION") == true)
+                                if ((@ITEM_LEVEL_2.Nombre.Contains("RECEPCION") == true) && (@ITEM_LEVEL_2.Nombre.Contains("RECEPCION DE BULTOS") == false))
                                 {
-                                    <a class="collapse-item item-menu-det" href="javascript:{}" id="LINK_@ITEM_LEVEL_2.ProyID@ITEM_LEVEL_2.DetID" onclick="AJX_SET_NAVID('@ITEM_LEVEL_2.ProyID@ITEM_LEVEL_2.DetID','@Url.Action("I", "R")','@Url.Content("~/H/AJX_R/")',@ITEM_LEVEL_2.ProyID,@ITEM_LEVEL_2.DetID)">@ITEM_LEVEL_2.Nombre</a>
+                                    <a class="collapse-item item-menu-det" href="javascript:{}" id="LINK_@ITEM_LEVEL_2.ProyID@ITEM_LEVEL_2.DetID" onclick="AJX_SET_NAVID('@ITEM_LEVEL_2.ProyID@ITEM_LEVEL_2.DetID','@Url.Action("I", "R")','@Url.Content("~/H/AJX_R/")',@ITEM_LEVEL_2.ProyID,@ITEM_LEVEL_2.DetID)">@ITEM_LEVEL_2.Nombre.Replace("RECEPCION", "").Trim()</a>
                                 }
                             }
                         </div>
@@ -112,7 +112,7 @@
                             {
                                 if (@ITEM_LEVEL_2.Nombre.Contains("DESPACHO") == true)
                                 {
-                                    <a class="collapse-item item-menu-det" href="javascript:{}" id="LINK_@ITEM_LEVEL_2.ProyID@ITEM_LEVEL_2.DetID" onclick="AJX_SET_NAVID('@ITEM_LEVEL_2.ProyID@ITEM_LEVEL_2.DetID','@Url.Action("I", "R")','@Url.Content("~/H/AJX_R/")',@ITEM_LEVEL_2.ProyID,@ITEM_LEVEL_2.DetID)">@ITEM_LEVEL_2.Nombre</a>
+                                    <a class="collapse-item item-menu-det" href="javascript:{}" id="LINK_@ITEM_LEVEL_2.ProyID@ITEM_LEVEL_2.DetID" onclick="AJX_SET_NAVID('@ITEM_LEVEL_2.ProyID@ITEM_LEVEL_2.DetID','@Url.Action("I", "R")','@Url.Content("~/H/AJX_R/")',@ITEM_LEVEL_2.ProyID,@ITEM_LEVEL_2.DetID)">@ITEM_LEVEL_2.Nombre.Replace("DESPACHO", "").Trim()</a>
                                 }
                             }
                         </div>
@@ -133,7 +133,7 @@
                             {
                                 if (@ITEM_LEVEL_2.Nombre.Contains("PRODUCTO") == true)
                                 {
-                                    <a class="collapse-item item-menu-det" href="javascript:{}" id="LINK_@ITEM_LEVEL_2.ProyID@ITEM_LEVEL_2.DetID" onclick="AJX_SET_NAVID('@ITEM_LEVEL_2.ProyID@ITEM_LEVEL_2.DetID','@Url.Action("I", "R")','@Url.Content("~/H/AJX_R/")',@ITEM_LEVEL_2.ProyID,@ITEM_LEVEL_2.DetID)">@ITEM_LEVEL_2.Nombre</a>
+                                    <a class="collapse-item item-menu-det" href="javascript:{}" id="LINK_@ITEM_LEVEL_2.ProyID@ITEM_LEVEL_2.DetID" onclick="AJX_SET_NAVID('@ITEM_LEVEL_2.ProyID@ITEM_LEVEL_2.DetID','@Url.Action("I", "R")','@Url.Content("~/H/AJX_R/")',@ITEM_LEVEL_2.ProyID,@ITEM_LEVEL_2.DetID)">@ITEM_LEVEL_2.Nombre.Replace("PRODUCTO", "").Trim()</a>
                                 }
                             }
                         </div>
@@ -154,7 +154,7 @@
                             {
                                 if (@ITEM_LEVEL_2.Nombre.Contains("STOCK") == true)
                                 {
-                                    <a class="collapse-item item-menu-det" href="javascript:{}" id="LINK_@ITEM_LEVEL_2.ProyID@ITEM_LEVEL_2.DetID" onclick="AJX_SET_NAVID('@ITEM_LEVEL_2.ProyID@ITEM_LEVEL_2.DetID','@Url.Action("I", "R")','@Url.Content("~/H/AJX_R/")',@ITEM_LEVEL_2.ProyID,@ITEM_LEVEL_2.DetID)">@ITEM_LEVEL_2.Nombre</a>
+                                    <a class="collapse-item item-menu-det" href="javascript:{}" id="LINK_@ITEM_LEVEL_2.ProyID@ITEM_LEVEL_2.DetID" onclick="AJX_SET_NAVID('@ITEM_LEVEL_2.ProyID@ITEM_LEVEL_2.DetID','@Url.Action("I", "R")','@Url.Content("~/H/AJX_R/")',@ITEM_LEVEL_2.ProyID,@ITEM_LEVEL_2.DetID)">@ITEM_LEVEL_2.Nombre.Replace("STOCK", "").Trim()</a>
                                 }
                             }
                         </div>
@@ -175,7 +175,7 @@
                             {
                                 if (@ITEM_LEVEL_2.Nombre.Contains("MOVIMIENTOS") == true)
                                 {
-                                    <a class="collapse-item item-menu-det" href="javascript:{}" id="LINK_@ITEM_LEVEL_2.ProyID@ITEM_LEVEL_2.DetID" onclick="AJX_SET_NAVID('@ITEM_LEVEL_2.ProyID@ITEM_LEVEL_2.DetID','@Url.Action("I", "R")','@Url.Content("~/H/AJX_R/")',@ITEM_LEVEL_2.ProyID,@ITEM_LEVEL_2.DetID)">@ITEM_LEVEL_2.Nombre</a>
+                                    <a class="collapse-item item-menu-det" href="javascript:{}" id="LINK_@ITEM_LEVEL_2.ProyID@ITEM_LEVEL_2.DetID" onclick="AJX_SET_NAVID('@ITEM_LEVEL_2.ProyID@ITEM_LEVEL_2.DetID','@Url.Action("I", "R")','@Url.Content("~/H/AJX_R/")',@ITEM_LEVEL_2.ProyID,@ITEM_LEVEL_2.DetID)">@ITEM_LEVEL_2.Nombre.Replace("MOVIMIENTOS", "").Trim()</a>
                                 }
                             }
                         </div>
@@ -196,7 +196,7 @@
                             {
                                 if (@ITEM_LEVEL_2.Nombre.Contains("WEBHOOK") == true)
                                 {
-                                    <a class="collapse-item item-menu-det" href="javascript:{}" id="LINK_@ITEM_LEVEL_2.ProyID@ITEM_LEVEL_2.DetID" onclick="AJX_SET_NAVID('@ITEM_LEVEL_2.ProyID@ITEM_LEVEL_2.DetID','@Url.Action("I", "R")','@Url.Content("~/H/AJX_R/")',@ITEM_LEVEL_2.ProyID,@ITEM_LEVEL_2.DetID)">@ITEM_LEVEL_2.Nombre</a>
+                                    <a class="collapse-item item-menu-det" href="javascript:{}" id="LINK_@ITEM_LEVEL_2.ProyID@ITEM_LEVEL_2.DetID" onclick="AJX_SET_NAVID('@ITEM_LEVEL_2.ProyID@ITEM_LEVEL_2.DetID','@Url.Action("I", "R")','@Url.Content("~/H/AJX_R/")',@ITEM_LEVEL_2.ProyID,@ITEM_LEVEL_2.DetID)">@ITEM_LEVEL_2.Nombre.Replace("WEBHOOK", "").Trim()</a>
                                 }
                             }
                         </div>
@@ -215,12 +215,12 @@
                         <div class="bg-white py-2 collapse-inner rounded">
                             @foreach (var ITEM_LEVEL_2 in LIST_API_PROY_DET.Where(m => m.ProyID == ITEM_LEVEL_1.ProyID))
                             {
-                                if ((@ITEM_LEVEL_2.Nombre.Contains("RECEPCION") == false) &&
-                                    (@ITEM_LEVEL_2.Nombre.Contains("DESPACHO") == false) &&
-                                    (@ITEM_LEVEL_2.Nombre.Contains("PRODUCTO") == false) &&
-                                    (@ITEM_LEVEL_2.Nombre.Contains("STOCK") == false) &&
-                                    (@ITEM_LEVEL_2.Nombre.Contains("MOVIMIENTOS") == false) &&
-                                    (@ITEM_LEVEL_2.Nombre.Contains("WEBHOOK") == false))
+                                if (((@ITEM_LEVEL_2.Nombre.Contains("RECEPCION") == false) &&
+                                     (@ITEM_LEVEL_2.Nombre.Contains("DESPACHO") == false) &&
+                                     (@ITEM_LEVEL_2.Nombre.Contains("PRODUCTO") == false) &&
+                                     (@ITEM_LEVEL_2.Nombre.Contains("STOCK") == false) &&
+                                     (@ITEM_LEVEL_2.Nombre.Contains("MOVIMIENTOS") == false) &&
+                                     (@ITEM_LEVEL_2.Nombre.Contains("WEBHOOK") == false)) || (@ITEM_LEVEL_2.Nombre.Contains("RECEPCION DE BULTOS") == true))
                                 {
                                     <a class="collapse-item item-menu-det" href="javascript:{}" id="LINK_@ITEM_LEVEL_2.ProyID@ITEM_LEVEL_2.DetID" onclick="AJX_SET_NAVID('@ITEM_LEVEL_2.ProyID@ITEM_LEVEL_2.DetID','@Url.Action("I", "R")','@Url.Content("~/H/AJX_R/")',@ITEM_LEVEL_2.ProyID,@ITEM_LEVEL_2.DetID)">@ITEM_LEVEL_2.Nombre</a>
                                 }

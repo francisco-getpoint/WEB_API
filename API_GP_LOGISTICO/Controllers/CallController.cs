@@ -1876,29 +1876,28 @@ namespace API_GP_LOGISTICO.Controllers
                     STATUS_CODE = HttpStatusCode.Unauthorized;
                     return new HttpActionResult(Request, (ConfigurationManager.AppSettings["InformaStatusAPI"].ToString() == "SI" ? STATUS_CODE : HttpStatusCode.OK), RESPONSE);
                 }
-                BULTOS = GP_ENT.sp_in_API_Confirma_Recep_Bultos(
-                    REQUEST.empId,
-                    REQUEST.recepcionId,
-                    REQUEST.intName,
-                    fh,
-                    REQUEST.solRecepId,
-                    fp,
-                    REQUEST.TipoDocumento,
-                    REQUEST.NumeroDocto,
-                    fd,
-                    REQUEST.TipoReferencia,
-                    REQUEST.NumeroReferencia,
-                    fr,
-                    item.Linea,
-                    item.CodigoArticulo,
-                    item.CodigoOriginal,
-                    item.UnidadCompra,
-                    item.CantidadSolicitada,
-                    item.ItemReferencia,
-                    item.LoteSerie,
-                    fv,
-                    item.CantRecibida,
-                    item.HU).ToList();
+                BULTOS = GP_ENT.sp_in_API_Confirma_Recep_Bultos(REQUEST.empId,
+                                                                REQUEST.recepcionId,
+                                                                REQUEST.intName,
+                                                                fh,
+                                                                REQUEST.solRecepId,
+                                                                fp,
+                                                                REQUEST.TipoDocumento,
+                                                                REQUEST.NumeroDocto,
+                                                                fd,
+                                                                REQUEST.TipoReferencia,
+                                                                REQUEST.NumeroReferencia,
+                                                                fr,
+                                                                item.Linea,
+                                                                item.CodigoArticulo,
+                                                                item.CodigoOriginal,
+                                                                item.UnidadCompra,
+                                                                item.CantidadSolicitada,
+                                                                item.ItemReferencia,
+                                                                item.LoteSerie,
+                                                                fv,
+                                                                item.CantRecibida,
+                                                                item.HU).ToList();
             }
 
             #region COMMENTS
@@ -3767,7 +3766,6 @@ namespace API_GP_LOGISTICO.Controllers
         }
         #endregion        
         
-        //===================================================
         //recurso 18 CREAR SOLICITUD DESPACHO JSON (18) --------
         //=========================================================
         #region CREAR SOLICITUD DESPACHO JSON (18) ****************
@@ -4579,7 +4577,7 @@ namespace API_GP_LOGISTICO.Controllers
             #endregion
 
             #region VALIDA EMPRESA NOK
-            if (!ACCESS.VALIDATE_USUARIO_EMPRESA(REQUEST.empId, USERNAME, out ERROR))
+            if (!ACCESS.VALIDATE_USUARIO_EMPRESA(REQUEST.EmpId, USERNAME, out ERROR))
             {
                 RESPONSE.resultado_descripcion = ERROR.Mensaje;
                 RESPONSE.resultado_codigo = ERROR.ErrID;
@@ -4598,13 +4596,12 @@ namespace API_GP_LOGISTICO.Controllers
             #endregion
             try
             {
-                List<sp_upd_cambEstado_SDD_Api_Result> estsdd = GP_ENT.sp_upd_cambEstado_SDD_Api(
-                REQUEST.empId,
-                USERNAME,
-                REQUEST.numeroReferencia,
-                REQUEST.sdd,
-                REQUEST.estado
-                ).ToList();
+                List<sp_upd_cambEstado_SDD_Api_Result> estsdd = GP_ENT.sp_upd_cambEstado_SDD_Api(REQUEST.EmpId,
+                                                                                                 USERNAME,
+                                                                                                 REQUEST.TipoReferencia,
+                                                                                                 REQUEST.NumeroReferencia,
+                                                                                                 REQUEST.SDD,
+                                                                                                 REQUEST.Estado).ToList();
 
                 RESPONSE.resultado_codigo = estsdd.ElementAt(0).resultado_codigo;
                 RESPONSE.resultado_descripcion = estsdd.ElementAt(0).resultado_descripcion;
@@ -4630,7 +4627,7 @@ namespace API_GP_LOGISTICO.Controllers
         [HttpGet]
         [HttpPost]
         [Route("ESTADOSDR/ACTUALIZAR")]
-        public IHttpActionResult recurso24(API_REQUEST_TYPE_19 REQUEST)
+        public IHttpActionResult recurso24(API_REQUEST_TYPE_24 REQUEST)
         {
             API_RESPONSE_TYPE_19 RESPONSE = new API_RESPONSE_TYPE_19();
             ERROR = new API_RESPONSE_ERRORS();
@@ -4649,7 +4646,7 @@ namespace API_GP_LOGISTICO.Controllers
             #endregion
 
             #region VALIDA EMPRESA NOK
-            if (!ACCESS.VALIDATE_USUARIO_EMPRESA(REQUEST.empId, USERNAME, out ERROR))
+            if (!ACCESS.VALIDATE_USUARIO_EMPRESA(REQUEST.EmpId, USERNAME, out ERROR))
             {
                 RESPONSE.resultado_descripcion = ERROR.Mensaje;
                 RESPONSE.resultado_codigo = ERROR.ErrID;
@@ -4666,11 +4663,12 @@ namespace API_GP_LOGISTICO.Controllers
 
             try
             {
-                List<sp_upd_cambEstado_SDR_Api_Result> estsdr = GP_ENT.sp_upd_cambEstado_SDR_Api(REQUEST.empId,
+                List<sp_upd_cambEstado_SDR_Api_Result> estsdr = GP_ENT.sp_upd_cambEstado_SDR_Api(REQUEST.EmpId,
                                                                                                  USERNAME,
-                                                                                                 REQUEST.numeroReferencia,
-                                                                                                 REQUEST.sdr,
-                                                                                                 REQUEST.estado).ToList();
+                                                                                                 REQUEST.TipoReferencia,
+                                                                                                 REQUEST.NumeroReferencia,
+                                                                                                 REQUEST.SDR,
+                                                                                                 REQUEST.Estado).ToList();
                 RESPONSE.resultado_codigo = estsdr.ElementAt(0).resultado_codigo;
                 RESPONSE.resultado_descripcion = estsdr.ElementAt(0).resultado_descripcion;
             }
@@ -13238,28 +13236,6 @@ namespace API_GP_LOGISTICO.Controllers
                     "",
                     body.ToString());
 
-            //#region PROCESO
-            //STATUS_CODE = HttpStatusCode.OK;
-            //try
-            //{
-            //    List<sp_in_API_Webhook_Bsale_Result> WBSL = GP_ENT.sp_in_API_Webhook_Bsale(data.ToString()).ToList();
-
-            //    RESPONSE.Resultado = WBSL.ElementAt(0).Resultado;
-            //    RESPONSE.Descripcion = WBSL.ElementAt(0).Descripcion;
-            //}
-            //catch (Exception ex)
-            //{
-            //    #region NOK
-            //    ERROR = API_CLS.API_RESPONSE_ERRORS.Find(1000);//REQUEST - ERROR NO ESPECIFICADO
-            //    RESPONSE.Resultado = "Error";
-            //    RESPONSE.Descripcion = ERROR.Mensaje + ". " + ex.Message.Trim();
-            //    STATUS_CODE = HttpStatusCode.InternalServerError;
-            //    return new HttpActionResult(Request, (ConfigurationManager.AppSettings["InformaStatusAPI"].ToString() == "SI" ? STATUS_CODE : HttpStatusCode.OK), RESPONSE);
-            //    #endregion
-            //}
-            //return new HttpActionResult(Request, (ConfigurationManager.AppSettings["InformaStatusAPI"].ToString() == "SI" ? STATUS_CODE : HttpStatusCode.OK), RESPONSE);
-            //#endregion
-
             //===============================================================================================================
             //===============================================================================================================
             //===============================================================================================================
@@ -13276,220 +13252,230 @@ namespace API_GP_LOGISTICO.Controllers
             int Linea = 1;
 
             //recorre estructura json del Webhook, insertamos campos importantes
-            foreach (var trips in REQUEST.trips.ToList())
+
+            if (REQUEST.trips != null)
             {
-                foreach (var results in trips.results.ToList())
+                foreach (var trips in REQUEST.trips.ToList())
                 {
-                    foreach (var orders in results.orders.ToList())
+                    if (trips.results != null)
                     {
-                        //Inserta linea de cabecera/detalle a tabla temporal ----------------------
-                        //Se llama a la funcion INSERTA_sp_in_API_Integraciones
-                        //  - Esta funcion llama al procedimiento almacenado sp_in_API_Integraciones, que inserta hasta el Texto100
-                        //  - La funcion Permite enviar los textos como parametros opcionales
-                        //  - En el procedimiento indicar la cantidad de textos que envia la integracion para optimizar la inserción 
-
-                        //controla nulos
-                        REQUEST.vehicle = (REQUEST.vehicle == null ? "" : REQUEST.vehicle);
-                        REQUEST.vehicle_detail = (REQUEST.vehicle_detail == null ? "" : REQUEST.vehicle_detail);
-                        //REQUEST.route_id = (REQUEST.route_id == null ? "" : REQUEST.route_id);
-                        REQUEST.route_code = (REQUEST.route_code == null ? "" : REQUEST.route_code);
-                        REQUEST.description = (REQUEST.description == null ? "" : REQUEST.description);
-                        REQUEST.deploy_date = (REQUEST.deploy_date == null ? "" : REQUEST.deploy_date);
-                        REQUEST.supplier_code = (REQUEST.supplier_code == null ? "" : REQUEST.supplier_code);
-                        REQUEST.scenario_token = (REQUEST.scenario_token == null ? "" : REQUEST.scenario_token);
-                        REQUEST.schema_code = (REQUEST.schema_code == null ? "" : REQUEST.schema_code);
-                        REQUEST.schema_name = (REQUEST.schema_name == null ? "" : REQUEST.schema_name);
-                        REQUEST.approved_at = (REQUEST.approved_at == null ? "" : REQUEST.approved_at);
-                        REQUEST.platform = (REQUEST.platform == null ? "" : REQUEST.platform);
-                        REQUEST.started_at = (REQUEST.started_at == null ? "" : REQUEST.started_at);
-                        REQUEST.fleet_sequence = (REQUEST.fleet_sequence == null ? "" : REQUEST.fleet_sequence);
-                        REQUEST.login_url = (REQUEST.login_url == null ? "" : REQUEST.login_url);
-                        REQUEST.driver.email = (REQUEST.driver.email == null ? "" : REQUEST.driver.email);
-                        REQUEST.driver.full_name = (REQUEST.driver.full_name == null ? "" : REQUEST.driver.full_name);
-                        REQUEST.driver.phone = (REQUEST.driver.phone == null ? "" : REQUEST.driver.phone);
-                        //REQUEST.summary.total_trips = (REQUEST.summary.total_trips == null ? "" : REQUEST.summary.total_trips);
-                        //REQUEST.summary.total_orders = (REQUEST.summary.total_orders == null ? "" : REQUEST.summary.total_orders);
-                        //REQUEST.summary.total_addresses = (REQUEST.summary.total_addresses == null ? "" : REQUEST.summary.total_addresses);
-                        //REQUEST.summary.total_distance = (REQUEST.summary.total_distance == null ? "" : REQUEST.summary.total_distance);
-                        //REQUEST.summary.total_time = (REQUEST.summary.total_time == null ? "" : REQUEST.summary.total_time);
-                        //trips.summary.trip_number = (trips.summary.trip_number == null ? "" : trips.summary.trip_number);
-                        //trips.summary.total_orders = (trips.summary.total_orders == null ? "" : trips.summary.total_orders);
-                        //trips.summary.total_addresses = (trips.summary.total_addresses == null ? "" : trips.summary.total_addresses);
-                        //trips.summary.total_distance = (trips.summary.total_distance == null ? "" : trips.summary.total_distance);
-                        //trips.summary.total_time = (trips.summary.total_time == null ? "" : trips.summary.total_time);
-                        results.deposit = (results.deposit == null ? "" : results.deposit);
-                        //results.position = (results.position == null ? "" : results.position);
-                        //results.eta_mode = (results.eta_mode == null ? "" : results.eta_mode);
-                        results.eta = (results.eta == null ? "" : results.eta);
-                        results.eta_approved = (results.eta_approved == null ? "" : results.eta_approved);
-                        results.eta_started = (results.eta_started == null ? "" : results.eta_started);
-                        results.stop.code = (results.stop.code == null ? "" : results.stop.code);
-                        results.stop.name = (results.stop.name == null ? "" : results.stop.name);
-                        results.stop.client = (results.stop.client == null ? "" : results.stop.client);
-                        results.stop.address_type = (results.stop.address_type == null ? "" : results.stop.address_type);
-                        results.stop.address = (results.stop.address == null ? "" : results.stop.address);
-                        results.stop.reference = (results.stop.reference == null ? "" : results.stop.reference);
-                        results.stop.city = (results.stop.city == null ? "" : results.stop.city);
-                        results.stop.country = (results.stop.country == null ? "" : results.stop.country);
-                        results.stop.lat = (results.stop.lat == null ? "" : results.stop.lat);
-                        results.stop.lng = (results.stop.lng == null ? "" : results.stop.lng);
-                        results.stop.postal_code = (results.stop.postal_code == null ? "" : results.stop.postal_code);
-                        //results.stop.service_time = (results.stop.service_time == null ? "" : results.stop.service_time);
-                        //results.stop.priority = (results.stop.priority == null ? "" : results.stop.priority);
-                        orders.idx = (orders.idx == null ? "" : orders.idx);
-                        orders.code = (orders.code == null ? "" : orders.code);
-                        orders.alt_code = (orders.alt_code == null ? "" : orders.alt_code);
-                        orders.delivery_date = (orders.delivery_date == null ? "" : orders.delivery_date);
-                        orders.supplier_code = (orders.supplier_code == null ? "" : orders.supplier_code);
-                        orders.supplier_name = (orders.supplier_name == null ? "" : orders.supplier_name);
-                        orders.client_code = (orders.client_code == null ? "" : orders.client_code);
-                        orders.client_name = (orders.client_name == null ? "" : orders.client_name);
-                        //orders.units_1 = (orders.units_1 == null ? "" : orders.units_1);
-                        //orders.units_2 = (orders.units_2 == null ? "" : orders.units_2);
-                        //orders.units_3 = (orders.units_3 == null ? "" : orders.units_3);
-                        orders.custom_1 = (orders.custom_1 == null ? "" : orders.custom_1);
-                        orders.custom_2 = (orders.custom_2 == null ? "" : orders.custom_2);
-                        orders.custom_3 = (orders.custom_3 == null ? "" : orders.custom_3);
-                        orders.custom_4 = (orders.custom_4 == null ? "" : orders.custom_4);
-                        orders.custom_5 = (orders.custom_5 == null ? "" : orders.custom_5);
-                        orders.custom_6 = (orders.custom_6 == null ? "" : orders.custom_6);
-                        orders.custom_7 = (orders.custom_7 == null ? "" : orders.custom_7);
-                        orders.custom_8 = (orders.custom_8 == null ? "" : orders.custom_8);
-                        orders.custom_9 = (orders.custom_9 == null ? "" : orders.custom_9);
-                        orders.custom_10 = (orders.custom_10 == null ? "" : orders.custom_10);
-                        orders.custom_11 = (orders.custom_11 == null ? "" : orders.custom_11);
-                        orders.number_1 = (orders.number_1 == null ? "" : orders.number_1);
-                        orders.number_2 = (orders.number_2 == null ? "" : orders.number_2);
-                        orders.number_3 = (orders.number_3 == null ? "" : orders.number_3);
-                        orders.number_4 = (orders.number_4 == null ? "" : orders.number_4);
-
-                        INTEGRACIONES = INSERTA_sp_in_API_Integraciones(GP_ENT,
-                                                                        Archivo,
-                                                                        USERNAME,
-                                                                        Fecha,
-                                                                        Linea,
-                                                                        Proceso.Trim(),
-                                                                        REQUEST.vehicle,
-                                                                        REQUEST.vehicle_detail,
-                                                                        REQUEST.route_id.ToString(),
-                                                                        REQUEST.route_code,
-                                                                        REQUEST.description,
-                                                                        REQUEST.deploy_date,
-                                                                        REQUEST.supplier_code,
-                                                                        REQUEST.scenario_token,
-                                                                        REQUEST.schema_code,
-                                                                        REQUEST.schema_name,
-                                                                        REQUEST.approved_at,
-                                                                        REQUEST.platform,
-                                                                        REQUEST.started_at,
-                                                                        REQUEST.fleet_sequence,
-                                                                        REQUEST.login_url,
-                                                                        REQUEST.driver.email.Trim(),
-                                                                        REQUEST.driver.full_name.Trim(),
-                                                                        REQUEST.driver.phone.Trim(),
-                                                                        REQUEST.summary.total_trips.ToString(),
-                                                                        REQUEST.summary.total_orders.ToString(),
-                                                                        REQUEST.summary.total_addresses.ToString(),
-                                                                        REQUEST.summary.total_distance.ToString(),
-                                                                        REQUEST.summary.total_time.ToString(),
-                                                                        trips.summary.trip_number.ToString(),
-                                                                        trips.summary.total_orders.ToString(),
-                                                                        trips.summary.total_addresses.ToString(),
-                                                                        trips.summary.total_distance.ToString(),
-                                                                        trips.summary.total_time.ToString(),
-                                                                        results.deposit.Trim(),
-                                                                        results.position.ToString(),
-                                                                        results.eta_mode.ToString(),
-                                                                        results.eta,
-                                                                        results.eta_approved,
-                                                                        results.eta_started,
-                                                                        results.stop.code,
-                                                                        results.stop.name,
-                                                                        results.stop.client,
-                                                                        results.stop.address_type,
-                                                                        results.stop.address,
-                                                                        results.stop.reference,
-                                                                        results.stop.city,
-                                                                        results.stop.country,
-                                                                        results.stop.lat,
-                                                                        results.stop.lng,
-                                                                        results.stop.postal_code,
-                                                                        results.stop.service_time.ToString(),
-                                                                        results.stop.priority.ToString(),
-                                                                        orders.idx,
-                                                                        orders.code,
-                                                                        orders.alt_code,
-                                                                        orders.delivery_date,
-                                                                        orders.supplier_code,
-                                                                        orders.supplier_name,
-                                                                        orders.client_code,
-                                                                        orders.client_name,
-                                                                        orders.units_1.ToString(),
-                                                                        orders.units_2.ToString(),
-                                                                        orders.units_3.ToString(),
-                                                                        orders.custom_1,
-                                                                        orders.custom_2,
-                                                                        orders.custom_3,
-                                                                        orders.custom_4,
-                                                                        orders.custom_5,
-                                                                        orders.custom_6,
-                                                                        orders.custom_7,
-                                                                        orders.custom_8,
-                                                                        orders.custom_9,
-                                                                        orders.custom_10,
-                                                                        orders.custom_11,
-                                                                        orders.number_1,
-                                                                        orders.number_2,
-                                                                        orders.number_3,
-                                                                        orders.number_4
-                                                                        ).ToList();
-                        if (INTEGRACIONES.Count > 0)
+                        foreach (var results in trips.results.ToList())
                         {
-                            if (INTEGRACIONES[0].Count == 0) //pregunta por el CAMPO Count, si es mayor a cero procesó OK el detalle
+                            if (results.orders != null)
                             {
-                                #region NOK
-                                ERROR = API_CLS.API_RESPONSE_ERRORS.Find(1017);//REQUEST - ERROR NO ESPECIFICADO
+                                foreach (var orders in results.orders.ToList())
+                                {
+                                    //Inserta linea de cabecera/detalle a tabla temporal ----------------------
+                                    //Se llama a la funcion INSERTA_sp_in_API_Integraciones
+                                    //  - Esta funcion llama al procedimiento almacenado sp_in_API_Integraciones, que inserta hasta el Texto100
+                                    //  - La funcion Permite enviar los textos como parametros opcionales
+                                    //  - En el procedimiento indicar la cantidad de textos que envia la integracion para optimizar la inserción 
 
-                                LogInfo(NombreProceso,
-                                        ERROR.Mensaje.Trim() + ". " + INTEGRACIONES[0].Descripcion,
-                                        true,
-                                        false,
-                                        "",
-                                        body.ToString());
+                                    //controla nulos
+                                    REQUEST.vehicle = (REQUEST.vehicle == null ? "" : REQUEST.vehicle);
+                                    REQUEST.vehicle_detail = (REQUEST.vehicle_detail == null ? "" : REQUEST.vehicle_detail);
+                                    //REQUEST.route_id = (REQUEST.route_id == null ? "" : REQUEST.route_id);
+                                    REQUEST.route_code = (REQUEST.route_code == null ? "" : REQUEST.route_code);
+                                    REQUEST.description = (REQUEST.description == null ? "" : REQUEST.description);
+                                    REQUEST.deploy_date = (REQUEST.deploy_date == null ? "" : REQUEST.deploy_date);
+                                    REQUEST.supplier_code = (REQUEST.supplier_code == null ? "" : REQUEST.supplier_code);
+                                    REQUEST.scenario_token = (REQUEST.scenario_token == null ? "" : REQUEST.scenario_token);
+                                    REQUEST.schema_code = (REQUEST.schema_code == null ? "" : REQUEST.schema_code);
+                                    REQUEST.schema_name = (REQUEST.schema_name == null ? "" : REQUEST.schema_name);
+                                    REQUEST.approved_at = (REQUEST.approved_at == null ? "" : REQUEST.approved_at);
+                                    REQUEST.platform = (REQUEST.platform == null ? "" : REQUEST.platform);
+                                    REQUEST.started_at = (REQUEST.started_at == null ? "" : REQUEST.started_at);
+                                    REQUEST.fleet_sequence = (REQUEST.fleet_sequence == null ? "" : REQUEST.fleet_sequence);
+                                    REQUEST.login_url = (REQUEST.login_url == null ? "" : REQUEST.login_url);
+                                    REQUEST.driver.email = (REQUEST.driver.email == null ? "" : REQUEST.driver.email);
+                                    REQUEST.driver.full_name = (REQUEST.driver.full_name == null ? "" : REQUEST.driver.full_name);
+                                    REQUEST.driver.phone = (REQUEST.driver.phone == null ? "" : REQUEST.driver.phone);
+                                    //REQUEST.summary.total_trips = (REQUEST.summary.total_trips == null ? "" : REQUEST.summary.total_trips);
+                                    //REQUEST.summary.total_orders = (REQUEST.summary.total_orders == null ? "" : REQUEST.summary.total_orders);
+                                    //REQUEST.summary.total_addresses = (REQUEST.summary.total_addresses == null ? "" : REQUEST.summary.total_addresses);
+                                    //REQUEST.summary.total_distance = (REQUEST.summary.total_distance == null ? "" : REQUEST.summary.total_distance);
+                                    //REQUEST.summary.total_time = (REQUEST.summary.total_time == null ? "" : REQUEST.summary.total_time);
+                                    //trips.summary.trip_number = (trips.summary.trip_number == null ? "" : trips.summary.trip_number);
+                                    //trips.summary.total_orders = (trips.summary.total_orders == null ? "" : trips.summary.total_orders);
+                                    //trips.summary.total_addresses = (trips.summary.total_addresses == null ? "" : trips.summary.total_addresses);
+                                    //trips.summary.total_distance = (trips.summary.total_distance == null ? "" : trips.summary.total_distance);
+                                    //trips.summary.total_time = (trips.summary.total_time == null ? "" : trips.summary.total_time);
+                                    results.deposit = (results.deposit == null ? "" : results.deposit);
+                                    //results.position = (results.position == null ? "" : results.position);
+                                    //results.eta_mode = (results.eta_mode == null ? "" : results.eta_mode);
+                                    results.eta = (results.eta == null ? "" : results.eta);
+                                    results.eta_approved = (results.eta_approved == null ? "" : results.eta_approved);
+                                    results.eta_started = (results.eta_started == null ? "" : results.eta_started);
+                                    results.stop.code = (results.stop.code == null ? "" : results.stop.code);
+                                    results.stop.name = (results.stop.name == null ? "" : results.stop.name);
+                                    results.stop.client = (results.stop.client == null ? "" : results.stop.client);
+                                    results.stop.address_type = (results.stop.address_type == null ? "" : results.stop.address_type);
+                                    results.stop.address = (results.stop.address == null ? "" : results.stop.address);
+                                    results.stop.reference = (results.stop.reference == null ? "" : results.stop.reference);
+                                    results.stop.city = (results.stop.city == null ? "" : results.stop.city);
+                                    results.stop.country = (results.stop.country == null ? "" : results.stop.country);
+                                    results.stop.lat = (results.stop.lat == null ? "" : results.stop.lat);
+                                    results.stop.lng = (results.stop.lng == null ? "" : results.stop.lng);
+                                    results.stop.postal_code = (results.stop.postal_code == null ? "" : results.stop.postal_code);
+                                    //results.stop.service_time = (results.stop.service_time == null ? "" : results.stop.service_time);
+                                    //results.stop.priority = (results.stop.priority == null ? "" : results.stop.priority);
+                                    orders.idx = (orders.idx == null ? "" : orders.idx);
+                                    orders.code = (orders.code == null ? "" : orders.code);
+                                    orders.alt_code = (orders.alt_code == null ? "" : orders.alt_code);
+                                    orders.delivery_date = (orders.delivery_date == null ? "" : orders.delivery_date);
+                                    orders.supplier_code = (orders.supplier_code == null ? "" : orders.supplier_code);
+                                    orders.supplier_name = (orders.supplier_name == null ? "" : orders.supplier_name);
+                                    orders.client_code = (orders.client_code == null ? "" : orders.client_code);
+                                    orders.client_name = (orders.client_name == null ? "" : orders.client_name);
+                                    //orders.units_1 = (orders.units_1 == null ? "" : orders.units_1);
+                                    //orders.units_2 = (orders.units_2 == null ? "" : orders.units_2);
+                                    //orders.units_3 = (orders.units_3 == null ? "" : orders.units_3);
+                                    orders.custom_1 = (orders.custom_1 == null ? "" : orders.custom_1);
+                                    orders.custom_2 = (orders.custom_2 == null ? "" : orders.custom_2);
+                                    orders.custom_3 = (orders.custom_3 == null ? "" : orders.custom_3);
+                                    orders.custom_4 = (orders.custom_4 == null ? "" : orders.custom_4);
+                                    orders.custom_5 = (orders.custom_5 == null ? "" : orders.custom_5);
+                                    orders.custom_6 = (orders.custom_6 == null ? "" : orders.custom_6);
+                                    orders.custom_7 = (orders.custom_7 == null ? "" : orders.custom_7);
+                                    orders.custom_8 = (orders.custom_8 == null ? "" : orders.custom_8);
+                                    orders.custom_9 = (orders.custom_9 == null ? "" : orders.custom_9);
+                                    orders.custom_10 = (orders.custom_10 == null ? "" : orders.custom_10);
+                                    orders.custom_11 = (orders.custom_11 == null ? "" : orders.custom_11);
+                                    orders.number_1 = (orders.number_1 == null ? "" : orders.number_1);
+                                    orders.number_2 = (orders.number_2 == null ? "" : orders.number_2);
+                                    orders.number_3 = (orders.number_3 == null ? "" : orders.number_3);
+                                    orders.number_4 = (orders.number_4 == null ? "" : orders.number_4);
 
-                                RESPONSE.Resultado = "ERROR";
-                                RESPONSE.Descripcion = "Error procesando Webhook";
-                                RESPONSE.Resultado_Codigo = ERROR.ErrID;
-                                RESPONSE.Resultado_Descripcion = ERROR.Mensaje;
-                                STATUS_CODE = HttpStatusCode.BadRequest;
-                                return new HttpActionResult(Request, (ConfigurationManager.AppSettings["InformaStatusAPI"].ToString() == "SI" ? STATUS_CODE : HttpStatusCode.OK), RESPONSE);
-                                #endregion
-                            }
+                                    INTEGRACIONES = INSERTA_sp_in_API_Integraciones(GP_ENT,
+                                                                                    Archivo,
+                                                                                    USERNAME,
+                                                                                    Fecha,
+                                                                                    Linea,
+                                                                                    Proceso.Trim(),
+                                                                                    REQUEST.vehicle,
+                                                                                    REQUEST.vehicle_detail,
+                                                                                    REQUEST.route_id.ToString(),
+                                                                                    REQUEST.route_code,
+                                                                                    REQUEST.description,
+                                                                                    REQUEST.deploy_date,
+                                                                                    REQUEST.supplier_code,
+                                                                                    REQUEST.scenario_token,
+                                                                                    REQUEST.schema_code,
+                                                                                    REQUEST.schema_name,
+                                                                                    REQUEST.approved_at,
+                                                                                    REQUEST.platform,
+                                                                                    REQUEST.started_at,
+                                                                                    REQUEST.fleet_sequence,
+                                                                                    REQUEST.login_url,
+                                                                                    REQUEST.driver.email.Trim(),
+                                                                                    REQUEST.driver.full_name.Trim(),
+                                                                                    REQUEST.driver.phone.Trim(),
+                                                                                    REQUEST.summary.total_trips.ToString(),
+                                                                                    REQUEST.summary.total_orders.ToString(),
+                                                                                    REQUEST.summary.total_addresses.ToString(),
+                                                                                    REQUEST.summary.total_distance.ToString(),
+                                                                                    REQUEST.summary.total_time.ToString(),
+                                                                                    trips.summary.trip_number.ToString(),
+                                                                                    trips.summary.total_orders.ToString(),
+                                                                                    trips.summary.total_addresses.ToString(),
+                                                                                    trips.summary.total_distance.ToString(),
+                                                                                    trips.summary.total_time.ToString(),
+                                                                                    results.deposit.Trim(),
+                                                                                    results.position.ToString(),
+                                                                                    results.eta_mode.ToString(),
+                                                                                    results.eta,
+                                                                                    results.eta_approved,
+                                                                                    results.eta_started,
+                                                                                    results.stop.code,
+                                                                                    results.stop.name,
+                                                                                    results.stop.client,
+                                                                                    results.stop.address_type,
+                                                                                    results.stop.address,
+                                                                                    results.stop.reference,
+                                                                                    results.stop.city,
+                                                                                    results.stop.country,
+                                                                                    results.stop.lat,
+                                                                                    results.stop.lng,
+                                                                                    results.stop.postal_code,
+                                                                                    results.stop.service_time.ToString(),
+                                                                                    results.stop.priority.ToString(),
+                                                                                    orders.idx,
+                                                                                    orders.code,
+                                                                                    orders.alt_code,
+                                                                                    orders.delivery_date,
+                                                                                    orders.supplier_code,
+                                                                                    orders.supplier_name,
+                                                                                    orders.client_code,
+                                                                                    orders.client_name,
+                                                                                    orders.units_1.ToString(),
+                                                                                    orders.units_2.ToString(),
+                                                                                    orders.units_3.ToString(),
+                                                                                    orders.custom_1,
+                                                                                    orders.custom_2,
+                                                                                    orders.custom_3,
+                                                                                    orders.custom_4,
+                                                                                    orders.custom_5,
+                                                                                    orders.custom_6,
+                                                                                    orders.custom_7,
+                                                                                    orders.custom_8,
+                                                                                    orders.custom_9,
+                                                                                    orders.custom_10,
+                                                                                    orders.custom_11,
+                                                                                    orders.number_1,
+                                                                                    orders.number_2,
+                                                                                    orders.number_3,
+                                                                                    orders.number_4
+                                                                                    ).ToList();
+                                    if (INTEGRACIONES.Count > 0)
+                                    {
+                                        if (INTEGRACIONES[0].Count == 0) //pregunta por el CAMPO Count, si es mayor a cero procesó OK el detalle
+                                        {
+                                            #region NOK
+                                            ERROR = API_CLS.API_RESPONSE_ERRORS.Find(1017);//REQUEST - ERROR NO ESPECIFICADO
+
+                                            LogInfo(NombreProceso,
+                                                    ERROR.Mensaje.Trim() + ". " + INTEGRACIONES[0].Descripcion,
+                                                    true,
+                                                    false,
+                                                    "",
+                                                    body.ToString());
+
+                                            RESPONSE.Resultado = "ERROR";
+                                            RESPONSE.Descripcion = "Error procesando Webhook";
+                                            RESPONSE.Resultado_Codigo = ERROR.ErrID;
+                                            RESPONSE.Resultado_Descripcion = ERROR.Mensaje;
+                                            STATUS_CODE = HttpStatusCode.BadRequest;
+                                            return new HttpActionResult(Request, (ConfigurationManager.AppSettings["InformaStatusAPI"].ToString() == "SI" ? STATUS_CODE : HttpStatusCode.OK), RESPONSE);
+                                            #endregion
+                                        }
+                                    }
+                                    else
+                                    {
+                                        #region NOK
+                                        ERROR = API_CLS.API_RESPONSE_ERRORS.Find(1000);//REQUEST - ERROR NO ESPECIFICADO
+
+                                        LogInfo(NombreProceso,
+                                                ERROR.Mensaje.Trim(),
+                                                true,
+                                                false,
+                                                "",
+                                                body.ToString());
+
+                                        RESPONSE.Resultado = "ERROR";
+                                        RESPONSE.Descripcion = "";
+                                        RESPONSE.Resultado_Codigo = ERROR.ErrID;
+                                        RESPONSE.Resultado_Descripcion = ERROR.Mensaje;
+                                        STATUS_CODE = HttpStatusCode.BadRequest;
+                                        return new HttpActionResult(Request, (ConfigurationManager.AppSettings["InformaStatusAPI"].ToString() == "SI" ? STATUS_CODE : HttpStatusCode.OK), RESPONSE);
+                                        #endregion
+                                    }
+                                }
+                            }                            
                         }
-                        else
-                        {
-                            #region NOK
-                            ERROR = API_CLS.API_RESPONSE_ERRORS.Find(1000);//REQUEST - ERROR NO ESPECIFICADO
+                    }                    
 
-                            LogInfo(NombreProceso,
-                                    ERROR.Mensaje.Trim(),
-                                    true,
-                                    false,
-                                    "",
-                                    body.ToString());
-
-                            RESPONSE.Resultado = "ERROR";
-                            RESPONSE.Descripcion = "";
-                            RESPONSE.Resultado_Codigo = ERROR.ErrID;
-                            RESPONSE.Resultado_Descripcion = ERROR.Mensaje;
-                            STATUS_CODE = HttpStatusCode.BadRequest;
-                            return new HttpActionResult(Request, (ConfigurationManager.AppSettings["InformaStatusAPI"].ToString() == "SI" ? STATUS_CODE : HttpStatusCode.OK), RESPONSE);
-                            #endregion
-                        }
-                    }                        
-                }                    
-
-            } //fin ciclo items del JSON
+                } //fin ciclo items del JSON
+            }            
 
             try
             {
@@ -13578,20 +13564,19 @@ namespace API_GP_LOGISTICO.Controllers
         }
         #endregion
 
-        //Webhook que recibe info de "Webhook Rutas" de ENVIAME
-        #region Webhook Ruta DRIVIN (56)
+        //Webhook que recibe info de "Webhook Tracking" de ENVIAME
+        #region Webhook Tracking ENVIAME (56)
         [HttpPost]
         [HttpGet]
-        [Route("WEBHOOK/DRIVINRUTA")]
-        public IHttpActionResult recurso56([FromBody] API_REQUEST_TYPE_55_WebhookRutaDRIVIN REQUEST)
+        [Route("WEBHOOK/ENVIAMETRACKING")]
+        public IHttpActionResult recurso56([FromBody] API_REQUEST_TYPE_56_WebhookTrackingENVIAME REQUEST)
         {
-
             API_RESPONSE_TYPE_0 RESPONSE = new API_RESPONSE_TYPE_0();
             ERROR = new API_RESPONSE_ERRORS();
 
             string USERNAME = "";
             HttpStatusCode STATUS_CODE = new HttpStatusCode();
-            string NombreProceso = "WEBHOOK/DRIVINRUTA";
+            string NombreProceso = "WEBHOOK/ENVIAMETRACKING";
 
             STATUS_CODE = HttpStatusCode.OK; //Por defecto status OK
 
@@ -13629,28 +13614,6 @@ namespace API_GP_LOGISTICO.Controllers
                     "",
                     body.ToString());
 
-            //#region PROCESO
-            //STATUS_CODE = HttpStatusCode.OK;
-            //try
-            //{
-            //    List<sp_in_API_Webhook_Bsale_Result> WBSL = GP_ENT.sp_in_API_Webhook_Bsale(data.ToString()).ToList();
-
-            //    RESPONSE.Resultado = WBSL.ElementAt(0).Resultado;
-            //    RESPONSE.Descripcion = WBSL.ElementAt(0).Descripcion;
-            //}
-            //catch (Exception ex)
-            //{
-            //    #region NOK
-            //    ERROR = API_CLS.API_RESPONSE_ERRORS.Find(1000);//REQUEST - ERROR NO ESPECIFICADO
-            //    RESPONSE.Resultado = "Error";
-            //    RESPONSE.Descripcion = ERROR.Mensaje + ". " + ex.Message.Trim();
-            //    STATUS_CODE = HttpStatusCode.InternalServerError;
-            //    return new HttpActionResult(Request, (ConfigurationManager.AppSettings["InformaStatusAPI"].ToString() == "SI" ? STATUS_CODE : HttpStatusCode.OK), RESPONSE);
-            //    #endregion
-            //}
-            //return new HttpActionResult(Request, (ConfigurationManager.AppSettings["InformaStatusAPI"].ToString() == "SI" ? STATUS_CODE : HttpStatusCode.OK), RESPONSE);
-            //#endregion
-
             //===============================================================================================================
             //===============================================================================================================
             //===============================================================================================================
@@ -13661,231 +13624,124 @@ namespace API_GP_LOGISTICO.Controllers
             List<sp_in_API_Integraciones_Result> INTEGRACIONES = new List<sp_in_API_Integraciones_Result>();
             List<Sp_Proc_IntegracionApi_Result> INTEGRACIONES_PROCESA = new List<Sp_Proc_IntegracionApi_Result>();
 
-            string Proceso = "INT-WEBHOOK-DRIVINRUTA";
-            string Archivo = "WEBHOOK_DRIVINRUTA_" + DateTime.Now.ToString("yyyyMMddHHmmss");
+            USERNAME = "INTEGRADOR_API";
+            string Proceso = "INT-WEBHOOK-ENVIAMETRACKING";
+            string Archivo = "WEBHOOK_ENVIAMETRACKING_" + DateTime.Now.ToString("yyyyMMddHHmmss");
             DateTime Fecha = DateTime.Now;
             int Linea = 1;
 
             //recorre estructura json del Webhook, insertamos campos importantes
-            foreach (var trips in REQUEST.trips.ToList())
+            //Inserta linea de cabecera/detalle a tabla temporal ----------------------
+            //Se llama a la funcion INSERTA_sp_in_API_Integraciones
+            //  - Esta funcion llama al procedimiento almacenado sp_in_API_Integraciones, que inserta hasta el Texto100
+            //  - La funcion Permite enviar los textos como parametros opcionales
+            //  - En el procedimiento indicar la cantidad de textos que envia la integracion para optimizar la inserción 
+
+            //controla nulos
+            REQUEST.identifier = (REQUEST.identifier == null ? "" : REQUEST.identifier); // (número único de Envíame),   
+            REQUEST.order_number = (REQUEST.order_number == null ? "" : REQUEST.order_number); // (referencia o número de pedido del seller)",
+            REQUEST.tracking_number = (REQUEST.tracking_number == null ? "" : REQUEST.tracking_number); // (orden de transporte proporcionado por el carrier)",
+            REQUEST.carrier_tracking_number = (REQUEST.carrier_tracking_number == null ? "" : REQUEST.carrier_tracking_number); // (N/A),
+            REQUEST.carrier_name = (REQUEST.carrier_name == null ? "" : REQUEST.carrier_name); // (Nombre del carrier)",
+            REQUEST.carrier_code = (REQUEST.carrier_code == null ? "" : REQUEST.carrier_code); // (Código del carrier en Envíame)",
+            REQUEST.dead_line_date = (REQUEST.dead_line_date == null ? "" : REQUEST.dead_line_date); // (fecha de compromiso de entrega, si aplica)",
+            REQUEST.status_id = (REQUEST.status_id == null ? "" : REQUEST.status_id); // (id interno del estado del envío),
+            REQUEST.status_name = (REQUEST.status_name == null ? "" : REQUEST.status_name); // (Nombre del estado en Envíame)",
+            REQUEST.status_information = (REQUEST.status_information == null ? "" : REQUEST.status_information); // (Comentario del estado)",
+            REQUEST.status_date = (REQUEST.status_date == null ? "" : REQUEST.status_date); // (Fecha del último estado en formato aaaa-mm-dd hh:mm)",
+            REQUEST.tracking_url = (REQUEST.tracking_url == null ? "" : REQUEST.tracking_url);
+            REQUEST.reference2 = (REQUEST.reference2 == null ? "" : REQUEST.reference2);
+
+            try
+            { 
+                INTEGRACIONES = INSERTA_sp_in_API_Integraciones(GP_ENT,
+                                                                Archivo,
+                                                                USERNAME,
+                                                                Fecha,
+                                                                Linea,
+                                                                Proceso.Trim(),
+                                                                REQUEST.identifier.ToString(),
+                                                                REQUEST.order_number.ToString(),
+                                                                REQUEST.tracking_number.ToString(),
+                                                                REQUEST.carrier_tracking_number.ToString(),
+                                                                REQUEST.carrier_name.ToString(),
+                                                                REQUEST.carrier_code.ToString(),
+                                                                REQUEST.dead_line_date.ToString(),
+                                                                REQUEST.status_id.ToString(),
+                                                                REQUEST.status_name.ToString(),
+                                                                REQUEST.status_information.ToString(),
+                                                                REQUEST.status_date.ToString(),
+                                                                REQUEST.tracking_url.ToString(),
+                                                                REQUEST.reference2.ToString()
+                                                                ).ToList();
+            }
+            catch (Exception ex)
             {
-                foreach (var results in trips.results.ToList())
+                #region NOK
+                ERROR = API_CLS.API_RESPONSE_ERRORS.Find(1017);//REQUEST - ERROR PROCESO BASE DE DATOS
+
+                LogInfo(NombreProceso,
+                        ERROR.Mensaje.Trim() + ". " + ex.Message.Trim(),
+                        true,
+                        false,
+                        "",
+                        body.ToString());
+
+                RESPONSE.Resultado = "ERROR";
+                RESPONSE.Descripcion = ex.Message.Trim();
+                RESPONSE.Resultado_Codigo = ERROR.ErrID;
+                RESPONSE.Resultado_Descripcion = ERROR.Mensaje;
+                STATUS_CODE = HttpStatusCode.BadRequest;
+                return new HttpActionResult(Request, (ConfigurationManager.AppSettings["InformaStatusAPI"].ToString() == "SI" ? STATUS_CODE : HttpStatusCode.OK), RESPONSE);
+                #endregion
+            }
+
+            if (INTEGRACIONES.Count > 0)
+            {
+                if (INTEGRACIONES[0].Count == 0) //pregunta por el CAMPO Count, si es mayor a cero procesó OK el detalle
                 {
-                    foreach (var orders in results.orders.ToList())
-                    {
-                        //Inserta linea de cabecera/detalle a tabla temporal ----------------------
-                        //Se llama a la funcion INSERTA_sp_in_API_Integraciones
-                        //  - Esta funcion llama al procedimiento almacenado sp_in_API_Integraciones, que inserta hasta el Texto100
-                        //  - La funcion Permite enviar los textos como parametros opcionales
-                        //  - En el procedimiento indicar la cantidad de textos que envia la integracion para optimizar la inserción 
+                    #region NOK
+                    ERROR = API_CLS.API_RESPONSE_ERRORS.Find(1017);//REQUEST - ERROR NO ESPECIFICADO
 
-                        //controla nulos
-                        REQUEST.vehicle = (REQUEST.vehicle == null ? "" : REQUEST.vehicle);
-                        REQUEST.vehicle_detail = (REQUEST.vehicle_detail == null ? "" : REQUEST.vehicle_detail);
-                        //REQUEST.route_id = (REQUEST.route_id == null ? "" : REQUEST.route_id);
-                        REQUEST.route_code = (REQUEST.route_code == null ? "" : REQUEST.route_code);
-                        REQUEST.description = (REQUEST.description == null ? "" : REQUEST.description);
-                        REQUEST.deploy_date = (REQUEST.deploy_date == null ? "" : REQUEST.deploy_date);
-                        REQUEST.supplier_code = (REQUEST.supplier_code == null ? "" : REQUEST.supplier_code);
-                        REQUEST.scenario_token = (REQUEST.scenario_token == null ? "" : REQUEST.scenario_token);
-                        REQUEST.schema_code = (REQUEST.schema_code == null ? "" : REQUEST.schema_code);
-                        REQUEST.schema_name = (REQUEST.schema_name == null ? "" : REQUEST.schema_name);
-                        REQUEST.approved_at = (REQUEST.approved_at == null ? "" : REQUEST.approved_at);
-                        REQUEST.platform = (REQUEST.platform == null ? "" : REQUEST.platform);
-                        REQUEST.started_at = (REQUEST.started_at == null ? "" : REQUEST.started_at);
-                        REQUEST.fleet_sequence = (REQUEST.fleet_sequence == null ? "" : REQUEST.fleet_sequence);
-                        REQUEST.login_url = (REQUEST.login_url == null ? "" : REQUEST.login_url);
-                        REQUEST.driver.email = (REQUEST.driver.email == null ? "" : REQUEST.driver.email);
-                        REQUEST.driver.full_name = (REQUEST.driver.full_name == null ? "" : REQUEST.driver.full_name);
-                        REQUEST.driver.phone = (REQUEST.driver.phone == null ? "" : REQUEST.driver.phone);
-                        //REQUEST.summary.total_trips = (REQUEST.summary.total_trips == null ? "" : REQUEST.summary.total_trips);
-                        //REQUEST.summary.total_orders = (REQUEST.summary.total_orders == null ? "" : REQUEST.summary.total_orders);
-                        //REQUEST.summary.total_addresses = (REQUEST.summary.total_addresses == null ? "" : REQUEST.summary.total_addresses);
-                        //REQUEST.summary.total_distance = (REQUEST.summary.total_distance == null ? "" : REQUEST.summary.total_distance);
-                        //REQUEST.summary.total_time = (REQUEST.summary.total_time == null ? "" : REQUEST.summary.total_time);
-                        //trips.summary.trip_number = (trips.summary.trip_number == null ? "" : trips.summary.trip_number);
-                        //trips.summary.total_orders = (trips.summary.total_orders == null ? "" : trips.summary.total_orders);
-                        //trips.summary.total_addresses = (trips.summary.total_addresses == null ? "" : trips.summary.total_addresses);
-                        //trips.summary.total_distance = (trips.summary.total_distance == null ? "" : trips.summary.total_distance);
-                        //trips.summary.total_time = (trips.summary.total_time == null ? "" : trips.summary.total_time);
-                        results.deposit = (results.deposit == null ? "" : results.deposit);
-                        //results.position = (results.position == null ? "" : results.position);
-                        //results.eta_mode = (results.eta_mode == null ? "" : results.eta_mode);
-                        results.eta = (results.eta == null ? "" : results.eta);
-                        results.eta_approved = (results.eta_approved == null ? "" : results.eta_approved);
-                        results.eta_started = (results.eta_started == null ? "" : results.eta_started);
-                        results.stop.code = (results.stop.code == null ? "" : results.stop.code);
-                        results.stop.name = (results.stop.name == null ? "" : results.stop.name);
-                        results.stop.client = (results.stop.client == null ? "" : results.stop.client);
-                        results.stop.address_type = (results.stop.address_type == null ? "" : results.stop.address_type);
-                        results.stop.address = (results.stop.address == null ? "" : results.stop.address);
-                        results.stop.reference = (results.stop.reference == null ? "" : results.stop.reference);
-                        results.stop.city = (results.stop.city == null ? "" : results.stop.city);
-                        results.stop.country = (results.stop.country == null ? "" : results.stop.country);
-                        results.stop.lat = (results.stop.lat == null ? "" : results.stop.lat);
-                        results.stop.lng = (results.stop.lng == null ? "" : results.stop.lng);
-                        results.stop.postal_code = (results.stop.postal_code == null ? "" : results.stop.postal_code);
-                        //results.stop.service_time = (results.stop.service_time == null ? "" : results.stop.service_time);
-                        //results.stop.priority = (results.stop.priority == null ? "" : results.stop.priority);
-                        orders.idx = (orders.idx == null ? "" : orders.idx);
-                        orders.code = (orders.code == null ? "" : orders.code);
-                        orders.alt_code = (orders.alt_code == null ? "" : orders.alt_code);
-                        orders.delivery_date = (orders.delivery_date == null ? "" : orders.delivery_date);
-                        orders.supplier_code = (orders.supplier_code == null ? "" : orders.supplier_code);
-                        orders.supplier_name = (orders.supplier_name == null ? "" : orders.supplier_name);
-                        orders.client_code = (orders.client_code == null ? "" : orders.client_code);
-                        orders.client_name = (orders.client_name == null ? "" : orders.client_name);
-                        //orders.units_1 = (orders.units_1 == null ? "" : orders.units_1);
-                        //orders.units_2 = (orders.units_2 == null ? "" : orders.units_2);
-                        //orders.units_3 = (orders.units_3 == null ? "" : orders.units_3);
-                        orders.custom_1 = (orders.custom_1 == null ? "" : orders.custom_1);
-                        orders.custom_2 = (orders.custom_2 == null ? "" : orders.custom_2);
-                        orders.custom_3 = (orders.custom_3 == null ? "" : orders.custom_3);
-                        orders.custom_4 = (orders.custom_4 == null ? "" : orders.custom_4);
-                        orders.custom_5 = (orders.custom_5 == null ? "" : orders.custom_5);
-                        orders.custom_6 = (orders.custom_6 == null ? "" : orders.custom_6);
-                        orders.custom_7 = (orders.custom_7 == null ? "" : orders.custom_7);
-                        orders.custom_8 = (orders.custom_8 == null ? "" : orders.custom_8);
-                        orders.custom_9 = (orders.custom_9 == null ? "" : orders.custom_9);
-                        orders.custom_10 = (orders.custom_10 == null ? "" : orders.custom_10);
-                        orders.custom_11 = (orders.custom_11 == null ? "" : orders.custom_11);
-                        orders.number_1 = (orders.number_1 == null ? "" : orders.number_1);
-                        orders.number_2 = (orders.number_2 == null ? "" : orders.number_2);
-                        orders.number_3 = (orders.number_3 == null ? "" : orders.number_3);
-                        orders.number_4 = (orders.number_4 == null ? "" : orders.number_4);
+                    LogInfo(NombreProceso,
+                            ERROR.Mensaje.Trim() + ". " + INTEGRACIONES[0].Descripcion,
+                            true,
+                            false,
+                            "",
+                            body.ToString());
 
-                        INTEGRACIONES = INSERTA_sp_in_API_Integraciones(GP_ENT,
-                                                                        Archivo,
-                                                                        USERNAME,
-                                                                        Fecha,
-                                                                        Linea,
-                                                                        Proceso.Trim(),
-                                                                        REQUEST.vehicle,
-                                                                        REQUEST.vehicle_detail,
-                                                                        REQUEST.route_id.ToString(),
-                                                                        REQUEST.route_code,
-                                                                        REQUEST.description,
-                                                                        REQUEST.deploy_date,
-                                                                        REQUEST.supplier_code,
-                                                                        REQUEST.scenario_token,
-                                                                        REQUEST.schema_code,
-                                                                        REQUEST.schema_name,
-                                                                        REQUEST.approved_at,
-                                                                        REQUEST.platform,
-                                                                        REQUEST.started_at,
-                                                                        REQUEST.fleet_sequence,
-                                                                        REQUEST.login_url,
-                                                                        REQUEST.driver.email.Trim(),
-                                                                        REQUEST.driver.full_name.Trim(),
-                                                                        REQUEST.driver.phone.Trim(),
-                                                                        REQUEST.summary.total_trips.ToString(),
-                                                                        REQUEST.summary.total_orders.ToString(),
-                                                                        REQUEST.summary.total_addresses.ToString(),
-                                                                        REQUEST.summary.total_distance.ToString(),
-                                                                        REQUEST.summary.total_time.ToString(),
-                                                                        trips.summary.trip_number.ToString(),
-                                                                        trips.summary.total_orders.ToString(),
-                                                                        trips.summary.total_addresses.ToString(),
-                                                                        trips.summary.total_distance.ToString(),
-                                                                        trips.summary.total_time.ToString(),
-                                                                        results.deposit.Trim(),
-                                                                        results.position.ToString(),
-                                                                        results.eta_mode.ToString(),
-                                                                        results.eta,
-                                                                        results.eta_approved,
-                                                                        results.eta_started,
-                                                                        results.stop.code,
-                                                                        results.stop.name,
-                                                                        results.stop.client,
-                                                                        results.stop.address_type,
-                                                                        results.stop.address,
-                                                                        results.stop.reference,
-                                                                        results.stop.city,
-                                                                        results.stop.country,
-                                                                        results.stop.lat,
-                                                                        results.stop.lng,
-                                                                        results.stop.postal_code,
-                                                                        results.stop.service_time.ToString(),
-                                                                        results.stop.priority.ToString(),
-                                                                        orders.idx,
-                                                                        orders.code,
-                                                                        orders.alt_code,
-                                                                        orders.delivery_date,
-                                                                        orders.supplier_code,
-                                                                        orders.supplier_name,
-                                                                        orders.client_code,
-                                                                        orders.client_name,
-                                                                        orders.units_1.ToString(),
-                                                                        orders.units_2.ToString(),
-                                                                        orders.units_3.ToString(),
-                                                                        orders.custom_1,
-                                                                        orders.custom_2,
-                                                                        orders.custom_3,
-                                                                        orders.custom_4,
-                                                                        orders.custom_5,
-                                                                        orders.custom_6,
-                                                                        orders.custom_7,
-                                                                        orders.custom_8,
-                                                                        orders.custom_9,
-                                                                        orders.custom_10,
-                                                                        orders.custom_11,
-                                                                        orders.number_1,
-                                                                        orders.number_2,
-                                                                        orders.number_3,
-                                                                        orders.number_4
-                                                                        ).ToList();
-                        if (INTEGRACIONES.Count > 0)
-                        {
-                            if (INTEGRACIONES[0].Count == 0) //pregunta por el CAMPO Count, si es mayor a cero procesó OK el detalle
-                            {
-                                #region NOK
-                                ERROR = API_CLS.API_RESPONSE_ERRORS.Find(1017);//REQUEST - ERROR NO ESPECIFICADO
-
-                                LogInfo(NombreProceso,
-                                        ERROR.Mensaje.Trim() + ". " + INTEGRACIONES[0].Descripcion,
-                                        true,
-                                        false,
-                                        "",
-                                        body.ToString());
-
-                                RESPONSE.Resultado = "ERROR";
-                                RESPONSE.Descripcion = "Error procesando Webhook";
-                                RESPONSE.Resultado_Codigo = ERROR.ErrID;
-                                RESPONSE.Resultado_Descripcion = ERROR.Mensaje;
-                                STATUS_CODE = HttpStatusCode.BadRequest;
-                                return new HttpActionResult(Request, (ConfigurationManager.AppSettings["InformaStatusAPI"].ToString() == "SI" ? STATUS_CODE : HttpStatusCode.OK), RESPONSE);
-                                #endregion
-                            }
-                        }
-                        else
-                        {
-                            #region NOK
-                            ERROR = API_CLS.API_RESPONSE_ERRORS.Find(1000);//REQUEST - ERROR NO ESPECIFICADO
-
-                            LogInfo(NombreProceso,
-                                    ERROR.Mensaje.Trim(),
-                                    true,
-                                    false,
-                                    "",
-                                    body.ToString());
-
-                            RESPONSE.Resultado = "ERROR";
-                            RESPONSE.Descripcion = "";
-                            RESPONSE.Resultado_Codigo = ERROR.ErrID;
-                            RESPONSE.Resultado_Descripcion = ERROR.Mensaje;
-                            STATUS_CODE = HttpStatusCode.BadRequest;
-                            return new HttpActionResult(Request, (ConfigurationManager.AppSettings["InformaStatusAPI"].ToString() == "SI" ? STATUS_CODE : HttpStatusCode.OK), RESPONSE);
-                            #endregion
-                        }
-                    }
+                    RESPONSE.Resultado = "ERROR";
+                    RESPONSE.Descripcion = "Error procesando Webhook";
+                    RESPONSE.Resultado_Codigo = ERROR.ErrID;
+                    RESPONSE.Resultado_Descripcion = ERROR.Mensaje;
+                    STATUS_CODE = HttpStatusCode.BadRequest;
+                    return new HttpActionResult(Request, (ConfigurationManager.AppSettings["InformaStatusAPI"].ToString() == "SI" ? STATUS_CODE : HttpStatusCode.OK), RESPONSE);
+                    #endregion
                 }
+            }
+            else
+            {
+                #region NOK
+                ERROR = API_CLS.API_RESPONSE_ERRORS.Find(1000);//REQUEST - ERROR NO ESPECIFICADO
 
-            } //fin ciclo items del JSON
+                LogInfo(NombreProceso,
+                        ERROR.Mensaje.Trim(),
+                        true,
+                        false,
+                        "",
+                        body.ToString());
+
+                RESPONSE.Resultado = "ERROR";
+                RESPONSE.Descripcion = "";
+                RESPONSE.Resultado_Codigo = ERROR.ErrID;
+                RESPONSE.Resultado_Descripcion = ERROR.Mensaje;
+                STATUS_CODE = HttpStatusCode.BadRequest;
+                return new HttpActionResult(Request, (ConfigurationManager.AppSettings["InformaStatusAPI"].ToString() == "SI" ? STATUS_CODE : HttpStatusCode.OK), RESPONSE);
+                #endregion
+            }
 
             try
             {
-                USERNAME = "INTEGRADOR_API";
-
                 //--------------------------------------------------------------------------------------------------------------------------------
                 //Si finalizo ok el ciclo de los items, llama a procedimiento que realiza validacion de informacion generada encabecera y detalle
                 //--------------------------------------------------------------------------------------------------------------------------------
@@ -13969,7 +13825,6 @@ namespace API_GP_LOGISTICO.Controllers
         }
         #endregion
 
-        //--------------------------------------------------------------------------------------------------------------------------------------------
         //Inserta en tabla L_Integraciones, los parametros Texto2 al Texto100 son opcionales ---------------------------------------------------------
         //--------------------------------------------------------------------------------------------------------------------------------------------
         public static List<sp_in_API_Integraciones_Result> INSERTA_sp_in_API_Integraciones(GP_ENT GP_ENT, string Archivo, string UserName, DateTime FechaProceso, int Linea, string Texto1, string Texto2 = "", string Texto3 = "", string Texto4 = "", string Texto5 = "", string Texto6 = "", string Texto7 = "", string Texto8 = "", string Texto9 = "", string Texto10 = "", string Texto11 = "", string Texto12 = "", string Texto13 = "", string Texto14 = "", string Texto15 = "", string Texto16 = "", string Texto17 = "", string Texto18 = "", string Texto19 = "", string Texto20 = "", string Texto21 = "", string Texto22 = "", string Texto23 = "", string Texto24 = "", string Texto25 = "", string Texto26 = "", string Texto27 = "", string Texto28 = "", string Texto29 = "", string Texto30 = "", string Texto31 = "", string Texto32 = "", string Texto33 = "", string Texto34 = "", string Texto35 = "", string Texto36 = "", string Texto37 = "", string Texto38 = "", string Texto39 = "", string Texto40 = "", string Texto41 = "", string Texto42 = "", string Texto43 = "", string Texto44 = "", string Texto45 = "", string Texto46 = "", string Texto47 = "", string Texto48 = "", string Texto49 = "", string Texto50 = "", string Texto51 = "", string Texto52 = "", string Texto53 = "", string Texto54 = "", string Texto55 = "", string Texto56 = "", string Texto57 = "", string Texto58 = "", string Texto59 = "", string Texto60 = "", string Texto61 = "", string Texto62 = "", string Texto63 = "", string Texto64 = "", string Texto65 = "", string Texto66 = "", string Texto67 = "", string Texto68 = "", string Texto69 = "", string Texto70 = "", string Texto71 = "", string Texto72 = "", string Texto73 = "", string Texto74 = "", string Texto75 = "", string Texto76 = "", string Texto77 = "", string Texto78 = "", string Texto79 = "", string Texto80 = "", string Texto81 = "", string Texto82 = "", string Texto83 = "", string Texto84 = "", string Texto85 = "", string Texto86 = "", string Texto87 = "", string Texto88 = "", string Texto89 = "", string Texto90 = "", string Texto91 = "", string Texto92 = "", string Texto93 = "", string Texto94 = "", string Texto95 = "", string Texto96 = "", string Texto97 = "", string Texto98 = "", string Texto99 = "", string Texto100 = "")

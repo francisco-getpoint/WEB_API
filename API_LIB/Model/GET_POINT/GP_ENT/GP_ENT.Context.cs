@@ -840,56 +840,6 @@ namespace API_LIB.Model.GET_POINT.GP_ENT
             return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<sp_sel_API_TrackingPickingDet_Result>("sp_sel_API_TrackingPickingDet", genPickIdParameter);
         }
     
-        public virtual ObjectResult<sp_upd_cambEstado_SDD_Api_Result> sp_upd_cambEstado_SDD_Api(Nullable<int> empId, string usuario, Nullable<int> numeroReferencia, Nullable<int> sDD, Nullable<int> estado)
-        {
-            var empIdParameter = empId.HasValue ?
-                new ObjectParameter("EmpId", empId) :
-                new ObjectParameter("EmpId", typeof(int));
-    
-            var usuarioParameter = usuario != null ?
-                new ObjectParameter("Usuario", usuario) :
-                new ObjectParameter("Usuario", typeof(string));
-    
-            var numeroReferenciaParameter = numeroReferencia.HasValue ?
-                new ObjectParameter("NumeroReferencia", numeroReferencia) :
-                new ObjectParameter("NumeroReferencia", typeof(int));
-    
-            var sDDParameter = sDD.HasValue ?
-                new ObjectParameter("SDD", sDD) :
-                new ObjectParameter("SDD", typeof(int));
-    
-            var estadoParameter = estado.HasValue ?
-                new ObjectParameter("Estado", estado) :
-                new ObjectParameter("Estado", typeof(int));
-    
-            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<sp_upd_cambEstado_SDD_Api_Result>("sp_upd_cambEstado_SDD_Api", empIdParameter, usuarioParameter, numeroReferenciaParameter, sDDParameter, estadoParameter);
-        }
-    
-        public virtual ObjectResult<sp_upd_cambEstado_SDR_Api_Result> sp_upd_cambEstado_SDR_Api(Nullable<int> empId, string usuario, Nullable<int> numeroReferencia, Nullable<int> sDR, Nullable<int> estado)
-        {
-            var empIdParameter = empId.HasValue ?
-                new ObjectParameter("EmpId", empId) :
-                new ObjectParameter("EmpId", typeof(int));
-    
-            var usuarioParameter = usuario != null ?
-                new ObjectParameter("Usuario", usuario) :
-                new ObjectParameter("Usuario", typeof(string));
-    
-            var numeroReferenciaParameter = numeroReferencia.HasValue ?
-                new ObjectParameter("NumeroReferencia", numeroReferencia) :
-                new ObjectParameter("NumeroReferencia", typeof(int));
-    
-            var sDRParameter = sDR.HasValue ?
-                new ObjectParameter("SDR", sDR) :
-                new ObjectParameter("SDR", typeof(int));
-    
-            var estadoParameter = estado.HasValue ?
-                new ObjectParameter("Estado", estado) :
-                new ObjectParameter("Estado", typeof(int));
-    
-            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<sp_upd_cambEstado_SDR_Api_Result>("sp_upd_cambEstado_SDR_Api", empIdParameter, usuarioParameter, numeroReferenciaParameter, sDRParameter, estadoParameter);
-        }
-    
         public virtual ObjectResult<sp_sel_API_Consulta_Stock_Bodega_Ubicacion_Result> sp_sel_API_Consulta_Stock_Bodega_Ubicacion(Nullable<int> empId, Nullable<int> lineaProducto, string tipoProducto, string codigoArticulo, string usuario)
         {
             var empIdParameter = empId.HasValue ?
@@ -3271,6 +3221,64 @@ namespace API_LIB.Model.GET_POINT.GP_ENT
                 new ObjectParameter("RowSet", typeof(int));
     
             return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<sp_in_API_TrackingSDD_Result>("sp_in_API_TrackingSDD", empIdParameter, fechaInicioParameter, fechaTerminoParameter, solDespIdParameter, tipoReferenciaParameter, numeroReferenciaParameter, rutClienteParameter, limitParameter, rowSetParameter);
+        }
+    
+        public virtual ObjectResult<sp_upd_cambEstado_SDD_Api_Result> sp_upd_cambEstado_SDD_Api(Nullable<int> empId, string usuario, string tipoReferencia, string numeroReferencia, Nullable<decimal> sDD, Nullable<int> estado)
+        {
+            var empIdParameter = empId.HasValue ?
+                new ObjectParameter("EmpId", empId) :
+                new ObjectParameter("EmpId", typeof(int));
+    
+            var usuarioParameter = usuario != null ?
+                new ObjectParameter("Usuario", usuario) :
+                new ObjectParameter("Usuario", typeof(string));
+    
+            var tipoReferenciaParameter = tipoReferencia != null ?
+                new ObjectParameter("TipoReferencia", tipoReferencia) :
+                new ObjectParameter("TipoReferencia", typeof(string));
+    
+            var numeroReferenciaParameter = numeroReferencia != null ?
+                new ObjectParameter("NumeroReferencia", numeroReferencia) :
+                new ObjectParameter("NumeroReferencia", typeof(string));
+    
+            var sDDParameter = sDD.HasValue ?
+                new ObjectParameter("SDD", sDD) :
+                new ObjectParameter("SDD", typeof(decimal));
+    
+            var estadoParameter = estado.HasValue ?
+                new ObjectParameter("Estado", estado) :
+                new ObjectParameter("Estado", typeof(int));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<sp_upd_cambEstado_SDD_Api_Result>("sp_upd_cambEstado_SDD_Api", empIdParameter, usuarioParameter, tipoReferenciaParameter, numeroReferenciaParameter, sDDParameter, estadoParameter);
+        }
+    
+        public virtual ObjectResult<sp_upd_cambEstado_SDR_Api_Result> sp_upd_cambEstado_SDR_Api(Nullable<int> empId, string usuario, string tipoReferencia, string numeroReferencia, Nullable<decimal> sDR, Nullable<int> estado)
+        {
+            var empIdParameter = empId.HasValue ?
+                new ObjectParameter("EmpId", empId) :
+                new ObjectParameter("EmpId", typeof(int));
+    
+            var usuarioParameter = usuario != null ?
+                new ObjectParameter("Usuario", usuario) :
+                new ObjectParameter("Usuario", typeof(string));
+    
+            var tipoReferenciaParameter = tipoReferencia != null ?
+                new ObjectParameter("TipoReferencia", tipoReferencia) :
+                new ObjectParameter("TipoReferencia", typeof(string));
+    
+            var numeroReferenciaParameter = numeroReferencia != null ?
+                new ObjectParameter("NumeroReferencia", numeroReferencia) :
+                new ObjectParameter("NumeroReferencia", typeof(string));
+    
+            var sDRParameter = sDR.HasValue ?
+                new ObjectParameter("SDR", sDR) :
+                new ObjectParameter("SDR", typeof(decimal));
+    
+            var estadoParameter = estado.HasValue ?
+                new ObjectParameter("Estado", estado) :
+                new ObjectParameter("Estado", typeof(int));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<sp_upd_cambEstado_SDR_Api_Result>("sp_upd_cambEstado_SDR_Api", empIdParameter, usuarioParameter, tipoReferenciaParameter, numeroReferenciaParameter, sDRParameter, estadoParameter);
         }
     }
 }

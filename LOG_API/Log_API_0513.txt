@@ -1,0 +1,3 @@
+[SOLDESP/CREARJSON2]. Fecha/Hora 13/05/2024 16:16. Estructura JSON recibida
+[SOLDESP/CREARJSON2]. Fecha/Hora 13/05/2024 16:16. ERROR: An error occurred while executing the command definition. See the inner exception for details.
+[SOLDESP/CREARJSON2]. Fecha/Hora 13/05/2024 16:17. Estructura JSON recibida
