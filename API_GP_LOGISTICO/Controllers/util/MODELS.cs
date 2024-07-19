@@ -136,15 +136,15 @@ namespace API_GP_LOGISTICO.Controllers.util
         }
         public class API_REQUEST_TYPE_8
         {
-            public int empId { get; set; }
-            public string fechaInicio { get; set; }
-            public string fechaTermino { get; set; }
-            public int solDespId { get; set; }
-            public string tipoReferencia { get; set; }
-            public int numeroReferencia { get; set; }
-            public string rutCliente { get; set; }
-            public int limit { get; set; }
-            public int rowset { get; set; }
+            public int EmpId { get; set; }
+            public string FechaInicio { get; set; }
+            public string FechaTermino { get; set; }
+            public int SolDespId { get; set; }
+            public string TipoReferencia { get; set; }
+            public string NumeroReferencia { get; set; }
+            public string RutCliente { get; set; }
+            public int Limit { get; set; }
+            public int Rowset { get; set; }
         }
         public class API_REQUEST_TYPE_9
         {

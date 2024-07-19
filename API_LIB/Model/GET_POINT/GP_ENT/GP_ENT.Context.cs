@@ -1502,27 +1502,6 @@ namespace API_LIB.Model.GET_POINT.GP_ENT
             return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<sp_in_API_SolRecepcionJson_Result>("sp_in_API_SolRecepcionJson", empIdParameter, usuarioDigParameter, fechaProcesoParameter, tipoSolicitudParameter, codigoBodegaParameter, compradorParameter, rutProveedorParameter, razonSocialParameter, tipoReferenciaParameter, numeroReferenciaParameter, fechaReferenciaParameter, glosaParameter, dato1Parameter, dato2Parameter, dato3Parameter, valor1Parameter, valor2Parameter, valor3Parameter, fecha1Parameter, fecha2Parameter, fecha3Parameter);
         }
     
-        public virtual ObjectResult<sp_in_API_LogAPI_Result> sp_in_API_LogAPI(string nombreProceso, string referencia, string mensaje, string jSON)
-        {
-            var nombreProcesoParameter = nombreProceso != null ?
-                new ObjectParameter("NombreProceso", nombreProceso) :
-                new ObjectParameter("NombreProceso", typeof(string));
-    
-            var referenciaParameter = referencia != null ?
-                new ObjectParameter("Referencia", referencia) :
-                new ObjectParameter("Referencia", typeof(string));
-    
-            var mensajeParameter = mensaje != null ?
-                new ObjectParameter("Mensaje", mensaje) :
-                new ObjectParameter("Mensaje", typeof(string));
-    
-            var jSONParameter = jSON != null ?
-                new ObjectParameter("JSON", jSON) :
-                new ObjectParameter("JSON", typeof(string));
-    
-            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<sp_in_API_LogAPI_Result>("sp_in_API_LogAPI", nombreProcesoParameter, referenciaParameter, mensajeParameter, jSONParameter);
-        }
-    
         public virtual ObjectResult<sp_GP_INT_RecibosASN_LPN_Result> sp_GP_INT_RecibosASN_LPN(string archivo, string userName, Nullable<System.DateTime> fechaProceso, string aux_Origen, Nullable<decimal> reciboAsnId)
         {
             var archivoParameter = archivo != null ?
@@ -3182,47 +3161,6 @@ namespace API_LIB.Model.GET_POINT.GP_ENT
             return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<sp_in_API_ArticulosJson_Result>("sp_in_API_ArticulosJson", empIdParameter, codigoArticuloParameter, descripArtParameter, descripTecnicaParameter, descripCortaParameter, lineaProductoParameter, tipoModeloParameter, tipoParameter, vigenciaDesdeParameter, vigenciaHastaParameter, rotacionParameter, codigoFabricaParameter, usaSerieParameter, usaLoteParameter, eAN13Parameter, dUN14Parameter, unidadMedidaCompraParameter, unidadMedidaVentaParameter, codigoProveedorParameter, marcaParameter, usuarioParameter, codigoExtParameter, glosaLineaProductoParameter, dato1Parameter, dato2Parameter, dato3Parameter, valor1Parameter, valor2Parameter, valor3Parameter, fecha1Parameter, fecha2Parameter, fecha3Parameter, origenParameter, articulosKitParameter);
         }
     
-        public virtual ObjectResult<sp_in_API_TrackingSDD_Result> sp_in_API_TrackingSDD(Nullable<int> empId, Nullable<System.DateTime> fechaInicio, Nullable<System.DateTime> fechaTermino, Nullable<int> solDespId, string tipoReferencia, Nullable<int> numeroReferencia, string rutCliente, Nullable<int> limit, Nullable<int> rowSet)
-        {
-            var empIdParameter = empId.HasValue ?
-                new ObjectParameter("EmpId", empId) :
-                new ObjectParameter("EmpId", typeof(int));
-    
-            var fechaInicioParameter = fechaInicio.HasValue ?
-                new ObjectParameter("FechaInicio", fechaInicio) :
-                new ObjectParameter("FechaInicio", typeof(System.DateTime));
-    
-            var fechaTerminoParameter = fechaTermino.HasValue ?
-                new ObjectParameter("FechaTermino", fechaTermino) :
-                new ObjectParameter("FechaTermino", typeof(System.DateTime));
-    
-            var solDespIdParameter = solDespId.HasValue ?
-                new ObjectParameter("SolDespId", solDespId) :
-                new ObjectParameter("SolDespId", typeof(int));
-    
-            var tipoReferenciaParameter = tipoReferencia != null ?
-                new ObjectParameter("TipoReferencia", tipoReferencia) :
-                new ObjectParameter("TipoReferencia", typeof(string));
-    
-            var numeroReferenciaParameter = numeroReferencia.HasValue ?
-                new ObjectParameter("NumeroReferencia", numeroReferencia) :
-                new ObjectParameter("NumeroReferencia", typeof(int));
-    
-            var rutClienteParameter = rutCliente != null ?
-                new ObjectParameter("RutCliente", rutCliente) :
-                new ObjectParameter("RutCliente", typeof(string));
-    
-            var limitParameter = limit.HasValue ?
-                new ObjectParameter("Limit", limit) :
-                new ObjectParameter("Limit", typeof(int));
-    
-            var rowSetParameter = rowSet.HasValue ?
-                new ObjectParameter("RowSet", rowSet) :
-                new ObjectParameter("RowSet", typeof(int));
-    
-            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<sp_in_API_TrackingSDD_Result>("sp_in_API_TrackingSDD", empIdParameter, fechaInicioParameter, fechaTerminoParameter, solDespIdParameter, tipoReferenciaParameter, numeroReferenciaParameter, rutClienteParameter, limitParameter, rowSetParameter);
-        }
-    
         public virtual ObjectResult<sp_upd_cambEstado_SDD_Api_Result> sp_upd_cambEstado_SDD_Api(Nullable<int> empId, string usuario, string tipoReferencia, string numeroReferencia, Nullable<decimal> sDD, Nullable<int> estado)
         {
             var empIdParameter = empId.HasValue ?
@@ -3279,6 +3217,68 @@ namespace API_LIB.Model.GET_POINT.GP_ENT
                 new ObjectParameter("Estado", typeof(int));
     
             return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<sp_upd_cambEstado_SDR_Api_Result>("sp_upd_cambEstado_SDR_Api", empIdParameter, usuarioParameter, tipoReferenciaParameter, numeroReferenciaParameter, sDRParameter, estadoParameter);
+        }
+    
+        public virtual ObjectResult<sp_in_API_TrackingSDD_Result> sp_in_API_TrackingSDD(Nullable<int> empId, Nullable<System.DateTime> fechaInicio, Nullable<System.DateTime> fechaTermino, Nullable<int> solDespId, string tipoReferencia, string numeroReferencia, string rutCliente, Nullable<int> limit, Nullable<int> rowSet)
+        {
+            var empIdParameter = empId.HasValue ?
+                new ObjectParameter("EmpId", empId) :
+                new ObjectParameter("EmpId", typeof(int));
+    
+            var fechaInicioParameter = fechaInicio.HasValue ?
+                new ObjectParameter("FechaInicio", fechaInicio) :
+                new ObjectParameter("FechaInicio", typeof(System.DateTime));
+    
+            var fechaTerminoParameter = fechaTermino.HasValue ?
+                new ObjectParameter("FechaTermino", fechaTermino) :
+                new ObjectParameter("FechaTermino", typeof(System.DateTime));
+    
+            var solDespIdParameter = solDespId.HasValue ?
+                new ObjectParameter("SolDespId", solDespId) :
+                new ObjectParameter("SolDespId", typeof(int));
+    
+            var tipoReferenciaParameter = tipoReferencia != null ?
+                new ObjectParameter("TipoReferencia", tipoReferencia) :
+                new ObjectParameter("TipoReferencia", typeof(string));
+    
+            var numeroReferenciaParameter = numeroReferencia != null ?
+                new ObjectParameter("NumeroReferencia", numeroReferencia) :
+                new ObjectParameter("NumeroReferencia", typeof(string));
+    
+            var rutClienteParameter = rutCliente != null ?
+                new ObjectParameter("RutCliente", rutCliente) :
+                new ObjectParameter("RutCliente", typeof(string));
+    
+            var limitParameter = limit.HasValue ?
+                new ObjectParameter("Limit", limit) :
+                new ObjectParameter("Limit", typeof(int));
+    
+            var rowSetParameter = rowSet.HasValue ?
+                new ObjectParameter("RowSet", rowSet) :
+                new ObjectParameter("RowSet", typeof(int));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<sp_in_API_TrackingSDD_Result>("sp_in_API_TrackingSDD", empIdParameter, fechaInicioParameter, fechaTerminoParameter, solDespIdParameter, tipoReferenciaParameter, numeroReferenciaParameter, rutClienteParameter, limitParameter, rowSetParameter);
+        }
+    
+        public virtual ObjectResult<sp_in_API_LogAPI_Result> sp_in_API_LogAPI(string nombreProceso, string referencia, string mensaje, string jSON)
+        {
+            var nombreProcesoParameter = nombreProceso != null ?
+                new ObjectParameter("NombreProceso", nombreProceso) :
+                new ObjectParameter("NombreProceso", typeof(string));
+    
+            var referenciaParameter = referencia != null ?
+                new ObjectParameter("Referencia", referencia) :
+                new ObjectParameter("Referencia", typeof(string));
+    
+            var mensajeParameter = mensaje != null ?
+                new ObjectParameter("Mensaje", mensaje) :
+                new ObjectParameter("Mensaje", typeof(string));
+    
+            var jSONParameter = jSON != null ?
+                new ObjectParameter("JSON", jSON) :
+                new ObjectParameter("JSON", typeof(string));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<sp_in_API_LogAPI_Result>("sp_in_API_LogAPI", nombreProcesoParameter, referenciaParameter, mensajeParameter, jSONParameter);
         }
     }
 }

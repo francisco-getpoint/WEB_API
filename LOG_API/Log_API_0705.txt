@@ -1,0 +1,5 @@
+[RECEPCION/CAMBIOESTADOARTRDM]. Fecha: 05/07/2024 11:17. Estructura JSON: {"Empid":1,"RecepcionId":20272,"TipoReferencia":"OC","NumeroReferencia":"202308010","Estado":1}
+[RECEPCION/CAMBIOESTADOARTRDM]. Fecha: 05/07/2024 11:19. Estructura JSON: {"Empid":1,"RecepcionId":20272,"TipoReferencia":"OC","NumeroReferencia":"202308010","Estado":1}
+[RECEPCION/CAMBIOESTADOARTRDM]. Fecha: 05/07/2024 11:19. Se produjo un error al ejecutar un proceso a nivel de base de datos. An error occurred while executing the command definition. See the inner exception for details.
+[RECEPCION/CAMBIOESTADOARTRDM]. Fecha: 05/07/2024 11:21. Estructura JSON: {"Empid":1,"RecepcionId":20272,"TipoReferencia":"OC","NumeroReferencia":"202308010","Estado":1}
+[RECEPCION/CAMBIOESTADOARTRDM]. Fecha: 05/07/2024 11:32. Se produjo un error al ejecutar un proceso a nivel de base de datos. An error occurred while executing the command definition. See the inner exception for details.

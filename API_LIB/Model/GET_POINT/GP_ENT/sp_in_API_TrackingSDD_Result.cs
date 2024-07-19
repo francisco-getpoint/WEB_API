@@ -27,6 +27,9 @@ namespace API_LIB.Model.GET_POINT.GP_ENT
         public Nullable<System.DateTime> FechaDigitacion { get; set; }
         public Nullable<System.DateTime> FechaProceso { get; set; }
         public string Usuario { get; set; }
+        public Nullable<int> MotivoAnula { get; set; }
+        public string DescripcionMotivoAnula { get; set; }
+        public string UsuarioAnula { get; set; }
         public string GlosaAnula { get; set; }
     }
 }

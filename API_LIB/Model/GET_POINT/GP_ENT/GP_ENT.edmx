@@ -627,7 +627,7 @@
           <Parameter Name="FechaTermino" Type="date" Mode="In" />
           <Parameter Name="SolDespId" Type="int" Mode="In" />
           <Parameter Name="TipoReferencia" Type="char" Mode="In" />
-          <Parameter Name="NumeroReferencia" Type="int" Mode="In" />
+          <Parameter Name="NumeroReferencia" Type="char" Mode="In" />
           <Parameter Name="RutCliente" Type="char" Mode="In" />
           <Parameter Name="Limit" Type="int" Mode="In" />
           <Parameter Name="RowSet" Type="int" Mode="In" />
@@ -1268,12 +1268,6 @@
             <Parameter Name="Fecha2" Mode="In" Type="DateTime" />
             <Parameter Name="Fecha3" Mode="In" Type="DateTime" />
           </FunctionImport>
-          <FunctionImport Name="sp_in_API_LogAPI" ReturnType="Collection(GP.ENT.sp_in_API_LogAPI_Result)">
-            <Parameter Name="NombreProceso" Mode="In" Type="String" />
-            <Parameter Name="Referencia" Mode="In" Type="String" />
-            <Parameter Name="Mensaje" Mode="In" Type="String" />
-            <Parameter Name="JSON" Mode="In" Type="String" />
-          </FunctionImport>
           <FunctionImport Name="sp_GP_INT_RecibosASN_LPN" ReturnType="Collection(GP.ENT.sp_GP_INT_RecibosASN_LPN_Result)">
             <Parameter Name="Archivo" Mode="In" Type="String" />
             <Parameter Name="UserName" Mode="In" Type="String" />
@@ -1704,17 +1698,6 @@
             <Parameter Name="Origen" Mode="In" Type="String" />
             <Parameter Name="ArticulosKit" Mode="In" Type="String" />
           </FunctionImport>
-          <FunctionImport Name="sp_in_API_TrackingSDD" ReturnType="Collection(GP.ENT.sp_in_API_TrackingSDD_Result)">
-            <Parameter Name="EmpId" Mode="In" Type="Int32" />
-            <Parameter Name="FechaInicio" Mode="In" Type="DateTime" />
-            <Parameter Name="FechaTermino" Mode="In" Type="DateTime" />
-            <Parameter Name="SolDespId" Mode="In" Type="Int32" />
-            <Parameter Name="TipoReferencia" Mode="In" Type="String" />
-            <Parameter Name="NumeroReferencia" Mode="In" Type="Int32" />
-            <Parameter Name="RutCliente" Mode="In" Type="String" />
-            <Parameter Name="Limit" Mode="In" Type="Int32" />
-            <Parameter Name="RowSet" Mode="In" Type="Int32" />
-          </FunctionImport>
           <FunctionImport Name="sp_upd_cambEstado_SDD_Api" ReturnType="Collection(GP.ENT.sp_upd_cambEstado_SDD_Api_Result)">
             <Parameter Name="EmpId" Mode="In" Type="Int32" />
             <Parameter Name="Usuario" Mode="In" Type="String" />
@@ -1730,6 +1713,23 @@
             <Parameter Name="NumeroReferencia" Mode="In" Type="String" />
             <Parameter Name="SDR" Mode="In" Type="Decimal" />
             <Parameter Name="Estado" Mode="In" Type="Int32" />
+          </FunctionImport>
+          <FunctionImport Name="sp_in_API_TrackingSDD" ReturnType="Collection(GP.ENT.sp_in_API_TrackingSDD_Result)">
+            <Parameter Name="EmpId" Mode="In" Type="Int32" />
+            <Parameter Name="FechaInicio" Mode="In" Type="DateTime" />
+            <Parameter Name="FechaTermino" Mode="In" Type="DateTime" />
+            <Parameter Name="SolDespId" Mode="In" Type="Int32" />
+            <Parameter Name="TipoReferencia" Mode="In" Type="String" />
+            <Parameter Name="NumeroReferencia" Mode="In" Type="String" />
+            <Parameter Name="RutCliente" Mode="In" Type="String" />
+            <Parameter Name="Limit" Mode="In" Type="Int32" />
+            <Parameter Name="RowSet" Mode="In" Type="Int32" />
+          </FunctionImport>
+          <FunctionImport Name="sp_in_API_LogAPI" ReturnType="Collection(GP.ENT.sp_in_API_LogAPI_Result)">
+            <Parameter Name="NombreProceso" Mode="In" Type="String" />
+            <Parameter Name="Referencia" Mode="In" Type="String" />
+            <Parameter Name="Mensaje" Mode="In" Type="String" />
+            <Parameter Name="JSON" Mode="In" Type="String" />
           </FunctionImport>
         </EntityContainer>
         <ComplexType Name="sp_in_API_PickUp_Result">
@@ -2158,11 +2158,6 @@
           <Property Type="Decimal" Name="SolRecepId" Nullable="true" Precision="18" Scale="0" />
           <Property Type="String" Name="Descripcion" Nullable="true" />
         </ComplexType>
-        <ComplexType Name="sp_in_API_LogAPI_Result">
-          <Property Type="Int32" Name="Count" Nullable="true" />
-          <Property Type="String" Name="Resultado" Nullable="true" />
-          <Property Type="String" Name="Descripcion" Nullable="true" />
-        </ComplexType>
         <ComplexType Name="sp_sel_API_ArticulosJson_Result">
           <Property Type="Int32" Name="Total" Nullable="true" />
           <Property Type="Int32" Name="Fila" Nullable="true" />
@@ -2285,23 +2280,6 @@
           <Property Type="String" Name="Resultado" Nullable="true" />
           <Property Type="String" Name="Descripcion" Nullable="true" />
         </ComplexType>
-        <ComplexType Name="sp_in_API_TrackingSDD_Result">
-          <Property Type="Int32" Name="Count" Nullable="true" />
-          <Property Type="String" Name="Resultado" Nullable="true" />
-          <Property Type="Int32" Name="Limit" Nullable="true" />
-          <Property Type="Int32" Name="RowSet" Nullable="true" />
-          <Property Type="Int32" Name="SolDespId" Nullable="true" />
-          <Property Type="String" Name="TipoReferencia" Nullable="true" MaxLength="10" />
-          <Property Type="String" Name="NumeroReferencia" Nullable="true" MaxLength="20" />
-          <Property Type="String" Name="RutCliente" Nullable="true" MaxLength="12" />
-          <Property Type="Int32" Name="Estado" Nullable="true" />
-          <Property Type="String" Name="EstadoGlosa" Nullable="true" />
-          <Property Type="DateTime" Name="FechaEstado" Nullable="true" />
-          <Property Type="DateTime" Name="FechaDigitacion" Nullable="true" Precision="23" />
-          <Property Type="DateTime" Name="FechaProceso" Nullable="true" Precision="23" />
-          <Property Type="String" Name="Usuario" Nullable="true" MaxLength="50" />
-          <Property Type="String" Name="GlosaAnula" Nullable="true" />
-        </ComplexType>
         <ComplexType Name="sp_upd_cambEstado_SDD_Api_Result">
           <Property Type="Int32" Name="resultado_codigo" Nullable="false" />
           <Property Type="String" Name="resultado_descripcion" Nullable="false" MaxLength="29" />
@@ -2309,6 +2287,31 @@
         <ComplexType Name="sp_upd_cambEstado_SDR_Api_Result">
           <Property Type="Int32" Name="resultado_codigo" Nullable="false" />
           <Property Type="String" Name="resultado_descripcion" Nullable="false" MaxLength="29" />
+        </ComplexType>
+        <ComplexType Name="sp_in_API_TrackingSDD_Result">
+          <Property Type="Int32" Name="Count" Nullable="true" />
+          <Property Type="String" Name="Resultado" Nullable="true" />
+          <Property Type="Int32" Name="Limit" Nullable="true" />
+          <Property Type="Int32" Name="RowSet" Nullable="true" />
+          <Property Type="Int32" Name="SolDespId" Nullable="true" />
+          <Property Type="String" Name="TipoReferencia" Nullable="true" MaxLength="20" />
+          <Property Type="String" Name="NumeroReferencia" Nullable="true" MaxLength="30" />
+          <Property Type="String" Name="RutCliente" Nullable="true" MaxLength="12" />
+          <Property Type="Int32" Name="Estado" Nullable="true" />
+          <Property Type="String" Name="EstadoGlosa" Nullable="true" />
+          <Property Type="DateTime" Name="FechaEstado" Nullable="true" />
+          <Property Type="DateTime" Name="FechaDigitacion" Nullable="true" Precision="23" />
+          <Property Type="DateTime" Name="FechaProceso" Nullable="true" Precision="23" />
+          <Property Type="String" Name="Usuario" Nullable="true" MaxLength="50" />
+          <Property Type="Int32" Name="MotivoAnula" Nullable="true" />
+          <Property Type="String" Name="DescripcionMotivoAnula" Nullable="true" MaxLength="50" />
+          <Property Type="String" Name="UsuarioAnula" Nullable="true" MaxLength="50" />
+          <Property Type="String" Name="GlosaAnula" Nullable="true" />
+        </ComplexType>
+        <ComplexType Name="sp_in_API_LogAPI_Result">
+          <Property Type="Int32" Name="Count" Nullable="true" />
+          <Property Type="String" Name="Resultado" Nullable="true" />
+          <Property Type="String" Name="Descripcion" Nullable="true" />
         </ComplexType>
       </Schema>
     </edmx:ConceptualModels>
@@ -2924,15 +2927,6 @@
               </ComplexTypeMapping>
             </ResultMapping>
           </FunctionImportMapping>
-          <FunctionImportMapping FunctionImportName="sp_in_API_LogAPI" FunctionName="GP.ENT.Store.sp_in_API_LogAPI">
-            <ResultMapping>
-              <ComplexTypeMapping TypeName="GP.ENT.sp_in_API_LogAPI_Result">
-                <ScalarProperty Name="Count" ColumnName="Count" />
-                <ScalarProperty Name="Resultado" ColumnName="Resultado" />
-                <ScalarProperty Name="Descripcion" ColumnName="Descripcion" />
-              </ComplexTypeMapping>
-            </ResultMapping>
-          </FunctionImportMapping>
           <FunctionImportMapping FunctionImportName="sp_GP_INT_RecibosASN_LPN" FunctionName="GP.ENT.Store.sp_GP_INT_RecibosASN_LPN">
             <ResultMapping>
               <ComplexTypeMapping TypeName="GP.ENT.sp_GP_INT_RecibosASN_LPN_Result">
@@ -3095,6 +3089,22 @@
               </ComplexTypeMapping>
             </ResultMapping>
           </FunctionImportMapping>
+          <FunctionImportMapping FunctionImportName="sp_upd_cambEstado_SDD_Api" FunctionName="GP.ENT.Store.sp_upd_cambEstado_SDD_Api">
+            <ResultMapping>
+              <ComplexTypeMapping TypeName="GP.ENT.sp_upd_cambEstado_SDD_Api_Result">
+                <ScalarProperty Name="resultado_codigo" ColumnName="resultado_codigo" />
+                <ScalarProperty Name="resultado_descripcion" ColumnName="resultado_descripcion" />
+              </ComplexTypeMapping>
+            </ResultMapping>
+          </FunctionImportMapping>
+          <FunctionImportMapping FunctionImportName="sp_upd_cambEstado_SDR_Api" FunctionName="GP.ENT.Store.sp_upd_cambEstado_SDR_Api">
+            <ResultMapping>
+              <ComplexTypeMapping TypeName="GP.ENT.sp_upd_cambEstado_SDR_Api_Result">
+                <ScalarProperty Name="resultado_codigo" ColumnName="resultado_codigo" />
+                <ScalarProperty Name="resultado_descripcion" ColumnName="resultado_descripcion" />
+              </ComplexTypeMapping>
+            </ResultMapping>
+          </FunctionImportMapping>
           <FunctionImportMapping FunctionImportName="sp_in_API_TrackingSDD" FunctionName="GP.ENT.Store.sp_in_API_TrackingSDD">
             <ResultMapping>
               <ComplexTypeMapping TypeName="GP.ENT.sp_in_API_TrackingSDD_Result">
@@ -3112,23 +3122,19 @@
                 <ScalarProperty Name="FechaDigitacion" ColumnName="FechaDigitacion" />
                 <ScalarProperty Name="FechaProceso" ColumnName="FechaProceso" />
                 <ScalarProperty Name="Usuario" ColumnName="Usuario" />
+                <ScalarProperty Name="MotivoAnula" ColumnName="MotivoAnula" />
+                <ScalarProperty Name="DescripcionMotivoAnula" ColumnName="DescripcionMotivoAnula" />
+                <ScalarProperty Name="UsuarioAnula" ColumnName="UsuarioAnula" />
                 <ScalarProperty Name="GlosaAnula" ColumnName="GlosaAnula" />
               </ComplexTypeMapping>
             </ResultMapping>
           </FunctionImportMapping>
-          <FunctionImportMapping FunctionImportName="sp_upd_cambEstado_SDD_Api" FunctionName="GP.ENT.Store.sp_upd_cambEstado_SDD_Api">
+          <FunctionImportMapping FunctionImportName="sp_in_API_LogAPI" FunctionName="GP.ENT.Store.sp_in_API_LogAPI">
             <ResultMapping>
-              <ComplexTypeMapping TypeName="GP.ENT.sp_upd_cambEstado_SDD_Api_Result">
-                <ScalarProperty Name="resultado_codigo" ColumnName="resultado_codigo" />
-                <ScalarProperty Name="resultado_descripcion" ColumnName="resultado_descripcion" />
-              </ComplexTypeMapping>
-            </ResultMapping>
-          </FunctionImportMapping>
-          <FunctionImportMapping FunctionImportName="sp_upd_cambEstado_SDR_Api" FunctionName="GP.ENT.Store.sp_upd_cambEstado_SDR_Api">
-            <ResultMapping>
-              <ComplexTypeMapping TypeName="GP.ENT.sp_upd_cambEstado_SDR_Api_Result">
-                <ScalarProperty Name="resultado_codigo" ColumnName="resultado_codigo" />
-                <ScalarProperty Name="resultado_descripcion" ColumnName="resultado_descripcion" />
+              <ComplexTypeMapping TypeName="GP.ENT.sp_in_API_LogAPI_Result">
+                <ScalarProperty Name="Count" ColumnName="Count" />
+                <ScalarProperty Name="Resultado" ColumnName="Resultado" />
+                <ScalarProperty Name="Descripcion" ColumnName="Descripcion" />
               </ComplexTypeMapping>
             </ResultMapping>
           </FunctionImportMapping>
