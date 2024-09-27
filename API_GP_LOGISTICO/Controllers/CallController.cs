@@ -8351,11 +8351,11 @@ namespace API_GP_LOGISTICO.Controllers
 
             }// fin ciclo items
 
+            //--------------------------------------------------------------------------------------------------------------------------------
+            //Al finalizar OK el ciclo de los items, llama a procedimiento que realiza validacion de informacion generada encabecera y detalle
+            //--------------------------------------------------------------------------------------------------------------------------------
             try
             {
-                //--------------------------------------------------------------------------------------------------------------------------------
-                //Si finalizo ok el ciclo de los items, llama a procedimiento que realiza validacion de informacion generada encabecera y detalle
-                //--------------------------------------------------------------------------------------------------------------------------------
                 SOLDESPACHO_PROCESA = GP_ENT.sp_proc_API_TMPSolDespachoJson(Archivo,
                                                                             USERNAME
                                                                             ).ToList();
@@ -8366,14 +8366,14 @@ namespace API_GP_LOGISTICO.Controllers
                 ERROR = API_CLS.API_RESPONSE_ERRORS.Find(1017);//REQUEST - ERROR PROCESO BASE DE DATOS
 
                 LogInfo(NombreProceso,
-                        "ERROR: " + ex.Message.Trim(),
+                        "ERROR: " + ex.Message.Trim() + ". " + ex.InnerException.ToString().Trim(),
                         true,
                         true,
                         REQUEST.NumeroReferencia,
                         body.ToString());
 
                 RESPONSE.resultado = "ERROR";
-                RESPONSE.descripcion = ex.Message.Trim();
+                RESPONSE.descripcion = ex.Message.Trim() + ". " + ex.InnerException.ToString().Trim();
                 RESPONSE.resultado_codigo = ERROR.ErrID;
                 RESPONSE.resultado_descripcion = ERROR.Mensaje;
                 STATUS_CODE = HttpStatusCode.BadRequest;
@@ -8387,6 +8387,7 @@ namespace API_GP_LOGISTICO.Controllers
                 {
                     RESPONSE.resultado = "OK";
                     RESPONSE.descripcion = SOLDESPACHO_PROCESA[0].Descripcion;
+                    RESPONSE.solDespId = 0; //cargar SDD generada *******************
                 }
                 else
                 {
