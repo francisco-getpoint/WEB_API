@@ -2334,19 +2334,6 @@ namespace API_LIB.Model.GET_POINT.GP_ENT
             return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("sp_proc_API_TMPSolDespachoValidaJson", empidParameter, userNameParameter, solDespIdParameter, listaCodigoArticuloParameter, cantidadItemsParameter);
         }
     
-        public virtual ObjectResult<sp_proc_API_TMPSolDespachoJson_Result> sp_proc_API_TMPSolDespachoJson(string archivo, string usuarioDig)
-        {
-            var archivoParameter = archivo != null ?
-                new ObjectParameter("Archivo", archivo) :
-                new ObjectParameter("Archivo", typeof(string));
-    
-            var usuarioDigParameter = usuarioDig != null ?
-                new ObjectParameter("UsuarioDig", usuarioDig) :
-                new ObjectParameter("UsuarioDig", typeof(string));
-    
-            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<sp_proc_API_TMPSolDespachoJson_Result>("sp_proc_API_TMPSolDespachoJson", archivoParameter, usuarioDigParameter);
-        }
-    
         public virtual ObjectResult<sp_proc_API_Integraciones_Result> sp_proc_API_Integraciones(string archivo, string usuarioDig)
         {
             var archivoParameter = archivo != null ?
@@ -3260,7 +3247,7 @@ namespace API_LIB.Model.GET_POINT.GP_ENT
             return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<sp_in_API_TrackingSDD_Result>("sp_in_API_TrackingSDD", empIdParameter, fechaInicioParameter, fechaTerminoParameter, solDespIdParameter, tipoReferenciaParameter, numeroReferenciaParameter, rutClienteParameter, limitParameter, rowSetParameter);
         }
     
-        public virtual ObjectResult<sp_in_API_LogAPI_Result> sp_in_API_LogAPI(string nombreProceso, string referencia, string mensaje, string jSON)
+        public virtual ObjectResult<sp_in_API_LogAPI_Result> sp_in_API_LogAPI(string nombreProceso, string referencia, string mensaje, string jSON, string username)
         {
             var nombreProcesoParameter = nombreProceso != null ?
                 new ObjectParameter("NombreProceso", nombreProceso) :
@@ -3278,7 +3265,24 @@ namespace API_LIB.Model.GET_POINT.GP_ENT
                 new ObjectParameter("JSON", jSON) :
                 new ObjectParameter("JSON", typeof(string));
     
-            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<sp_in_API_LogAPI_Result>("sp_in_API_LogAPI", nombreProcesoParameter, referenciaParameter, mensajeParameter, jSONParameter);
+            var usernameParameter = username != null ?
+                new ObjectParameter("Username", username) :
+                new ObjectParameter("Username", typeof(string));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<sp_in_API_LogAPI_Result>("sp_in_API_LogAPI", nombreProcesoParameter, referenciaParameter, mensajeParameter, jSONParameter, usernameParameter);
+        }
+    
+        public virtual ObjectResult<sp_proc_API_TMPSolDespachoJson_Result> sp_proc_API_TMPSolDespachoJson(string archivo, string usuarioDig)
+        {
+            var archivoParameter = archivo != null ?
+                new ObjectParameter("Archivo", archivo) :
+                new ObjectParameter("Archivo", typeof(string));
+    
+            var usuarioDigParameter = usuarioDig != null ?
+                new ObjectParameter("UsuarioDig", usuarioDig) :
+                new ObjectParameter("UsuarioDig", typeof(string));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<sp_proc_API_TMPSolDespachoJson_Result>("sp_proc_API_TMPSolDespachoJson", archivoParameter, usuarioDigParameter);
         }
     }
 }

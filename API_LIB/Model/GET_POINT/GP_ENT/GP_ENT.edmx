@@ -293,6 +293,7 @@
           <Parameter Name="Referencia" Type="char" Mode="In" />
           <Parameter Name="Mensaje" Type="char" Mode="In" />
           <Parameter Name="JSON" Type="varchar(max)" Mode="In" />
+          <Parameter Name="Username" Type="char" Mode="In" />
         </Function>
         <Function Name="sp_in_API_PickUp" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
           <Parameter Name="Key" Type="char" Mode="In" />
@@ -1483,10 +1484,6 @@
             <Parameter Name="ListaCodigoArticulo" Mode="In" Type="String" />
             <Parameter Name="CantidadItems" Mode="In" Type="Int32" />
           </FunctionImport>
-          <FunctionImport Name="sp_proc_API_TMPSolDespachoJson" ReturnType="Collection(GP.ENT.sp_proc_API_TMPSolDespachoJson_Result)">
-            <Parameter Name="Archivo" Mode="In" Type="String" />
-            <Parameter Name="UsuarioDig" Mode="In" Type="String" />
-          </FunctionImport>
           <FunctionImport Name="sp_proc_API_Integraciones" ReturnType="Collection(GP.ENT.sp_proc_API_Integraciones_Result)">
             <Parameter Name="Archivo" Mode="In" Type="String" />
             <Parameter Name="UsuarioDig" Mode="In" Type="String" />
@@ -1730,6 +1727,11 @@
             <Parameter Name="Referencia" Mode="In" Type="String" />
             <Parameter Name="Mensaje" Mode="In" Type="String" />
             <Parameter Name="JSON" Mode="In" Type="String" />
+            <Parameter Name="Username" Mode="In" Type="String" />
+          </FunctionImport>
+          <FunctionImport Name="sp_proc_API_TMPSolDespachoJson" ReturnType="Collection(GP.ENT.sp_proc_API_TMPSolDespachoJson_Result)">
+            <Parameter Name="Archivo" Mode="In" Type="String" />
+            <Parameter Name="UsuarioDig" Mode="In" Type="String" />
           </FunctionImport>
         </EntityContainer>
         <ComplexType Name="sp_in_API_PickUp_Result">
@@ -2228,10 +2230,6 @@
           <Property Type="String" Name="Descripcion" Nullable="true" />
           <Property Type="Decimal" Name="Correlativo" Nullable="true" Precision="18" Scale="0" />
         </ComplexType>
-        <ComplexType Name="sp_proc_API_TMPSolDespachoJson_Result">
-          <Property Type="String" Name="Resultado" Nullable="false" MaxLength="5" />
-          <Property Type="String" Name="Descripcion" Nullable="false" MaxLength="1000" />
-        </ComplexType>
         <ComplexType Name="sp_proc_API_Integraciones_Result">
           <Property Type="String" Name="Resultado" Nullable="true" />
           <Property Type="String" Name="Descripcion" Nullable="true" />
@@ -2312,6 +2310,11 @@
           <Property Type="Int32" Name="Count" Nullable="true" />
           <Property Type="String" Name="Resultado" Nullable="true" />
           <Property Type="String" Name="Descripcion" Nullable="true" />
+        </ComplexType>
+        <ComplexType Name="sp_proc_API_TMPSolDespachoJson_Result">
+          <Property Type="String" Name="Resultado" Nullable="true" />
+          <Property Type="String" Name="Descripcion" Nullable="true" />
+          <Property Type="Int32" Name="SolDespId" Nullable="true" />
         </ComplexType>
       </Schema>
     </edmx:ConceptualModels>
@@ -2996,14 +2999,6 @@
             </ResultMapping>
           </FunctionImportMapping>
           <FunctionImportMapping FunctionImportName="sp_proc_API_TMPSolDespachoValidaJson" FunctionName="GP.ENT.Store.sp_proc_API_TMPSolDespachoValidaJson" />
-          <FunctionImportMapping FunctionImportName="sp_proc_API_TMPSolDespachoJson" FunctionName="GP.ENT.Store.sp_proc_API_TMPSolDespachoJson">
-            <ResultMapping>
-              <ComplexTypeMapping TypeName="GP.ENT.sp_proc_API_TMPSolDespachoJson_Result">
-                <ScalarProperty Name="Resultado" ColumnName="Resultado" />
-                <ScalarProperty Name="Descripcion" ColumnName="Descripcion" />
-              </ComplexTypeMapping>
-            </ResultMapping>
-          </FunctionImportMapping>
           <FunctionImportMapping FunctionImportName="sp_proc_API_Integraciones" FunctionName="GP.ENT.Store.sp_proc_API_Integraciones">
             <ResultMapping>
               <ComplexTypeMapping TypeName="GP.ENT.sp_proc_API_Integraciones_Result">
@@ -3135,6 +3130,15 @@
                 <ScalarProperty Name="Count" ColumnName="Count" />
                 <ScalarProperty Name="Resultado" ColumnName="Resultado" />
                 <ScalarProperty Name="Descripcion" ColumnName="Descripcion" />
+              </ComplexTypeMapping>
+            </ResultMapping>
+          </FunctionImportMapping>
+          <FunctionImportMapping FunctionImportName="sp_proc_API_TMPSolDespachoJson" FunctionName="GP.ENT.Store.sp_proc_API_TMPSolDespachoJson">
+            <ResultMapping>
+              <ComplexTypeMapping TypeName="GP.ENT.sp_proc_API_TMPSolDespachoJson_Result">
+                <ScalarProperty Name="Resultado" ColumnName="Resultado" />
+                <ScalarProperty Name="Descripcion" ColumnName="Descripcion" />
+                <ScalarProperty Name="SolDespId" ColumnName="SolDespId" />
               </ComplexTypeMapping>
             </ResultMapping>
           </FunctionImportMapping>

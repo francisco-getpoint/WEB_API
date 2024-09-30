@@ -15,5 +15,6 @@ namespace API_LIB.Model.GET_POINT.GP_ENT
     {
         public string Resultado { get; set; }
         public string Descripcion { get; set; }
+        public Nullable<int> SolDespId { get; set; }
     }
 }

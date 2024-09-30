@@ -8387,7 +8387,7 @@ namespace API_GP_LOGISTICO.Controllers
                 {
                     RESPONSE.resultado = "OK";
                     RESPONSE.descripcion = SOLDESPACHO_PROCESA[0].Descripcion;
-                    RESPONSE.solDespId = 0; //cargar SDD generada *******************
+                    RESPONSE.solDespId = int.Parse(SOLDESPACHO_PROCESA[0].SolDespId.ToString()); //id SDD generada *******************
                 }
                 else
                 {
@@ -8918,7 +8918,7 @@ namespace API_GP_LOGISTICO.Controllers
                 {
                     RESPONSE.resultado = "OK";
                     RESPONSE.descripcion = SOLRECEP_PROCESA[0].Descripcion;
-                    RESPONSE.solRecepId = int.Parse(SOLRECEP_PROCESA[0].SolRecepId.ToString());
+                    RESPONSE.solRecepId = int.Parse(SOLRECEP_PROCESA[0].SolRecepId.ToString()); //recupera id generado SDR
                 }
                 else
                 {
@@ -14289,7 +14289,9 @@ namespace API_GP_LOGISTICO.Controllers
                 List<sp_in_API_LogAPI_Result> LogAPI = GP_ENT2.sp_in_API_LogAPI(NombreProceso, 
                                                                                 Referencia, 
                                                                                 Mensaje, 
-                                                                                EstructuraJSON).ToList();
+                                                                                EstructuraJSON,
+                                                                                Username
+                                                                                ).ToList();
                 string Resultado;
                 Resultado = LogAPI.ElementAt(0).Resultado;
 
