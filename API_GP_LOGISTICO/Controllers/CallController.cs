@@ -8205,7 +8205,7 @@ namespace API_GP_LOGISTICO.Controllers
 
             limpiar = 1; //debe limpiar los datos anteriores de la tabla de paso para el Usuario -----
 
-            Archivo = "SOLDESP_CREARJSON_" + REQUEST.NumeroReferencia.Trim() + "_" + DateTime.Now.ToString("yyyyMMddHHmmss");
+            Archivo = "SOLDESP_CREARJSON_" + REQUEST.NumeroReferencia.Trim() + "_" + DateTime.Now.ToString("yyyyMMddHHmmssfff");
 
             //recorre items json
             foreach (var item2 in REQUEST.Items.ToList())
@@ -8387,7 +8387,7 @@ namespace API_GP_LOGISTICO.Controllers
                 {
                     RESPONSE.resultado = "OK";
                     RESPONSE.descripcion = SOLDESPACHO_PROCESA[0].Descripcion;
-                    RESPONSE.solDespId = int.Parse(SOLDESPACHO_PROCESA[0].SolDespId.ToString()); //id SDD generada *******************
+                    RESPONSE.solDespId = int.Parse(SOLDESPACHO_PROCESA[0].SolDespId.ToString()); //id SDD generada *****
                 }
                 else
                 {
@@ -8730,7 +8730,7 @@ namespace API_GP_LOGISTICO.Controllers
             List<sp_proc_API_TMPSolRecepcionJson_Result> SOLRECEP_PROCESA = new List<sp_proc_API_TMPSolRecepcionJson_Result>();
 
             string Item_crossdocking = "";
-            string Archivo = "SOLRECEP_CREARJSON_" + REQUEST.NumeroReferencia.Trim() + "_" + DateTime.Now.ToString("yyyyMMddHHmmss");
+            string Archivo = "SOLRECEP_CREARJSON_" + REQUEST.NumeroReferencia.Trim() + "_" + DateTime.Now.ToString("yyyyMMddHHmmssfff");
 
             //recorre items json
             foreach (var item2 in REQUEST.Items.ToList())
@@ -9212,7 +9212,7 @@ namespace API_GP_LOGISTICO.Controllers
             List<sp_in_API_Integraciones_Result> INTEGRACIONES = new List<sp_in_API_Integraciones_Result>();
             List<Sp_Proc_IntegracionApi_Result> INTEGRACIONES_PROCESA = new List<Sp_Proc_IntegracionApi_Result>();
 
-            string Archivo = "CAMBIO_ESTADO_" + DateTime.Now.ToString("yyyyMMddHHmmss");
+            string Archivo = "CAMBIO_ESTADO_" + DateTime.Now.ToString("yyyyMMddHHmmssfff");
             DateTime Fecha = DateTime.Now;
             int Linea = 1;
 
@@ -9645,7 +9645,7 @@ namespace API_GP_LOGISTICO.Controllers
         }
         #endregion
 
-        //recurso 43 Genera Consumo, tambien genera AJUSTES --------
+        //recurso 43 Genera Consumo, tambien genera AJUSTES (Cuando NombreProceso = "AJUSTE" --------
         #region Genera Consumo (43), tambien genera AJUSTES 
         [HttpPost]
         [Route("MOVIMIENTOS/GENERACONSUMO")]
@@ -9851,7 +9851,7 @@ namespace API_GP_LOGISTICO.Controllers
             }
 
 
-            string Archivo = "MOVIMIENTO_CONSUMO_" + DateTime.Now.ToString("yyyyMMddHHmmss");
+            string Archivo = "MOVIMIENTO_CONSUMO_" + DateTime.Now.ToString("yyyyMMddHHmmssfff") + "_" + REQUEST.TipoTransaccion.ToString();
             DateTime Fecha = DateTime.Now;
             int Linea = 1;
 
@@ -10322,7 +10322,7 @@ namespace API_GP_LOGISTICO.Controllers
             List<Sp_Proc_IntegracionApi_Result> INTEGRACIONES_PROCESA = new List<Sp_Proc_IntegracionApi_Result>();
 
             string Proceso = "INT-RECETA-CREAR";
-            string Archivo = "RECETA_CREAR_" + DateTime.Now.ToString("yyyyMMddHHmmss");
+            string Archivo = "RECETA_CREAR_" + DateTime.Now.ToString("yyyyMMddHHmmssfff");
             DateTime Fecha = DateTime.Now;
             int Linea = 1;
 
@@ -10658,7 +10658,7 @@ namespace API_GP_LOGISTICO.Controllers
 
             string Proceso = "INT-CONFIRMA-INVENTARIO";
 
-            string Archivo = "CONFIRMA_INVENTARIO_" + DateTime.Now.ToString("yyyyMMddHHmmss");
+            string Archivo = "CONFIRMA_INVENTARIO_" + DateTime.Now.ToString("yyyyMMddHHmmssfff");
             DateTime Fecha = DateTime.Now;
             int Linea = 1;
 
@@ -10950,7 +10950,7 @@ namespace API_GP_LOGISTICO.Controllers
 
             string Proceso = "INT-CAMBIOESTADO-RDM";
 
-            string Archivo = "CAMBIOESTADO_RDM_" + DateTime.Now.ToString("yyyyMMddHHmmss");
+            string Archivo = "CAMBIOESTADO_RDM_" + DateTime.Now.ToString("yyyyMMddHHmmssfff");
             DateTime Fecha = DateTime.Now;
             int Linea = 1;
 
@@ -11278,7 +11278,7 @@ namespace API_GP_LOGISTICO.Controllers
 
             string Proceso = "INT-ACT-FEC-ENTREGA";
 
-            string Archivo = "ACT_FEC_ENTREGA_" + DateTime.Now.ToString("yyyyMMddHHmmss");
+            string Archivo = "ACT_FEC_ENTREGA_" + DateTime.Now.ToString("yyyyMMddHHmmssfff");
             DateTime Fecha = DateTime.Now;
             int Linea = 1;
 
@@ -11628,7 +11628,7 @@ namespace API_GP_LOGISTICO.Controllers
 
             string Proceso = "INT-FORECAST-PRD-NB";
 
-            string Archivo = "FORECAST_PRD_NB_" + DateTime.Now.ToString("yyyyMMddHHmmss");
+            string Archivo = "FORECAST_PRD_NB_" + DateTime.Now.ToString("yyyyMMddHHmmssfff");
             DateTime Fecha = DateTime.Now;
             int Linea = 1;
 
@@ -12024,7 +12024,7 @@ namespace API_GP_LOGISTICO.Controllers
 
             string Proceso = "INT-ADJUNTAR-ARCHIVO-SDR";
 
-            string Archivo = "ADJUNTAR_ARCHIVO_SDR_" + DateTime.Now.ToString("yyyyMMddHHmmss");
+            string Archivo = "ADJUNTAR_ARCHIVO_SDR_" + DateTime.Now.ToString("yyyyMMddHHmmssfff");
             DateTime Fecha = DateTime.Now;
             int Linea = 1;
 
@@ -12363,7 +12363,7 @@ namespace API_GP_LOGISTICO.Controllers
 
             string Proceso = "INT-ADJUNTAR-ARCHIVO-SDD";
 
-            string Archivo = "ADJUNTAR_ARCHIVO_SDD_" + DateTime.Now.ToString("yyyyMMddHHmmss");
+            string Archivo = "ADJUNTAR_ARCHIVO_SDD_" + DateTime.Now.ToString("yyyyMMddHHmmssfff");
             DateTime Fecha = DateTime.Now;
             int Linea = 1;
 
@@ -12700,7 +12700,7 @@ namespace API_GP_LOGISTICO.Controllers
 
             string Proceso = "INT-ANULA-SOL-TRAS";
 
-            string Archivo = "ANULA_SOL_TRAS_" + DateTime.Now.ToString("yyyyMMddHHmmss");
+            string Archivo = "ANULA_SOL_TRAS_" + DateTime.Now.ToString("yyyyMMddHHmmssfff");
             DateTime Fecha = DateTime.Now;
             int Linea = 1;
 
@@ -13038,7 +13038,7 @@ namespace API_GP_LOGISTICO.Controllers
 
             string Proceso = "INT-ANULA-SOL-DESP";
 
-            string Archivo = "ANULA_SOL_DESP_" + DateTime.Now.ToString("yyyyMMddHHmmss");
+            string Archivo = "ANULA_SOL_DESP_" + DateTime.Now.ToString("yyyyMMddHHmmssfff");
             DateTime Fecha = DateTime.Now;
             int Linea = 1;
 
@@ -13252,7 +13252,7 @@ namespace API_GP_LOGISTICO.Controllers
             List<Sp_Proc_IntegracionApi_Result> INTEGRACIONES_PROCESA = new List<Sp_Proc_IntegracionApi_Result>();
 
             string Proceso = "INT-WEBHOOK-DRIVINRUTA";
-            string Archivo = "WEBHOOK_DRIVINRUTA_" + DateTime.Now.ToString("yyyyMMddHHmmss");
+            string Archivo = "WEBHOOK_DRIVINRUTA_" + DateTime.Now.ToString("yyyyMMddHHmmssfff");
             DateTime Fecha = DateTime.Now;
             int Linea = 1;
 
@@ -13631,7 +13631,7 @@ namespace API_GP_LOGISTICO.Controllers
 
             USERNAME = "INTEGRADOR_API";
             string Proceso = "INT-WEBHOOK-ENVIAMETRACKING";
-            string Archivo = "WEBHOOK_ENVIAMETRACKING_" + DateTime.Now.ToString("yyyyMMddHHmmss");
+            string Archivo = "WEBHOOK_ENVIAMETRACKING_" + DateTime.Now.ToString("yyyyMMddHHmmssfff");
             DateTime Fecha = DateTime.Now;
             int Linea = 1;
 
@@ -13979,7 +13979,7 @@ namespace API_GP_LOGISTICO.Controllers
 
             string Proceso = "INT-CAMBIOESTADOART-PORRDM";
 
-            string Archivo = "CAMBIOESTADOART_PORRDM_" + DateTime.Now.ToString("yyyyMMddHHmmss");
+            string Archivo = "CAMBIOESTADOART_PORRDM_" + DateTime.Now.ToString("yyyyMMddHHmmssfff");
             DateTime Fecha = DateTime.Now;
             int Linea = 1;
 
