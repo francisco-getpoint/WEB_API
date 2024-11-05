@@ -21,6 +21,7 @@ namespace API_LIB.Model.GET_POINT.GP_ENT
         public string Descripcion { get; set; }
         public Nullable<decimal> StockEstado { get; set; }
         public string GlosaEstado { get; set; }
+        public Nullable<int> CodigoEstado { get; set; }
         public decimal Stock { get; set; }
         public decimal StockTotal { get; set; }
     }

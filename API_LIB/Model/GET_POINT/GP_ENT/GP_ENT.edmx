@@ -1199,14 +1199,6 @@
             <Parameter Name="Limit" Mode="In" Type="Int32" />
             <Parameter Name="Rowset" Mode="In" Type="Int32" />
           </FunctionImport>
-          <FunctionImport Name="sp_sel_API_Consulta_Stock" ReturnType="Collection(GP.ENT.sp_sel_API_Consulta_Stock_Result)">
-            <Parameter Name="EmpId" Mode="In" Type="Int32" />
-            <Parameter Name="LineaProducto" Mode="In" Type="Int32" />
-            <Parameter Name="TipoProducto" Mode="In" Type="String" />
-            <Parameter Name="CodigoArticulo" Mode="In" Type="String" />
-            <Parameter Name="Usuario" Mode="In" Type="String" />
-            <Parameter Name="CodigoBodega" Mode="In" Type="Int32" />
-          </FunctionImport>
           <FunctionImport Name="sp_upd_API_ReferenciaSDR" ReturnType="Collection(GP.ENT.sp_upd_API_ReferenciaSDR_Result)">
             <Parameter Name="EmpId" Mode="In" Type="Int32" />
             <Parameter Name="UsuarioDig" Mode="In" Type="String" />
@@ -1733,6 +1725,14 @@
             <Parameter Name="Archivo" Mode="In" Type="String" />
             <Parameter Name="UsuarioDig" Mode="In" Type="String" />
           </FunctionImport>
+          <FunctionImport Name="sp_sel_API_Consulta_Stock" ReturnType="Collection(GP.ENT.sp_sel_API_Consulta_Stock_Result)">
+            <Parameter Name="EmpId" Mode="In" Type="Int32" />
+            <Parameter Name="LineaProducto" Mode="In" Type="Int32" />
+            <Parameter Name="TipoProducto" Mode="In" Type="String" />
+            <Parameter Name="CodigoArticulo" Mode="In" Type="String" />
+            <Parameter Name="Usuario" Mode="In" Type="String" />
+            <Parameter Name="CodigoBodega" Mode="In" Type="Int32" />
+          </FunctionImport>
         </EntityContainer>
         <ComplexType Name="sp_in_API_PickUp_Result">
           <Property Type="Int32" Name="GenPickId" Nullable="false" />
@@ -2120,18 +2120,6 @@
           <Property Type="String" Name="GlosaRdm" Nullable="true" MaxLength="8000" />
           <Property Type="Int16" Name="Estado" Nullable="false" />
         </ComplexType>
-        <ComplexType Name="sp_sel_API_Consulta_Stock_Result">
-          <Property Type="String" Name="CodigoArticulo" Nullable="true" />
-          <Property Type="String" Name="NumeroSerie" Nullable="true" MaxLength="25" />
-          <Property Type="String" Name="FechaVecto" Nullable="true" MaxLength="10" />
-          <Property Type="Int32" Name="Count" Nullable="true" />
-          <Property Type="String" Name="Resultado" Nullable="true" />
-          <Property Type="String" Name="Descripcion" Nullable="false" MaxLength="1" />
-          <Property Type="Decimal" Name="StockEstado" Nullable="true" Precision="19" />
-          <Property Type="String" Name="GlosaEstado" Nullable="true" MaxLength="50" />
-          <Property Type="Decimal" Name="Stock" Nullable="false" Precision="19" />
-          <Property Type="Decimal" Name="StockTotal" Nullable="false" Precision="19" />
-        </ComplexType>
         <ComplexType Name="sp_upd_API_ReferenciaSDR_Result">
           <Property Type="Int32" Name="Count" Nullable="true" />
           <Property Type="String" Name="Resultado" Nullable="true" />
@@ -2315,6 +2303,19 @@
           <Property Type="String" Name="Resultado" Nullable="true" />
           <Property Type="String" Name="Descripcion" Nullable="true" />
           <Property Type="Int32" Name="SolDespId" Nullable="true" />
+        </ComplexType>
+        <ComplexType Name="sp_sel_API_Consulta_Stock_Result">
+          <Property Type="String" Name="CodigoArticulo" Nullable="true" />
+          <Property Type="String" Name="NumeroSerie" Nullable="true" MaxLength="25" />
+          <Property Type="String" Name="FechaVecto" Nullable="true" MaxLength="10" />
+          <Property Type="Int32" Name="Count" Nullable="true" />
+          <Property Type="String" Name="Resultado" Nullable="true" />
+          <Property Type="String" Name="Descripcion" Nullable="true" MaxLength="50" />
+          <Property Type="Decimal" Name="StockEstado" Nullable="true" Precision="19" />
+          <Property Type="String" Name="GlosaEstado" Nullable="true" MaxLength="50" />
+          <Property Type="Int32" Name="CodigoEstado" Nullable="true" />
+          <Property Type="Decimal" Name="Stock" Nullable="false" Precision="19" />
+          <Property Type="Decimal" Name="StockTotal" Nullable="false" Precision="19" />
         </ComplexType>
       </Schema>
     </edmx:ConceptualModels>
@@ -2866,22 +2867,6 @@
               </ComplexTypeMapping>
             </ResultMapping>
           </FunctionImportMapping>
-          <FunctionImportMapping FunctionImportName="sp_sel_API_Consulta_Stock" FunctionName="GP.ENT.Store.sp_sel_API_Consulta_Stock">
-            <ResultMapping>
-              <ComplexTypeMapping TypeName="GP.ENT.sp_sel_API_Consulta_Stock_Result">
-                <ScalarProperty Name="CodigoArticulo" ColumnName="CodigoArticulo" />
-                <ScalarProperty Name="NumeroSerie" ColumnName="NumeroSerie" />
-                <ScalarProperty Name="FechaVecto" ColumnName="FechaVecto" />
-                <ScalarProperty Name="Count" ColumnName="Count" />
-                <ScalarProperty Name="Resultado" ColumnName="Resultado" />
-                <ScalarProperty Name="Descripcion" ColumnName="Descripcion" />
-                <ScalarProperty Name="StockEstado" ColumnName="StockEstado" />
-                <ScalarProperty Name="GlosaEstado" ColumnName="GlosaEstado" />
-                <ScalarProperty Name="Stock" ColumnName="Stock" />
-                <ScalarProperty Name="StockTotal" ColumnName="StockTotal" />
-              </ComplexTypeMapping>
-            </ResultMapping>
-          </FunctionImportMapping>
           <FunctionImportMapping FunctionImportName="sp_upd_API_ReferenciaSDR" FunctionName="GP.ENT.Store.sp_upd_API_ReferenciaSDR">
             <ResultMapping>
               <ComplexTypeMapping TypeName="GP.ENT.sp_upd_API_ReferenciaSDR_Result">
@@ -3139,6 +3124,23 @@
                 <ScalarProperty Name="Resultado" ColumnName="Resultado" />
                 <ScalarProperty Name="Descripcion" ColumnName="Descripcion" />
                 <ScalarProperty Name="SolDespId" ColumnName="SolDespId" />
+              </ComplexTypeMapping>
+            </ResultMapping>
+          </FunctionImportMapping>
+          <FunctionImportMapping FunctionImportName="sp_sel_API_Consulta_Stock" FunctionName="GP.ENT.Store.sp_sel_API_Consulta_Stock">
+            <ResultMapping>
+              <ComplexTypeMapping TypeName="GP.ENT.sp_sel_API_Consulta_Stock_Result">
+                <ScalarProperty Name="CodigoArticulo" ColumnName="CodigoArticulo" />
+                <ScalarProperty Name="NumeroSerie" ColumnName="NumeroSerie" />
+                <ScalarProperty Name="FechaVecto" ColumnName="FechaVecto" />
+                <ScalarProperty Name="Count" ColumnName="Count" />
+                <ScalarProperty Name="Resultado" ColumnName="Resultado" />
+                <ScalarProperty Name="Descripcion" ColumnName="Descripcion" />
+                <ScalarProperty Name="StockEstado" ColumnName="StockEstado" />
+                <ScalarProperty Name="GlosaEstado" ColumnName="GlosaEstado" />
+                <ScalarProperty Name="CodigoEstado" ColumnName="CodigoEstado" />
+                <ScalarProperty Name="Stock" ColumnName="Stock" />
+                <ScalarProperty Name="StockTotal" ColumnName="StockTotal" />
               </ComplexTypeMapping>
             </ResultMapping>
           </FunctionImportMapping>

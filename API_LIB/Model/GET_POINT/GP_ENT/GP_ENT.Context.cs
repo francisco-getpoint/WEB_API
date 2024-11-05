@@ -1240,35 +1240,6 @@ namespace API_LIB.Model.GET_POINT.GP_ENT
             return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<sp_sel_API_Confirma_Recep_Result>("sp_sel_API_Confirma_Recep", keyParameter, empIdParameter, fechaInicioParameter, fechaTerminoParameter, solRecepIdParameter, tipoReferenciaParameter, numeroReferenciaParameter, rutProveedorParameter, limitParameter, rowsetParameter);
         }
     
-        public virtual ObjectResult<sp_sel_API_Consulta_Stock_Result> sp_sel_API_Consulta_Stock(Nullable<int> empId, Nullable<int> lineaProducto, string tipoProducto, string codigoArticulo, string usuario, Nullable<int> codigoBodega)
-        {
-            var empIdParameter = empId.HasValue ?
-                new ObjectParameter("EmpId", empId) :
-                new ObjectParameter("EmpId", typeof(int));
-    
-            var lineaProductoParameter = lineaProducto.HasValue ?
-                new ObjectParameter("LineaProducto", lineaProducto) :
-                new ObjectParameter("LineaProducto", typeof(int));
-    
-            var tipoProductoParameter = tipoProducto != null ?
-                new ObjectParameter("TipoProducto", tipoProducto) :
-                new ObjectParameter("TipoProducto", typeof(string));
-    
-            var codigoArticuloParameter = codigoArticulo != null ?
-                new ObjectParameter("CodigoArticulo", codigoArticulo) :
-                new ObjectParameter("CodigoArticulo", typeof(string));
-    
-            var usuarioParameter = usuario != null ?
-                new ObjectParameter("Usuario", usuario) :
-                new ObjectParameter("Usuario", typeof(string));
-    
-            var codigoBodegaParameter = codigoBodega.HasValue ?
-                new ObjectParameter("CodigoBodega", codigoBodega) :
-                new ObjectParameter("CodigoBodega", typeof(int));
-    
-            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<sp_sel_API_Consulta_Stock_Result>("sp_sel_API_Consulta_Stock", empIdParameter, lineaProductoParameter, tipoProductoParameter, codigoArticuloParameter, usuarioParameter, codigoBodegaParameter);
-        }
-    
         public virtual ObjectResult<sp_upd_API_ReferenciaSDR_Result> sp_upd_API_ReferenciaSDR(Nullable<int> empId, string usuarioDig, Nullable<System.DateTime> fechaProceso, Nullable<int> tipoSolicitud, Nullable<int> codigoBodega, string comprador, string rutProveedor, string razonSocial, string tipoReferencia, string numeroReferencia, Nullable<System.DateTime> fechaReferencia, string tipoReferencia2, string numeroReferencia2, Nullable<System.DateTime> fechaReferencia2, string glosa, string dato1, string dato2, string dato3)
         {
             var empIdParameter = empId.HasValue ?
@@ -3283,6 +3254,35 @@ namespace API_LIB.Model.GET_POINT.GP_ENT
                 new ObjectParameter("UsuarioDig", typeof(string));
     
             return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<sp_proc_API_TMPSolDespachoJson_Result>("sp_proc_API_TMPSolDespachoJson", archivoParameter, usuarioDigParameter);
+        }
+    
+        public virtual ObjectResult<sp_sel_API_Consulta_Stock_Result> sp_sel_API_Consulta_Stock(Nullable<int> empId, Nullable<int> lineaProducto, string tipoProducto, string codigoArticulo, string usuario, Nullable<int> codigoBodega)
+        {
+            var empIdParameter = empId.HasValue ?
+                new ObjectParameter("EmpId", empId) :
+                new ObjectParameter("EmpId", typeof(int));
+    
+            var lineaProductoParameter = lineaProducto.HasValue ?
+                new ObjectParameter("LineaProducto", lineaProducto) :
+                new ObjectParameter("LineaProducto", typeof(int));
+    
+            var tipoProductoParameter = tipoProducto != null ?
+                new ObjectParameter("TipoProducto", tipoProducto) :
+                new ObjectParameter("TipoProducto", typeof(string));
+    
+            var codigoArticuloParameter = codigoArticulo != null ?
+                new ObjectParameter("CodigoArticulo", codigoArticulo) :
+                new ObjectParameter("CodigoArticulo", typeof(string));
+    
+            var usuarioParameter = usuario != null ?
+                new ObjectParameter("Usuario", usuario) :
+                new ObjectParameter("Usuario", typeof(string));
+    
+            var codigoBodegaParameter = codigoBodega.HasValue ?
+                new ObjectParameter("CodigoBodega", codigoBodega) :
+                new ObjectParameter("CodigoBodega", typeof(int));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<sp_sel_API_Consulta_Stock_Result>("sp_sel_API_Consulta_Stock", empIdParameter, lineaProductoParameter, tipoProductoParameter, codigoArticuloParameter, usuarioParameter, codigoBodegaParameter);
         }
     }
 }

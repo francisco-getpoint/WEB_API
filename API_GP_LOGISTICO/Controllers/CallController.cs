@@ -2744,7 +2744,7 @@ namespace API_GP_LOGISTICO.Controllers
         [Route("CONSTOCK/LISTAR")]
         public IHttpActionResult recurso15(API_REQUEST_TYPE_15_ConsultaStock REQUEST)
         {
-            API_RESPONSE_TYPE_15 RESPONSE = new API_RESPONSE_TYPE_15();
+            API_RESPONSE_TYPE_15_ConsultaStock RESPONSE = new API_RESPONSE_TYPE_15_ConsultaStock();
             ERROR = new API_RESPONSE_ERRORS();
 
             string USERNAME = "";
@@ -2897,14 +2897,18 @@ namespace API_GP_LOGISTICO.Controllers
             if (STOCKS.Count > 0)
             {
                 RESPONSE.count = STOCKS.Count;
+                RESPONSE.resultado = "OK";
+                RESPONSE.resultado_descripcion = STOCKS[0].Descripcion;
+                RESPONSE.resultado_codigo = 0;
+                RESPONSE.descripcion = "";
 
                 string NumeroSerie = "";
                 string FechaVecto = "";
                 string CodigoArticulo = "";
                 string GlosaEstado = "";
 
-                API_RESPONSE_TYPE_15_DET RESPONSE_STOCK = new API_RESPONSE_TYPE_15_DET();
-                API_RESPONSE_TYPE_15_SALDOS RESPONSE_SALDOS = new API_RESPONSE_TYPE_15_SALDOS();
+                API_RESPONSE_TYPE_15_DET_ConsultaStock RESPONSE_STOCK = new API_RESPONSE_TYPE_15_DET_ConsultaStock();
+                API_RESPONSE_TYPE_15_SALDOS_ConsultaStock RESPONSE_SALDOS = new API_RESPONSE_TYPE_15_SALDOS_ConsultaStock();
 
                 foreach (var Stock in STOCKS)
                 {
@@ -2916,7 +2920,7 @@ namespace API_GP_LOGISTICO.Controllers
                         }
 
                         //Inicializa variable de Item -------------
-                        RESPONSE_STOCK = new API_RESPONSE_TYPE_15_DET();
+                        RESPONSE_STOCK = new API_RESPONSE_TYPE_15_DET_ConsultaStock();
 
                         RESPONSE_STOCK.Serie = Stock.NumeroSerie;
                         RESPONSE_STOCK.FechaVencimiento = Stock.FechaVecto;
@@ -2932,8 +2936,9 @@ namespace API_GP_LOGISTICO.Controllers
 
                     if (Stock.GlosaEstado != GlosaEstado)
                     {
-                        RESPONSE_SALDOS = new API_RESPONSE_TYPE_15_SALDOS();
+                        RESPONSE_SALDOS = new API_RESPONSE_TYPE_15_SALDOS_ConsultaStock();
 
+                        RESPONSE_SALDOS.CodigoEstado = int.Parse(Stock.CodigoEstado.ToString());
                         RESPONSE_SALDOS.Estado = Stock.GlosaEstado;
                         RESPONSE_SALDOS.StockEstado = decimal.Parse(Stock.StockEstado.ToString());
 

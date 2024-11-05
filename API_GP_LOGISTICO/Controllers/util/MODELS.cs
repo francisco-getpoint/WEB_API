@@ -2201,7 +2201,7 @@ namespace API_GP_LOGISTICO.Controllers.util
         }
 
         [DataContract]
-        public class API_RESPONSE_TYPE_15
+        public class API_RESPONSE_TYPE_15_ConsultaStock
         {
             [DataMember(Order = 1)]
             public long count { get; set; }
@@ -2219,11 +2219,11 @@ namespace API_GP_LOGISTICO.Controllers.util
             public string descripcion { get; set; }
 
             [DataMember(Order = 99)]
-            public List<API_RESPONSE_TYPE_15_DET> items = new List<API_RESPONSE_TYPE_15_DET>();
+            public List<API_RESPONSE_TYPE_15_DET_ConsultaStock> items = new List<API_RESPONSE_TYPE_15_DET_ConsultaStock>();
         }
 
         [DataContract]
-        public class API_RESPONSE_TYPE_15_DET
+        public class API_RESPONSE_TYPE_15_DET_ConsultaStock
         {
             [DataMember(Order = 1)]
             public string Serie { get; set; }
@@ -2241,16 +2241,19 @@ namespace API_GP_LOGISTICO.Controllers.util
             public decimal StockTotal { get; set; }
 
             [DataMember(Order = 99)]
-            public List<API_RESPONSE_TYPE_15_SALDOS> StockEstados = new List<API_RESPONSE_TYPE_15_SALDOS>();
+            public List<API_RESPONSE_TYPE_15_SALDOS_ConsultaStock> StockEstados = new List<API_RESPONSE_TYPE_15_SALDOS_ConsultaStock>();
         }
 
         [DataContract]
-        public class API_RESPONSE_TYPE_15_SALDOS
+        public class API_RESPONSE_TYPE_15_SALDOS_ConsultaStock
         {
             [DataMember(Order = 1)]
-            public string Estado { get; set; }
+            public int CodigoEstado { get; set; }
 
             [DataMember(Order = 2)]
+            public string Estado { get; set; }
+
+            [DataMember(Order = 3)]
             public decimal StockEstado { get; set; }
         }
 

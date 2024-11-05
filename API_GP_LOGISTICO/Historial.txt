@@ -1,3 +1,5 @@
-﻿09-10-2024
+﻿05-11-2024
+	CONSTOCK/LISTAR	: se agrega estado del producto (campo CodigoEstado)
 
+09-10-2024
 	Se modifican todos loe metodos que generen nombre de archivo con el formato yyyyMMddHHmmss
