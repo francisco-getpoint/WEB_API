@@ -41,6 +41,7 @@ namespace API_GP_LOGISTICO.Controllers.util
         }
         #endregion
 
+        //JSON de entrada -----
         #region REQUESTS MODELS
         public class API_REQUEST_TYPE_1
         {
@@ -1051,7 +1052,7 @@ namespace API_GP_LOGISTICO.Controllers.util
             public List<API_REQUEST_TYPE_38_DETALLES> Items { get; set; }
         }
 
-        //define estructura de items de la Solicitus ASN
+        //define estructura de items de la Solicitud ASN
         [DataContract]
         public class API_REQUEST_TYPE_38_DETALLES
         {
@@ -1797,8 +1798,95 @@ namespace API_GP_LOGISTICO.Controllers.util
             public string reference2 { get; set; } //NumeroReferencia: Identificador Pedido de California,
         }
 
+        //JSON Actualiza Item Solicitud Recepcion - Cabecera
+        [DataContract]
+        public class API_REQUEST_TYPE_58_ActualizaItemSolicitudRecepcionCAB
+        {
+            [DataMember(Order = 1)]
+            public int Empid { get; set; }
+
+            [DataMember(Order = 2)]
+            public string TipoReferencia { get; set; }
+
+            [DataMember(Order = 3)]
+            public string NumeroReferencia { get; set; }
+
+            [DataMember(Order = 4)]
+            public int SDR { get; set; }
+
+            [DataMember(Order = 99)]
+            public List<API_REQUEST_TYPE_58_ActualizaItemSolicitudRecepcionDET> Items { get; set; }
+        }
+
+        //JSON Actualiza Item Solicitud Recepcion - Cabecera
+        [DataContract]
+        public class API_REQUEST_TYPE_58_ActualizaItemSolicitudRecepcionDET
+        {
+            [DataMember(Order = 1)]
+            public string CodigoArticulo { get; set; }
+
+            [DataMember(Order = 2)]
+            public string UnidadCompra { get; set; }
+
+            [DataMember(Order = 3)]
+            public decimal Cantidad { get; set; }
+
+            [DataMember(Order = 4)]
+            public int ItemReferencia { get; set; }
+
+            [DataMember(Order = 5)]
+            public decimal CostoUnitario { get; set; }
+
+            [DataMember(Order = 6)]
+            public decimal KilosTotales { get; set; }
+
+            [DataMember(Order = 7)]
+            public string NumeroSerie { get; set; }
+
+            [DataMember(Order = 8)]
+            public string FechaVectoLote { get; set; }
+
+            [DataMember(Order = 9)]
+            public int Estado { get; set; }
+
+            [DataMember(Order = 10)]
+            public decimal PorcQA { get; set; }
+
+            [DataMember(Order = 11)]
+            public string Dato1 { get; set; }
+
+            [DataMember(Order = 12)]
+            public string Dato2 { get; set; }
+
+            [DataMember(Order = 13)]
+            public string Dato3 { get; set; }
+
+            [DataMember(Order = 14)]
+            public decimal Valor1 { get; set; }
+
+            [DataMember(Order = 15)]
+            public decimal Valor2 { get; set; }
+
+            [DataMember(Order = 16)]
+            public decimal Valor3 { get; set; }
+
+            [DataMember(Order = 17)]
+            public string Fecha1 { get; set; }
+
+            [DataMember(Order = 18)]
+            public string Fecha2 { get; set; }
+
+            [DataMember(Order = 19)]
+            public string Fecha3 { get; set; }
+
+            [DataMember(Order = 20)]
+            public int Sucursal { get; set; }
+        }
+
+
         #endregion
 
+        //JSON de respuesta -----
         #region RESPONSE MODELS       
 
         [DataContract]
