@@ -733,6 +733,7 @@
           <Parameter Name="CodigoArticulo" Type="varchar(max)" Mode="In" />
           <Parameter Name="Usuario" Type="varchar(max)" Mode="In" />
           <Parameter Name="CodigoBodega" Type="int" Mode="In" />
+          <Parameter Name="DetalleBodega" Type="int" Mode="In" />
         </Function>
         <Function Name="sp_sel_API_Consulta_Stock_Bodega" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
           <Parameter Name="EmpId" Type="int" Mode="In" />
@@ -1732,6 +1733,7 @@
             <Parameter Name="CodigoArticulo" Mode="In" Type="String" />
             <Parameter Name="Usuario" Mode="In" Type="String" />
             <Parameter Name="CodigoBodega" Mode="In" Type="Int32" />
+            <Parameter Name="DetalleBodega" Mode="In" Type="Int32" />
           </FunctionImport>
         </EntityContainer>
         <ComplexType Name="sp_in_API_PickUp_Result">
@@ -2310,12 +2312,13 @@
           <Property Type="String" Name="FechaVecto" Nullable="true" MaxLength="10" />
           <Property Type="Int32" Name="Count" Nullable="true" />
           <Property Type="String" Name="Resultado" Nullable="true" />
-          <Property Type="String" Name="Descripcion" Nullable="true" MaxLength="50" />
+          <Property Type="String" Name="Descripcion" Nullable="false" MaxLength="1" />
           <Property Type="Decimal" Name="StockEstado" Nullable="true" Precision="19" />
           <Property Type="String" Name="GlosaEstado" Nullable="true" MaxLength="50" />
           <Property Type="Int32" Name="CodigoEstado" Nullable="true" />
           <Property Type="Decimal" Name="Stock" Nullable="false" Precision="19" />
           <Property Type="Decimal" Name="StockTotal" Nullable="false" Precision="19" />
+          <Property Type="Int32" Name="CodigoBodega" Nullable="true" />
         </ComplexType>
       </Schema>
     </edmx:ConceptualModels>
@@ -3141,6 +3144,7 @@
                 <ScalarProperty Name="CodigoEstado" ColumnName="CodigoEstado" />
                 <ScalarProperty Name="Stock" ColumnName="Stock" />
                 <ScalarProperty Name="StockTotal" ColumnName="StockTotal" />
+                <ScalarProperty Name="CodigoBodega" ColumnName="CodigoBodega" />
               </ComplexTypeMapping>
             </ResultMapping>
           </FunctionImportMapping>

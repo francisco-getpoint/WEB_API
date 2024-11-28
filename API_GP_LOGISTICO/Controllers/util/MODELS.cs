@@ -251,6 +251,7 @@ namespace API_GP_LOGISTICO.Controllers.util
             public string max_delivery_time { get; set; }
         }
 
+        //estructura consulta STOCK
         [DataContract]
         public class API_REQUEST_TYPE_15_ConsultaStock
         {
@@ -269,11 +270,15 @@ namespace API_GP_LOGISTICO.Controllers.util
             [DataMember(Order = 5)]
             public int CodigoBodega { get; set; }
 
+            [DataMember(Order = 6)]
+            public int DetalleBodega { get; set; }
+
             [DataMember(Order = 99)]
 
             public List<API_REQUEST_TYPE_15_ConsultaStock_Det> Articulos = new List<API_REQUEST_TYPE_15_ConsultaStock_Det>();
         }
 
+        //estructura consulta STOCK Detalle 
         [DataContract]
         public class API_REQUEST_TYPE_15_ConsultaStock_Det
         {
@@ -2288,6 +2293,7 @@ namespace API_GP_LOGISTICO.Controllers.util
             public List<dynamic> Detalle = new List<dynamic>();
         }
 
+        //respuesta Consulta Stock normal -----
         [DataContract]
         public class API_RESPONSE_TYPE_15_ConsultaStock
         {
@@ -2314,13 +2320,13 @@ namespace API_GP_LOGISTICO.Controllers.util
         public class API_RESPONSE_TYPE_15_DET_ConsultaStock
         {
             [DataMember(Order = 1)]
-            public string Serie { get; set; }
+            public string CodigoArticulo { get; set; }
 
             [DataMember(Order = 2)]
-            public string FechaVencimiento { get; set; }
+            public string Serie { get; set; }
 
             [DataMember(Order = 3)]
-            public string CodigoArticulo { get; set; }
+            public string FechaVencimiento { get; set; }
 
             [DataMember(Order = 4)]
             public decimal Stock { get; set; }
@@ -2343,6 +2349,67 @@ namespace API_GP_LOGISTICO.Controllers.util
 
             [DataMember(Order = 3)]
             public decimal StockEstado { get; set; }
+        }
+
+        //respuesta Consulta Stock con Detalle Bodega -----
+        [DataContract]
+        public class API_RESPONSE_TYPE_15_ConsultaStock_DetalleBodega
+        {
+            [DataMember(Order = 1)]
+            public long count { get; set; }
+
+            [DataMember(Order = 2)]
+            public string resultado { get; set; }
+
+            [DataMember(Order = 3)]
+            public string resultado_descripcion { get; set; }
+
+            [DataMember(Order = 4)]
+            public long resultado_codigo { get; set; }
+
+            [DataMember(Order = 5)]
+            public string descripcion { get; set; }
+
+            [DataMember(Order = 99)]
+            public List<API_RESPONSE_TYPE_15_DET_ConsultaStock_DetalleBodega> items = new List<API_RESPONSE_TYPE_15_DET_ConsultaStock_DetalleBodega>();
+        }
+
+        [DataContract]
+        public class API_RESPONSE_TYPE_15_DET_ConsultaStock_DetalleBodega
+        {
+            [DataMember(Order = 1)]
+            public string CodigoArticulo { get; set; }
+
+            [DataMember(Order = 2)]
+            public string Serie { get; set; }
+
+            [DataMember(Order = 3)]
+            public string FechaVencimiento { get; set; }
+
+            [DataMember(Order = 4)]
+            public decimal Stock { get; set; }
+
+            [DataMember(Order = 5)]
+            public decimal StockTotal { get; set; }
+
+            [DataMember(Order = 99)]
+            public List<API_RESPONSE_TYPE_15_SALDOS_ConsultaStock_DetalleBodega> StockEstados = new List<API_RESPONSE_TYPE_15_SALDOS_ConsultaStock_DetalleBodega>();
+        }
+
+        [DataContract]
+        public class API_RESPONSE_TYPE_15_SALDOS_ConsultaStock_DetalleBodega
+        {
+            [DataMember(Order = 1)]
+            public int CodigoEstado { get; set; }
+
+            [DataMember(Order = 2)]
+            public string Estado { get; set; }
+
+            [DataMember(Order = 3)]
+            public decimal StockEstado { get; set; }
+
+            [DataMember(Order = 4)]
+            public int CodigoBodega { get; set; }
         }
 
         [DataContract]

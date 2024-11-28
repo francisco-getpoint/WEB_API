@@ -2745,6 +2745,8 @@ namespace API_GP_LOGISTICO.Controllers
         public IHttpActionResult recurso15(API_REQUEST_TYPE_15_ConsultaStock REQUEST)
         {
             API_RESPONSE_TYPE_15_ConsultaStock RESPONSE = new API_RESPONSE_TYPE_15_ConsultaStock();
+            API_RESPONSE_TYPE_15_ConsultaStock_DetalleBodega RESPONSE_DetalleBodega = new API_RESPONSE_TYPE_15_ConsultaStock_DetalleBodega();
+            
             ERROR = new API_RESPONSE_ERRORS();
 
             string USERNAME = "";
@@ -2832,9 +2834,6 @@ namespace API_GP_LOGISTICO.Controllers
 
             #region PROCESO
             STATUS_CODE = HttpStatusCode.OK;
-            RESPONSE.resultado = "OK";
-            RESPONSE.resultado_descripcion = "";
-            RESPONSE.resultado_codigo = 0;
 
             string CodigoArticuloFiltro = "";
 
@@ -2872,7 +2871,8 @@ namespace API_GP_LOGISTICO.Controllers
                                                                                              REQUEST.TipoProducto,
                                                                                              CodigoArticuloFiltro.Trim(),
                                                                                              USERNAME,
-                                                                                             REQUEST.CodigoBodega).ToList();
+                                                                                             REQUEST.CodigoBodega,
+                                                                                             REQUEST.DetalleBodega).ToList();
             foreach (var item in STOCKS) 
             { 
                 HELPERS.TrimModelProperties(typeof(sp_sel_API_Consulta_Stock_Result), item); 
@@ -2896,68 +2896,139 @@ namespace API_GP_LOGISTICO.Controllers
             //Si retorna resultados carga JSON de retorno -----
             if (STOCKS.Count > 0)
             {
-                RESPONSE.count = STOCKS.Count;
-                RESPONSE.resultado = "OK";
-                RESPONSE.resultado_descripcion = STOCKS[0].Descripcion;
-                RESPONSE.resultado_codigo = 0;
-                RESPONSE.descripcion = "";
-
-                string NumeroSerie = "";
-                string FechaVecto = "";
-                string CodigoArticulo = "";
-                string GlosaEstado = "";
-
-                API_RESPONSE_TYPE_15_DET_ConsultaStock RESPONSE_STOCK = new API_RESPONSE_TYPE_15_DET_ConsultaStock();
-                API_RESPONSE_TYPE_15_SALDOS_ConsultaStock RESPONSE_SALDOS = new API_RESPONSE_TYPE_15_SALDOS_ConsultaStock();
-
-                foreach (var Stock in STOCKS)
+                //SIN DETALLE BODEGA
+                if (REQUEST.DetalleBodega == 0)
                 {
-                    if ((Stock.NumeroSerie != NumeroSerie) || (Stock.FechaVecto != FechaVecto) || (Stock.CodigoArticulo != CodigoArticulo))
+                    RESPONSE.count = STOCKS.Count;
+                    RESPONSE.resultado = "OK";
+                    RESPONSE.resultado_descripcion = STOCKS[0].Descripcion;
+                    RESPONSE.resultado_codigo = 0;
+                    RESPONSE.descripcion = "";
+
+                    string NumeroSerie = "";
+                    string FechaVecto = "";
+                    string CodigoArticulo = "";
+                    string GlosaEstado = "";
+
+                    API_RESPONSE_TYPE_15_DET_ConsultaStock RESPONSE_STOCK = new API_RESPONSE_TYPE_15_DET_ConsultaStock();
+                    API_RESPONSE_TYPE_15_SALDOS_ConsultaStock RESPONSE_SALDOS = new API_RESPONSE_TYPE_15_SALDOS_ConsultaStock();
+
+                    foreach (var Stock in STOCKS)
                     {
-                        if (CodigoArticulo.Trim() != "")
+                        if ((Stock.NumeroSerie != NumeroSerie) || (Stock.FechaVecto != FechaVecto) || (Stock.CodigoArticulo != CodigoArticulo))
                         {
-                            RESPONSE.items.Add(RESPONSE_STOCK);
+                            if (CodigoArticulo.Trim() != "")
+                            {
+                                RESPONSE.items.Add(RESPONSE_STOCK);
+                            }
+
+                            //Inicializa variable de Item -------------
+                            RESPONSE_STOCK = new API_RESPONSE_TYPE_15_DET_ConsultaStock();
+
+                            RESPONSE_STOCK.Serie = Stock.NumeroSerie;
+                            RESPONSE_STOCK.FechaVencimiento = Stock.FechaVecto;
+                            RESPONSE_STOCK.CodigoArticulo = Stock.CodigoArticulo;
+                            RESPONSE_STOCK.Stock = decimal.Parse(Stock.Stock.ToString());
+                            RESPONSE_STOCK.StockTotal = decimal.Parse(Stock.StockTotal.ToString());
+
+                            NumeroSerie = Stock.NumeroSerie;
+                            FechaVecto = Stock.FechaVecto;
+                            CodigoArticulo = Stock.CodigoArticulo;
+                            GlosaEstado = "";
                         }
 
-                        //Inicializa variable de Item -------------
-                        RESPONSE_STOCK = new API_RESPONSE_TYPE_15_DET_ConsultaStock();
+                        if (Stock.GlosaEstado != GlosaEstado)
+                        {
+                            RESPONSE_SALDOS = new API_RESPONSE_TYPE_15_SALDOS_ConsultaStock();
 
-                        RESPONSE_STOCK.Serie = Stock.NumeroSerie;
-                        RESPONSE_STOCK.FechaVencimiento = Stock.FechaVecto;
-                        RESPONSE_STOCK.CodigoArticulo = Stock.CodigoArticulo;
-                        RESPONSE_STOCK.Stock = decimal.Parse(Stock.Stock.ToString());
-                        RESPONSE_STOCK.StockTotal = decimal.Parse(Stock.StockTotal.ToString());
+                            RESPONSE_SALDOS.CodigoEstado = int.Parse(Stock.CodigoEstado.ToString());
+                            RESPONSE_SALDOS.Estado = Stock.GlosaEstado;
+                            RESPONSE_SALDOS.StockEstado = decimal.Parse(Stock.StockEstado.ToString());
 
-                        NumeroSerie = Stock.NumeroSerie;
-                        FechaVecto = Stock.FechaVecto;
-                        CodigoArticulo = Stock.CodigoArticulo;
-                        GlosaEstado = "";
+                            //Agrega nueva UM al JSON del articulo
+                            RESPONSE_STOCK.StockEstados.Add(RESPONSE_SALDOS);
+
+                            GlosaEstado = Stock.GlosaEstado;
+                        }
                     }
 
-                    if (Stock.GlosaEstado != GlosaEstado)
-                    {
-                        RESPONSE_SALDOS = new API_RESPONSE_TYPE_15_SALDOS_ConsultaStock();
-
-                        RESPONSE_SALDOS.CodigoEstado = int.Parse(Stock.CodigoEstado.ToString());
-                        RESPONSE_SALDOS.Estado = Stock.GlosaEstado;
-                        RESPONSE_SALDOS.StockEstado = decimal.Parse(Stock.StockEstado.ToString());
-
-                        //Agrega nueva UM al JSON del articulo
-                        RESPONSE_STOCK.StockEstados.Add(RESPONSE_SALDOS);
-
-                        GlosaEstado = Stock.GlosaEstado;
-                    }
+                    //Agrega ultimo item que estaba procesando al JSON
+                    RESPONSE.items.Add(RESPONSE_STOCK);
                 }
+                else
+                {
+                    RESPONSE_DetalleBodega.count = STOCKS.Count;
+                    RESPONSE_DetalleBodega.resultado = "OK";
+                    RESPONSE_DetalleBodega.resultado_descripcion = STOCKS[0].Descripcion;
+                    RESPONSE_DetalleBodega.resultado_codigo = 0;
+                    RESPONSE_DetalleBodega.descripcion = "";
 
-                //Agrega ultimo item que estaba procesando al JSON
-                RESPONSE.items.Add(RESPONSE_STOCK);
+                    string NumeroSerie = "";
+                    string FechaVecto = "";
+                    string CodigoArticulo = "";
+                    string GlosaEstado = "";
+
+                    API_RESPONSE_TYPE_15_DET_ConsultaStock_DetalleBodega RESPONSE_STOCK_DetalleBodega = new API_RESPONSE_TYPE_15_DET_ConsultaStock_DetalleBodega();
+                    API_RESPONSE_TYPE_15_SALDOS_ConsultaStock_DetalleBodega RESPONSE_SALDOS_DetalleBodega = new API_RESPONSE_TYPE_15_SALDOS_ConsultaStock_DetalleBodega();
+
+                    foreach (var Stock in STOCKS)
+                    {
+                        if ((Stock.NumeroSerie != NumeroSerie) || (Stock.FechaVecto != FechaVecto) || (Stock.CodigoArticulo != CodigoArticulo))
+                        {
+                            if (CodigoArticulo.Trim() != "")
+                            {
+                                RESPONSE_DetalleBodega.items.Add(RESPONSE_STOCK_DetalleBodega);
+                            }
+
+                            //Inicializa variable de Item -------------
+                            RESPONSE_STOCK_DetalleBodega = new API_RESPONSE_TYPE_15_DET_ConsultaStock_DetalleBodega();
+
+                            RESPONSE_STOCK_DetalleBodega.Serie = Stock.NumeroSerie;
+                            RESPONSE_STOCK_DetalleBodega.FechaVencimiento = Stock.FechaVecto;
+                            RESPONSE_STOCK_DetalleBodega.CodigoArticulo = Stock.CodigoArticulo;
+                            RESPONSE_STOCK_DetalleBodega.Stock = decimal.Parse(Stock.Stock.ToString());
+                            RESPONSE_STOCK_DetalleBodega.StockTotal = decimal.Parse(Stock.StockTotal.ToString());
+
+                            NumeroSerie = Stock.NumeroSerie;
+                            FechaVecto = Stock.FechaVecto;
+                            CodigoArticulo = Stock.CodigoArticulo;
+                            GlosaEstado = "";
+                        }
+
+                        if (Stock.GlosaEstado != GlosaEstado)
+                        {
+                            RESPONSE_SALDOS_DetalleBodega = new API_RESPONSE_TYPE_15_SALDOS_ConsultaStock_DetalleBodega();
+
+                            RESPONSE_SALDOS_DetalleBodega.CodigoEstado = int.Parse(Stock.CodigoEstado.ToString());
+                            RESPONSE_SALDOS_DetalleBodega.Estado = Stock.GlosaEstado;
+                            RESPONSE_SALDOS_DetalleBodega.StockEstado = decimal.Parse(Stock.StockEstado.ToString());
+                            RESPONSE_SALDOS_DetalleBodega.CodigoBodega = int.Parse(Stock.CodigoBodega.ToString());
+
+                            //Agrega nueva UM al JSON del articulo
+                            RESPONSE_STOCK_DetalleBodega.StockEstados.Add(RESPONSE_SALDOS_DetalleBodega);
+
+                            GlosaEstado = Stock.GlosaEstado;
+                        }
+                    }
+
+                    //Agrega ultimo item que estaba procesando al JSON
+                    RESPONSE_DetalleBodega.items.Add(RESPONSE_STOCK_DetalleBodega);
+                }
             }
             else 
             { 
                 RESPONSE.count = 0; 
             }
 
-            return new HttpActionResult(Request, (ConfigurationManager.AppSettings["InformaStatusAPI"].ToString() == "SI" ? STATUS_CODE : HttpStatusCode.OK), RESPONSE);
+            if (REQUEST.DetalleBodega == 0)
+            {
+                return new HttpActionResult(Request, (ConfigurationManager.AppSettings["InformaStatusAPI"].ToString() == "SI" ? STATUS_CODE : HttpStatusCode.OK), RESPONSE);
+            }
+            else
+            {
+                return new HttpActionResult(Request, (ConfigurationManager.AppSettings["InformaStatusAPI"].ToString() == "SI" ? STATUS_CODE : HttpStatusCode.OK), RESPONSE_DetalleBodega);
+            }
+                
             #endregion
         }
         #endregion
@@ -14248,7 +14319,7 @@ namespace API_GP_LOGISTICO.Controllers
             {
                 if (REQUEST.TipoReferencia == null || REQUEST.TipoReferencia == "") { throw new Exception("Debe informar Tipo Referencia"); } //requerido
                 if (REQUEST.NumeroReferencia == null || REQUEST.NumeroReferencia == "") { throw new Exception("Debe informar Número Referencia"); } //requerido
-                //REQUEST.SDR //opcional numerico, toma cero
+                if (REQUEST.SDR <= 0) { throw new Exception("Debe informar Estado > 0 "); } //requerido
 
                 //Valida que el json tenga items ---
                 if (REQUEST.Items == null) { throw new Exception("Debe informar Items"); } //requerido
@@ -14260,25 +14331,23 @@ namespace API_GP_LOGISTICO.Controllers
                     if (item.CodigoArticulo == null || item.CodigoArticulo == "") { throw new Exception("Debe informar Codigo Articulo"); } //requerido
                     if (item.UnidadCompra == null || item.UnidadCompra == "") { throw new Exception("Debe informar Unidad Compra"); } //requerido
                     if (item.Cantidad <= 0) { throw new Exception("Debe informar Cantidad > 0"); } //requerido
+                    //item.ItemReferencia //opcional numerico, toma cero
+                    //item.CostoUnitario //opcional numerico, toma cero
+                    //item.KilosTotales //opcional numerico, toma cero
                     item.NumeroSerie = (item.NumeroSerie == null ? "" : item.NumeroSerie); //opcional
                     item.FechaVectoLote = (item.FechaVectoLote == null ? "" : item.FechaVectoLote); //opcional
                     if (item.Estado <= 0) { throw new Exception("Debe informar Estado > 0 "); } //requerido
-
                     //item.PorcQA //opcional numerico, toma cero
-                    //item.SolDespIdCD //opcional numerico, toma cero
-                    //item.CantidadCD //opcional numerico, toma cero
-
                     item.Dato1 = (item.Dato1 == null ? "" : item.Dato1); //opcional
                     item.Dato2 = (item.Dato2 == null ? "" : item.Dato2); //opcional
                     item.Dato3 = (item.Dato3 == null ? "" : item.Dato3); //opcional
-
                     //decimal Valor1 //opcional numerico, toma cero
                     //decimal Valor2 //opcional numerico, toma cero
                     //decimal Valor3 //opcional numerico, toma cero
-
                     item.Fecha1 = (item.Fecha1 == null ? "" : item.Fecha1); //opcional                    
                     item.Fecha2 = (item.Fecha2 == null ? "" : item.Fecha2); //opcional
                     item.Fecha3 = (item.Fecha3 == null ? "" : item.Fecha3); //opcional
+                    //item.Sucursal //opcional numerico, toma cero
                 }
             }
             catch (Exception ex)

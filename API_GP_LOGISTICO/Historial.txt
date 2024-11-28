@@ -1,4 +1,7 @@
-﻿05-11-2024
+﻿20-11-2024
+	CONSTOCK/LISTAR	: se agrega parametro DetalleBodega (campo DetalleBodega en json de entrada)	
+
+05-11-2024
 	CONSTOCK/LISTAR	: se agrega estado del producto (campo CodigoEstado)
 
 09-10-2024

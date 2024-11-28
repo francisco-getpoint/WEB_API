@@ -3256,7 +3256,7 @@ namespace API_LIB.Model.GET_POINT.GP_ENT
             return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<sp_proc_API_TMPSolDespachoJson_Result>("sp_proc_API_TMPSolDespachoJson", archivoParameter, usuarioDigParameter);
         }
     
-        public virtual ObjectResult<sp_sel_API_Consulta_Stock_Result> sp_sel_API_Consulta_Stock(Nullable<int> empId, Nullable<int> lineaProducto, string tipoProducto, string codigoArticulo, string usuario, Nullable<int> codigoBodega)
+        public virtual ObjectResult<sp_sel_API_Consulta_Stock_Result> sp_sel_API_Consulta_Stock(Nullable<int> empId, Nullable<int> lineaProducto, string tipoProducto, string codigoArticulo, string usuario, Nullable<int> codigoBodega, Nullable<int> detalleBodega)
         {
             var empIdParameter = empId.HasValue ?
                 new ObjectParameter("EmpId", empId) :
@@ -3282,7 +3282,11 @@ namespace API_LIB.Model.GET_POINT.GP_ENT
                 new ObjectParameter("CodigoBodega", codigoBodega) :
                 new ObjectParameter("CodigoBodega", typeof(int));
     
-            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<sp_sel_API_Consulta_Stock_Result>("sp_sel_API_Consulta_Stock", empIdParameter, lineaProductoParameter, tipoProductoParameter, codigoArticuloParameter, usuarioParameter, codigoBodegaParameter);
+            var detalleBodegaParameter = detalleBodega.HasValue ?
+                new ObjectParameter("DetalleBodega", detalleBodega) :
+                new ObjectParameter("DetalleBodega", typeof(int));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<sp_sel_API_Consulta_Stock_Result>("sp_sel_API_Consulta_Stock", empIdParameter, lineaProductoParameter, tipoProductoParameter, codigoArticuloParameter, usuarioParameter, codigoBodegaParameter, detalleBodegaParameter);
         }
     }
 }

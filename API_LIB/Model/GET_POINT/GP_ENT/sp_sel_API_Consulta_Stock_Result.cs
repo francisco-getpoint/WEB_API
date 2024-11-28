@@ -24,5 +24,6 @@ namespace API_LIB.Model.GET_POINT.GP_ENT
         public Nullable<int> CodigoEstado { get; set; }
         public decimal Stock { get; set; }
         public decimal StockTotal { get; set; }
+        public Nullable<int> CodigoBodega { get; set; }
     }
 }
