@@ -4918,7 +4918,7 @@ namespace API_GP_LOGISTICO.Controllers
         }
         #endregion
 
-        //Trae listado de Confirmaciones pendientes de enviar en tabla L_IntegraConfirmaciones (Estado 1) ==========
+        //Trae listado de Confirmaciones pendientes de enviar en tabla L_IntegraConfirmaciones (Estado 1) =====
         #region INTEGRACIÓN CONFIRMACIONES JSON (27)
         [HttpPost]
         [HttpGet]
@@ -5510,7 +5510,7 @@ namespace API_GP_LOGISTICO.Controllers
         }
         #endregion
 
-        //recurso 30 CREAR PRODUCTO JSON (30) ======================================================================
+        //recurso 30 CREAR PRODUCTO JSON (30) =================================================================
         #region CREAR PRODUCTO JSON (30)
         [HttpPost]
         [Route("PRODUCTO/CREARJSON")]
@@ -10097,7 +10097,7 @@ namespace API_GP_LOGISTICO.Controllers
         }
         #endregion
 
-        //recurso 44 Consulta Bulto Roboris -----------------
+        //recurso 44 Consulta Bulto Roboris ----------
         #region Consulta Bulto Roboris (44)
         [HttpGet]
         [HttpPut]
@@ -14594,7 +14594,6 @@ namespace API_GP_LOGISTICO.Controllers
             #endregion
         }
         #endregion
-
 
         //Inserta en tabla L_Integraciones, los parametros Texto2 al Texto100 son opcionales ---------------------------------------------------------
         //--------------------------------------------------------------------------------------------------------------------------------------------
