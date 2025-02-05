@@ -814,50 +814,14 @@ namespace API_GP_LOGISTICO.Controllers.util
             [DataMember(Order = 31)]
             public string Fecha3 { get; set; }
 
-            [DataMember(Order = 98)]
+            [DataMember(Order = 97)]
             public List<API_REQUEST_TYPE_30_DETALLES_UM> UnidadMedida { get; set; }
 
-            [DataMember(Order = 99)]
+            [DataMember(Order = 98)]
             public List<API_REQUEST_TYPE_30_DETALLES_KIT> Kit = new List<API_REQUEST_TYPE_30_DETALLES_KIT>();
 
-            //campos L_Articulos
-            //CodigoDig int	4
-            //Version char	20
-            //Origen char	20
-            //Rotacion char	10
-            //CodigoFabrica char	20
-            //Marca char	20
-            //UsaSerie tinyint	1
-            //UsaLote tinyint	1
-            //EAN13 char	20
-            //DUN14 char	20
-            //FotoChica varchar	100
-            //FotoGrande varchar	100
-            //Foto3 varchar	100
-            //Foto4 varchar	100
-            //FechaCreacion datetime	8
-            //Usuario char	15
-            //FechaAct datetime	8
-            //UsuarioAct char	15
-            //FechaAprob datetime	8
-            //UsuarioAprob char	15
-            //Fecha1 datetime	8
-            //Fecha2 datetime	8
-            //Fecha3 datetime	8
-            //Dato1 varchar	250
-            //Dato2 varchar	250
-            //Dato3 varchar	250
-            //Valor1 money	8
-            //Valor2 money	8
-            //Valor3 money	8
-            //UnidadMedidaCompra char	10
-            //UnidadMedidaVenta char	10
-            //CodigoProveedor char	20
-            //BodegaDefecto int	4
-            //UbicacionDefecto char	6
-            //RegistroSanitario char	20
-            //IndicadorCertif tinyint	1
-            //CodigoBarra char	50
+            [DataMember(Order = 99)]
+            public List<API_REQUEST_TYPE_30_DETALLES_CATEGORIA> Categoria = new List<API_REQUEST_TYPE_30_DETALLES_CATEGORIA>();
         }
 
         [DataContract]
@@ -908,6 +872,16 @@ namespace API_GP_LOGISTICO.Controllers.util
 
             [DataMember(Order = 2)]
             public decimal CantidadRequerida { get; set; }
+        }
+
+        [DataContract]
+        public class API_REQUEST_TYPE_30_DETALLES_CATEGORIA
+        {
+            [DataMember(Order = 1)]
+            public string CodigoCategoria { get; set; }
+
+            [DataMember(Order = 2)]
+            public string CodigoDetCat { get; set; }
         }
         public class API_REQUEST_TYPE_31
         {

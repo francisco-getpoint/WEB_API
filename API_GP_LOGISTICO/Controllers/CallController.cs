@@ -5719,7 +5719,7 @@ namespace API_GP_LOGISTICO.Controllers
                         //UnidadMedida.TiempoDesp //opcional
                     }
 
-                    //Valida datos de Items json, si trae detalles de KIT los campos son obligatorios
+                    //Valida datos de KIT, si trae detalles de KIT los campos son obligatorios
                     if (Articulo.Kit != null)
                     {
                         foreach (var Kit1 in Articulo.Kit)
@@ -5728,6 +5728,19 @@ namespace API_GP_LOGISTICO.Controllers
                             if (Kit1.CantidadRequerida <= 0) { throw new Exception("Debe informar Cantidad Item Kit " + Kit1.CodigoArticulo.ToString().Trim() + ", requerido debe ser > 0"); } //requerido
                         }
                     }
+
+                    //Valida datos de CATEGORIAS, si trae detalles de CATEGORIAS los campos son obligatorios
+                    if (Articulo.Categoria != null)
+                    {
+                        foreach (var Categoria1 in Articulo.Categoria)
+                        {
+                            if (Categoria1.CodigoCategoria == null || Categoria1.CodigoCategoria == "") { throw new Exception("Debe informar Codigo Categoria"); } //requerido
+                            if (Categoria1.CodigoDetCat == null || Categoria1.CodigoDetCat == "") { throw new Exception("Debe informar Codigo Detalle Categoria"); } //requerido
+                        }
+                    }
+
+
+                    //API_REQUEST_TYPE_30_DETALLES_CATEGORIA
                 }
             }
             catch (Exception ex)
@@ -5794,6 +5807,7 @@ namespace API_GP_LOGISTICO.Controllers
             int CantidadOK = 0;
             int CantidadERROR = 0;
             string Item_Kit = "";
+            string Item_Categoria = "";
             string SeparadorCampo = "¬"; //alt 170
             string SeparadorLinea = "«"; //alt 174
 
@@ -5808,7 +5822,7 @@ namespace API_GP_LOGISTICO.Controllers
 
                 Item_Kit = "";
 
-                //si tiene detalle de crossdocking lo envia
+                //si tiene detalle de Kit lo concatena
                 if (Articulo.Kit != null)
                 {
                     foreach (var Kit2 in Articulo.Kit.ToList())
@@ -5822,6 +5836,26 @@ namespace API_GP_LOGISTICO.Controllers
                         {
                             Item_Kit = Item_Kit.Trim() + SeparadorLinea + Kit2.CodigoArticulo.Trim() + SeparadorCampo +
                                                                           Kit2.CantidadRequerida.ToString();
+                        }
+                    }
+                }
+
+                Item_Categoria = "";
+
+                //si tiene detalle de Categoria lo concatena
+                if (Articulo.Categoria != null)
+                {
+                    foreach (var Categoria2 in Articulo.Categoria.ToList())
+                    {
+                        if (Item_Categoria.Trim() == "") //Si es el primer item de la categoria
+                        {
+                            Item_Categoria = Categoria2.CodigoCategoria.Trim() + SeparadorCampo +
+                                             Categoria2.CodigoDetCat.ToString();
+                        }
+                        else
+                        {
+                            Item_Categoria = Item_Categoria.Trim() + SeparadorLinea + Categoria2.CodigoCategoria.Trim() + SeparadorCampo +
+                                                                                      Categoria2.CodigoDetCat.ToString();
                         }
                     }
                 }
@@ -5862,7 +5896,8 @@ namespace API_GP_LOGISTICO.Controllers
                                                                   Fecha2,
                                                                   Fecha3,
                                                                   Articulo.Origen,
-                                                                  Item_Kit
+                                                                  Item_Kit,
+                                                                  Item_Categoria
                                                                   ).ToList();
                 }
                 catch (Exception ex)
