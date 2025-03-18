@@ -1,4 +1,7 @@
-﻿25-11-2024
+﻿03-03-2025
+	ValidaCampoFecha (funcion): se agrega validacion de fecha, debe ser mayor al 01-01-1900. Visual estudio soporta fechas desde el 1/1/1 pero SQL Server no
+
+25-11-2024
 	SOLRECEP/ACTUALIZAITEM : se crea este nuevo metodo
 
 20-11-2024

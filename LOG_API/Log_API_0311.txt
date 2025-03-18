@@ -1,0 +1,5 @@
+[SOLDESP/CREARJSON2]. Fecha: 11/03/2025 14:08. Estructura JSON recibida
+[SOLDESP/CREARJSON2]. Fecha: 11/03/2025 14:08. ERROR: El TOKEN o SECRET especificado no son validos
+[SOLDESP/CREARJSON2]. Fecha: 11/03/2025 14:09. Estructura JSON recibida
+[SOLDESP/CREARJSON2]. Fecha: 11/03/2025 14:12. ERROR: FORMATO INCORRECTO EN FechaProceso. DEBE SER FORMATO dd-MM-yyyy (por ejemplo: 31-12-2028)
+[SOLDESP/CREARJSON2]. Fecha: 11/03/2025 14:17. Estructura JSON recibida

@@ -11033,9 +11033,16 @@ namespace API_GP_LOGISTICO.Controllers
                 //Valida datos cabecera json ----
 
                 //REQUEST.Empid // se valida con el usuario
-                if (REQUEST.RecepcionId <= 0) { throw new Exception("Debe informar una Recepcion > 0"); } //requerido
+                //if (REQUEST.RecepcionId <= 0) { throw new Exception("Debe informar una Recepcion > 0"); } //requerido
+
                 REQUEST.TipoReferencia = (REQUEST.TipoReferencia == null ? "" : REQUEST.TipoReferencia); //opcional
                 REQUEST.NumeroReferencia = (REQUEST.NumeroReferencia == null ? "" : REQUEST.NumeroReferencia); //opcional
+
+                if (REQUEST.RecepcionId == 0 && (REQUEST.TipoReferencia == "" || REQUEST.NumeroReferencia == ""))
+                {
+                    throw new Exception("Debe informar id Recepcion o Tipo y Numero referencia");
+                }
+
                 if (REQUEST.Estado <= 0) { throw new Exception("Debe informar un Estado");    } //requerido
             }
             catch (Exception ex)
@@ -14060,7 +14067,7 @@ namespace API_GP_LOGISTICO.Controllers
                 REQUEST.TipoReferencia = (REQUEST.TipoReferencia == null ? "" : REQUEST.TipoReferencia); //opcional
                 REQUEST.NumeroReferencia = (REQUEST.NumeroReferencia == null ? "" : REQUEST.NumeroReferencia); //opcional
 
-                if (REQUEST.RecepcionId == 0 && REQUEST.TipoReferencia == "" && REQUEST.NumeroReferencia == "")
+                if (REQUEST.RecepcionId == 0 && (REQUEST.TipoReferencia == "" || REQUEST.NumeroReferencia == ""))
                 {
                     throw new Exception("Debe informar id Recepcion o Tipo y Numero referencia");
                 }
@@ -14808,18 +14815,29 @@ namespace API_GP_LOGISTICO.Controllers
         #region Funcion ValidaCampoFecha: Valida formato fecha, si es error gatilla un error excepcion con un mensaje para el usuario
         private DateTime ValidaCampoFecha(string Fecha, string NombreCampoMensaje)
         {
+            DateTime FechaConvertida;
+            DateTime FechaMinima = new DateTime(1900, 1, 1);
+
             try
             {
                 if (Fecha.Equals(""))
                 {
-                    return DateTime.ParseExact("01-01-1900", "dd-MM-yyyy", null);
+                    FechaConvertida = DateTime.ParseExact("01-01-1900", "dd-MM-yyyy", null);
                 }
                 else
                 {
-                    return DateTime.ParseExact(Fecha, "dd-MM-yyyy", null);
+                    FechaConvertida = DateTime.ParseExact(Fecha, "dd-MM-yyyy", null);
                 }
             }
             catch { throw new Exception("FORMATO INCORRECTO EN " + NombreCampoMensaje.Trim() + ". DEBE SER FORMATO dd-MM-yyyy (por ejemplo: 31-12-2028)"); }
+
+            //Si la fecha es menor al 01-01-1900 lanza error -----------
+            if (FechaConvertida < FechaMinima)
+            {
+                throw new Exception("FECHA INVALIDA: " + NombreCampoMensaje.Trim() + ". FECHA DEBE SER MAYOR AL 01-01-1900");
+            }
+
+            return FechaConvertida; //DateTime.ParseExact(Fecha, "dd-MM-yyyy", null);
         }
         #endregion
     }
