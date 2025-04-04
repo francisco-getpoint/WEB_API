@@ -4919,6 +4919,7 @@ namespace API_GP_LOGISTICO.Controllers
         #endregion
 
         //Trae listado de Confirmaciones pendientes de enviar en tabla L_IntegraConfirmaciones (Estado 1) =====
+        //Se carga con los procedimientos sp_sel_SDR_Confirmadas y sp_sel_SDD_Confirmadas
         #region INTEGRACIÓN CONFIRMACIONES JSON (27)
         [HttpPost]
         [HttpGet]
@@ -7543,6 +7544,7 @@ namespace API_GP_LOGISTICO.Controllers
         //Crea Solicitud ASN (38)
         #region CREA SOLICITUD ASN (38)
         [HttpPost]
+        [HttpGet]
         [Route("SOLASN/CREAR")]
         public IHttpActionResult recurso38([FromBody] API_REQUEST_TYPE_38 REQUEST)
         {
@@ -9079,13 +9081,14 @@ namespace API_GP_LOGISTICO.Controllers
 
             #endregion
         }
-        #endregion        
+        #endregion
 
         //recurso 41 Cambio de Estado Lote ----------------------
         //  MOTIVO = 1  --> Cambio estado, cambio lote
         //  MOTIVO = 2  --> SOLO FECHA (todas las sucursales)
         #region CAMBIO DE ESTADO LOTE (41) ***************
         [HttpPost]
+        [HttpGet]
         [Route("MOVIMIENTOS/CAMBIOESTADOLOTE")]
         public IHttpActionResult recurso41([FromBody] API_REQUEST_TYPE_41_CambioEstado REQUEST)
         {
@@ -10159,7 +10162,7 @@ namespace API_GP_LOGISTICO.Controllers
         }
         #endregion
 
-        //recurso 45 Creacion de Recetas --------
+        //recurso 45 Creacion de Recetas (Portland) --------
         #region Creacion de Recetas (45)
         [HttpPost]
         [Route("RECETA/CREARJSON")]
@@ -10627,7 +10630,7 @@ namespace API_GP_LOGISTICO.Controllers
         }
         #endregion
 
-        //recurso 46 Confirma Cierre de Inventario --------
+        //recurso 46 Confirma Cierre de Inventario (Portland) --------
         #region Confirma Cierre de Inventario (46)
         [HttpPost]
         [Route("INVENTARIO/CONFIRMACIERRE")]
@@ -13951,6 +13954,7 @@ namespace API_GP_LOGISTICO.Controllers
         //recurso 57 Cambio Estado Articulo Por RDM --------
         #region Cambio Estado Articulo Por RDM (57)
         [HttpPost]
+        [HttpGet]
         [Route("RECEPCION/CAMBIOESTADOARTRDM")]
         public IHttpActionResult recurso57([FromBody] API_REQUEST_TYPE_47_CambioEstadoRDM REQUEST)
         {
@@ -14250,6 +14254,7 @@ namespace API_GP_LOGISTICO.Controllers
         //recurso 58 Actualiza Item Solicitud Recepcion --------
         #region Actualiza Item Solicitud Recepcion (58)
         [HttpPost]
+        [HttpGet]
         [Route("SOLRECEP/ACTUALIZAITEM")]
         public IHttpActionResult recurso58([FromBody] API_REQUEST_TYPE_58_ActualizaItemSolicitudRecepcionCAB REQUEST)
         {
