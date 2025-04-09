@@ -34,6 +34,7 @@ namespace API_GP_LOGISTICO.Controllers
         private GP_CLS GP_CLS = new GP_CLS();
         private GP_ENT GP_ENT = new GP_ENT();
 
+
         private CONFIGURATION CONFIGURATION = new CONFIGURATION();
         private ACCESS ACCESS = new ACCESS();
         private API_RESPONSE_ERRORS ERROR = new API_RESPONSE_ERRORS();
